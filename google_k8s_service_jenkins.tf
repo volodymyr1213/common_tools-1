@@ -1,5 +1,5 @@
 resource "kubernetes_deployment" "terraform-jenkins" {
-  metadata { name = "terraform-jenkins" namespace = "tools"
+  metadata { name = "terraform-jenkins" namespace = "${var.namespace}"
 
   labels {
     app = "jenkins-terraform-deployment" }
@@ -40,14 +40,14 @@ resource "kubernetes_deployment" "terraform-jenkins" {
 resource "kubernetes_service" "jenkins-service" {
   metadata {
     name = "jenkins-service"
-    namespace = "tools"
+    namespace = "${var.namespace}"
   }
 
   spec {
     port {
 
       protocol = "TCP"
-      port = 8080
+      port = "${var.jenkins_service_port}"
       target_port = 8080
     }
     selector { app = "jenkins-pod" }

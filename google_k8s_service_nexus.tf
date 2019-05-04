@@ -46,7 +46,7 @@ resource "kubernetes_deployment" "nexus-deployment" {
             name           = "nexus-http"
             container_port = 8081
           }
-          
+
           port {
             name           = "docker-repo"
             container_port = 8085
@@ -84,7 +84,7 @@ resource "kubernetes_service" "nexus-service" {
     port {
       name        = "http"
       protocol    = "TCP"
-      port        = 8083
+      port        = "${var.nexus_service_port}"
       target_port = 8081
     }
 
@@ -96,6 +96,6 @@ resource "kubernetes_service" "nexus-service" {
     }
 
     selector { app = "nexus-deployment" }
-    type = "LoadBalancer"
+    type = "NodePort"
   }
 }

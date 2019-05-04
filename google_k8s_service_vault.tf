@@ -1,4 +1,4 @@
-resource "kubernetes_deployment" "vault" {
+resource "kubernetes_deployment" "vault-deployment" {
   depends_on = ["kubernetes_secret.vault_secret"]
   metadata { name = "vault" namespace = "${var.namespace}"
 
@@ -106,7 +106,7 @@ resource "kubernetes_service" "vault_service" {
 
     port {
       protocol    = "TCP"
-      port        = 80
+      port        = "${var.vault_service_port}"
       target_port = 8200
     }
 

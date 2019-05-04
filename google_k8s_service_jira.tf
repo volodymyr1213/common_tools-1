@@ -1,11 +1,3 @@
-resource "kubernetes_namespace" "tools" {
-  metadata { name = "jira-ns" labels { mylabel = "jira-value" }
-    annotations {
-      name = "jira-annotation"
-    }
-  }
-}
-
 
 resource "kubernetes_persistent_volume_claim" "jira-pvc" {
   metadata { name = "jira-pvc" namespace = "${var.namespace}"
@@ -82,7 +74,7 @@ resource "kubernetes_service" "jira-service" {
   spec {
     port {
       protocol    = "TCP"
-      port        = 8081
+      port        = "${var.jira_service_port}"
       target_port = 8080
     }
 
