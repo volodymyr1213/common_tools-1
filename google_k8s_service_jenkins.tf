@@ -22,8 +22,10 @@ resource "kubernetes_deployment" "terraform-jenkins" {
 
           volume_mount {
             name = "docker-sock"
-            mount_path = "/var/run"
+            mount_path = "/var/run/docker.sock"
+          }
 
+          volume_mount {
             name = "jenkins-home"
             mount_path = "/root/.jenkins"
           }
@@ -32,7 +34,7 @@ resource "kubernetes_deployment" "terraform-jenkins" {
 
         volume {
           name = "docker-sock"
-          host_path = { path = "/var/run" }
+          host_path = {  path = "/var/run/docker.sock" }
         }
 
         volume {
