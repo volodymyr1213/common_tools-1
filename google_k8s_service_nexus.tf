@@ -1,34 +1,52 @@
 resource "kubernetes_persistent_volume_claim" "nexus-pvc" {
-  metadata { name = "nexus-pvc" namespace = "${var.namespace}"
+  metadata {
+    name = "nexus-pvc"
 
-    labels { app = "nexus-deployment" }
+    namespace = "${var.namespace}"
+
+    labels {
+      app = "nexus-fuchicorp-deployment"
+    }
   }
 
   spec {
     access_modes = ["ReadWriteOnce"]
+
     resources {
       requests {
         storage = "10Gi"
       }
     }
+
     storage_class_name = "standard"
   }
 }
 
+resource "kubernetes_deployment" "nexus-fuchicorp-deployment" {
+  metadata {
+    name = "nexus-fuchicorp-deployment"
 
-resource "kubernetes_deployment" "nexus-deployment" {
-  metadata { name = "nexus-deployment" namespace = "${var.namespace}"
+    namespace = "${var.namespace}"
 
-    labels { app = "nexus-deployment" }
+    labels {
+      app = "nexus-fuchicorp-deployment"
+    }
   }
+
   spec {
     replicas = 1
 
-    selector { match_labels { app = "nexus-deployment" }
+    selector {
+      match_labels {
+        app = "nexus-fuchicorp-deployment"
+      }
     }
 
     template {
-      metadata { labels { app = "nexus-deployment" }
+      metadata {
+        labels {
+          app = "nexus-fuchicorp-deployment"
+        }
       }
 
       spec {
@@ -40,7 +58,10 @@ resource "kubernetes_deployment" "nexus-deployment" {
           }
         }
 
-        container { name  = "nexus-container" image = "fsadykov/docker-nexus"
+        container {
+          name = "nexus-container"
+
+          image = "fsadykov/docker-nexus"
 
           port {
             name           = "nexus-http"
@@ -68,6 +89,7 @@ resource "kubernetes_deployment" "nexus-deployment" {
             name       = "nexus-pvc"
             mount_path = "/var/lib/nexus"
           }
+
           image_pull_policy = "IfNotPresent"
         }
       }
@@ -75,9 +97,11 @@ resource "kubernetes_deployment" "nexus-deployment" {
   }
 }
 
+resource "kubernetes_service" "nexus-fuchicorp-service" {
+  metadata {
+    name = "nexus-fuchicorp-service"
 
-resource "kubernetes_service" "nexus-service" {
-  metadata { name = "nexus-service" namespace = "${var.namespace}"
+    namespace = "${var.namespace}"
   }
 
   spec {
@@ -95,7 +119,10 @@ resource "kubernetes_service" "nexus-service" {
       target_port = 8085
     }
 
-    selector { app = "nexus-deployment" }
+    selector {
+      app = "nexus-fuchicorp-deployment"
+    }
+
     type = "NodePort"
   }
 }

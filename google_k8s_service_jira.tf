@@ -1,38 +1,51 @@
-
 resource "kubernetes_persistent_volume_claim" "jira-pvc" {
-  metadata { name = "jira-pvc" namespace = "${var.namespace}"
+  metadata {
+    name = "jira-pvc"
+
+    namespace = "${var.namespace}"
+
     labels {
-      app = "jira-deployment"
+      app = "jira-fuchicorp-deployment"
     }
   }
 
   spec {
     access_modes = ["ReadWriteOnce"]
+
     resources {
       requests {
         storage = "10Gi"
       }
     }
+
     storage_class_name = "standard"
   }
 }
 
+resource "kubernetes_deployment" "jira-fuchicorp-deployment" {
+  metadata {
+    name = "jira-fuchicorp-deployment"
 
-resource "kubernetes_deployment" "jira-deployment" {
-  metadata { name = "jira-deployment" namespace = "${var.namespace}"
+    namespace = "${var.namespace}"
 
-    labels { app = "jira-deployment" }
+    labels {
+      app = "jira-fuchicorp-deployment"
+    }
   }
 
   spec {
     replicas = 1
-    selector { match_labels { app = "jira-deployment" }
+
+    selector {
+      match_labels {
+        app = "jira-fuchicorp-deployment"
+      }
     }
 
     template {
       metadata {
         labels {
-          app = "jira-deployment"
+          app = "jira-fuchicorp-deployment"
         }
       }
 
@@ -47,7 +60,7 @@ resource "kubernetes_deployment" "jira-deployment" {
 
         container {
           image = "gcr.io/hightowerlabs/jira:7.3.6-standalone"
-          name  = "jira-deployment"
+          name  = "jira-fuchicorp-deployment"
 
           port {
             container_port = 8080
@@ -66,9 +79,11 @@ resource "kubernetes_deployment" "jira-deployment" {
   }
 }
 
+resource "kubernetes_service" " jira-fuchicorp-service" {
+  metadata {
+    name = " jira-fuchicorp-service"
 
-resource "kubernetes_service" "jira-service" {
-  metadata { name = "jira-service" namespace = "${var.namespace}"
+    namespace = "${var.namespace}"
   }
 
   spec {
@@ -78,7 +93,9 @@ resource "kubernetes_service" "jira-service" {
       target_port = 8080
     }
 
-    selector { app = "jira-deployment" }
+    selector {
+      app = "jira-fuchicorp-deployment"
+    }
 
     type = "NodePort"
   }
