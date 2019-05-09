@@ -1,4 +1,3 @@
- 
  resource "kubernetes_namespace" "dev-namespace" {
   metadata {
     name = "dev-students" 
