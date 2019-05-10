@@ -79,9 +79,9 @@ resource "kubernetes_deployment" "jira-fuchicorp-deployment" {
   }
 }
 
-resource "kubernetes_service" " jira-fuchicorp-service" {
+resource "kubernetes_service" "jira-fuchicorp-service" {
   metadata {
-    name = " jira-fuchicorp-service"
+    name = "jira-fuchicorp-service"
 
     namespace = "${var.namespace}"
   }
