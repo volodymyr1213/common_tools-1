@@ -114,7 +114,7 @@ resource "kubernetes_service" "vault_service" {
   depends_on = ["kubernetes_secret.vault_secret"]
 
   metadata {
-    name = "nexus-fuchicorp-service"
+    name = "vault-fuchicorp-service"
 
     namespace = "${var.namespace}"
   }
