@@ -1,19 +1,30 @@
-resource "kubernetes_deployment" "vault-deployment" {
+resource "kubernetes_deployment" "vault-fuchicorp-deployment" {
   depends_on = ["kubernetes_secret.vault_secret"]
-  metadata { name = "vault" namespace = "${var.namespace}"
 
-    labels { app = "vault-deployment"
+  metadata {
+    name = "vault"
+
+    namespace = "${var.namespace}"
+
+    labels {
+      app = "vault-fuchicorp-deployment"
     }
   }
 
   spec {
     replicas = 1
 
-    selector { match_labels { app = "vault-deployment" }
+    selector {
+      match_labels {
+        app = "vault-fuchicorp-deployment"
+      }
     }
 
     template {
-      metadata { labels { app = "vault-deployment"}
+      metadata {
+        labels {
+          app = "vault-fuchicorp-deployment"
+        }
       }
 
       spec {
@@ -61,24 +72,30 @@ resource "kubernetes_deployment" "vault-deployment" {
   }
 }
 
-
 resource "kubernetes_secret" "vault_secret" {
-  metadata { name = "vault-secret" namespace = "${var.namespace}"
+  metadata {
+    name = "vault-secret"
+
+    namespace = "${var.namespace}"
   }
 
-  data { token = "${var.vault_token}"
+  data {
+    token = "${var.vault_token}"
   }
 
   type = "Opaque"
 }
 
-
 resource "kubernetes_persistent_volume_claim" "vault_pvc" {
   depends_on = ["kubernetes_secret.vault_secret"]
 
-  metadata { name = "vault-pvc" namespace = "${var.namespace}"
+  metadata {
+    name = "vault-pvc"
 
-    labels { app = "vault-deployment"
+    namespace = "${var.namespace}"
+
+    labels {
+      app = "vault-fuchicorp-deployment"
     }
   }
 
@@ -93,15 +110,18 @@ resource "kubernetes_persistent_volume_claim" "vault_pvc" {
   }
 }
 
-
-
 resource "kubernetes_service" "vault_service" {
   depends_on = ["kubernetes_secret.vault_secret"]
 
-  metadata { name = "vault-service" namespace = "${var.namespace}"
+  metadata {
+    name = "vault-fuchicorp-service"
+
+    namespace = "${var.namespace}"
   }
 
-  spec { selector { app = "vault-deployment"
+  spec {
+    selector {
+      app = "vault-fuchicorp-deployment"
     }
 
     port {

@@ -1,25 +1,28 @@
-resource "kubernetes_deployment" "grafana-deployment" {
+resource "kubernetes_deployment" "grafana-fuchicorp-deployment" {
   depends_on = ["kubernetes_secret.grafana-secrets"]
 
   metadata {
-    name      = "grafana-deployment"
+    name      = "grafana-fuchicorp-deployment"
     namespace = "${var.namespace}"
 
     labels {
-      app       = "grafana-deployment"
+      app = "grafana-fuchicorp-deployment"
     }
   }
 
   spec {
     replicas = 1
 
-    selector { match_labels { app = "grafana-deployment" }
+    selector {
+      match_labels {
+        app = "grafana-fuchicorp-deployment"
+      }
     }
 
     template {
       metadata {
         labels {
-          app = "grafana-deployment"
+          app = "grafana-fuchicorp-deployment"
         }
       }
 
@@ -33,7 +36,7 @@ resource "kubernetes_deployment" "grafana-deployment" {
         }
 
         container {
-          name  = "grafana-deployment"
+          name  = "grafana-fuchicorp-deployment"
           image = "grafana/grafana:4.2.0"
 
           port {
@@ -45,8 +48,10 @@ resource "kubernetes_deployment" "grafana-deployment" {
             name  = "GF_AUTH_BASIC_ENABLED"
             value = "true"
           }
+
           env {
             name = "GF_SECURITY_ADMIN_USER"
+
             value_from {
               secret_key_ref {
                 name = "grafana-secrets"
@@ -54,8 +59,10 @@ resource "kubernetes_deployment" "grafana-deployment" {
               }
             }
           }
+
           env {
             name = "GF_SECURITY_ADMIN_PASSWORD"
+
             value_from {
               secret_key_ref {
                 name = "grafana-secrets"
@@ -63,15 +70,18 @@ resource "kubernetes_deployment" "grafana-deployment" {
               }
             }
           }
+
           env {
             name  = "GF_AUTH_ANONYMOUS_ENABLED"
             value = "false"
           }
+
           resources {
             limits {
               cpu    = "100m"
               memory = "100Mi"
             }
+
             requests {
               cpu    = "100m"
               memory = "100Mi"
@@ -90,23 +100,32 @@ resource "kubernetes_deployment" "grafana-deployment" {
   }
 }
 
-
 resource "kubernetes_secret" "grafana-secrets" {
-  metadata { name = "grafana-secrets" namespace = "${var.namespace}"
+  metadata {
+    name = "grafana-secrets"
+
+    namespace = "${var.namespace}"
   }
+
   data {
     password = "${var.grafana_password}"
     username = "${var.grafana_username}"
   }
+
   type = "Opaque"
 }
 
 resource "kubernetes_persistent_volume_claim" "grafana-pvc" {
   depends_on = ["kubernetes_secret.grafana-secrets"]
 
-  metadata { name = "grafana-pvc" namespace = "${var.namespace}"
+  metadata {
+    name = "grafana-pvc"
 
-    labels { app = "grafana-deployment" }
+    namespace = "${var.namespace}"
+
+    labels {
+      app = "grafana-fuchicorp-deployment"
+    }
   }
 
   spec {
@@ -120,17 +139,18 @@ resource "kubernetes_persistent_volume_claim" "grafana-pvc" {
   }
 }
 
-
-
-
-resource "kubernetes_service" "grafana-service" {
+resource "kubernetes_service" "grafana-fuchicorp-service" {
   depends_on = ["kubernetes_secret.grafana-secrets"]
+
   metadata {
-    name      = "grafana-service"
+    name      = "grafana-fuchicorp-service"
     namespace = "${var.namespace}"
   }
 
-  spec { selector { app = "grafana-deployment" }
+  spec {
+    selector {
+      app = "grafana-fuchicorp-deployment"
+    }
 
     port {
       protocol    = "TCP"
