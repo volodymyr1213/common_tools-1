@@ -1,8 +1,8 @@
 resource "null_resource" "ingress-applier" {
 
   provisioner "local-exec" {
-    command = <<EOF
-    helm install --name fuchicorp-services-ingress  --namespace "${lower(var.namespace)}" \
+    command = <<EOF 
+    helm install --name fuchicorp-services-ingress-"${lower(var.namespace)}"  --namespace "${lower(var.namespace)}" \
     --set-string grafanaport=${var.grafana_service_port} \
     --set-string jenkinsport=${var.jenkins_service_port} \
     --set-string jiraport=${var.jira_service_port} \
@@ -13,13 +13,12 @@ resource "null_resource" "ingress-applier" {
   }
 }
 
-
 resource "null_resource" "ingress-destroyer" {
 
   provisioner "local-exec" {
     when = "destroy"
 
-    command = "helm del --purge fuchicorp-services-ingress"
+    command = "helm del --purge fuchicorp-services-ingress-${lower(var.namespace)}"
 
   }
 }
