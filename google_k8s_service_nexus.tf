@@ -1,4 +1,5 @@
 resource "kubernetes_persistent_volume_claim" "nexus-pvc" {
+  depends_on = ["kubernetes_namespace.tools"]
   metadata {
     name = "nexus-pvc"
 
@@ -23,6 +24,7 @@ resource "kubernetes_persistent_volume_claim" "nexus-pvc" {
 }
 
 resource "kubernetes_deployment" "nexus-fuchicorp-deployment" {
+  depends_on = ["kubernetes_namespace.tools"]
   metadata {
     name = "nexus-fuchicorp-deployment"
 
@@ -98,6 +100,7 @@ resource "kubernetes_deployment" "nexus-fuchicorp-deployment" {
 }
 
 resource "kubernetes_service" "nexus-fuchicorp-service" {
+  depends_on = ["kubernetes_namespace.tools"]
   metadata {
     name = "nexus-fuchicorp-service"
 

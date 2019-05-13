@@ -1,5 +1,6 @@
 resource "kubernetes_deployment" "grafana-fuchicorp-deployment" {
   depends_on = ["kubernetes_secret.grafana-secrets"]
+  depends_on = ["kubernetes_namespace.tools"]
 
   metadata {
     name      = "grafana-fuchicorp-deployment"
@@ -117,6 +118,7 @@ resource "kubernetes_secret" "grafana-secrets" {
 
 resource "kubernetes_persistent_volume_claim" "grafana-pvc" {
   depends_on = ["kubernetes_secret.grafana-secrets"]
+  depends_on = ["kubernetes_namespace.tools"]
 
   metadata {
     name = "grafana-pvc"
@@ -141,6 +143,7 @@ resource "kubernetes_persistent_volume_claim" "grafana-pvc" {
 
 resource "kubernetes_service" "grafana-fuchicorp-service" {
   depends_on = ["kubernetes_secret.grafana-secrets"]
+  depends_on = ["kubernetes_namespace.tools"]
 
   metadata {
     name      = "grafana-fuchicorp-service"

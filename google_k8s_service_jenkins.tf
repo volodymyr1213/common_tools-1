@@ -1,4 +1,5 @@
 resource "kubernetes_deployment" "jenkins-fuchicorp-deployment" {
+  depends_on = ["kubernetes_namespace.tools"]
   metadata {
     name = "jenkins-fuchicorp-deployment"
 
@@ -62,6 +63,7 @@ resource "kubernetes_deployment" "jenkins-fuchicorp-deployment" {
 }
 
 resource "kubernetes_persistent_volume_claim" "jenkins-pvc" {
+  depends_on = ["kubernetes_namespace.tools"]
   metadata {
     name      = "jenkins-pvc"
     namespace = "${var.namespace}"
@@ -79,6 +81,7 @@ resource "kubernetes_persistent_volume_claim" "jenkins-pvc" {
 }
 
 resource "kubernetes_service" "jenkins-fuchicorp-service" {
+  depends_on = ["kubernetes_namespace.tools"]
   metadata {
     name      = "jenkins-fuchicorp-service"
     namespace = "${var.namespace}"
