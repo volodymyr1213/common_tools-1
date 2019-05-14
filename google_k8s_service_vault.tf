@@ -1,4 +1,5 @@
 resource "kubernetes_deployment" "vault-fuchicorp-deployment" {
+  depends_on = ["kubernetes_namespace.tools"]
   depends_on = ["kubernetes_secret.vault_secret"]
 
   metadata {
@@ -73,6 +74,7 @@ resource "kubernetes_deployment" "vault-fuchicorp-deployment" {
 }
 
 resource "kubernetes_secret" "vault_secret" {
+  depends_on = ["kubernetes_namespace.tools"]
   metadata {
     name = "vault-secret"
 
@@ -87,6 +89,7 @@ resource "kubernetes_secret" "vault_secret" {
 }
 
 resource "kubernetes_persistent_volume_claim" "vault_pvc" {
+  depends_on = ["kubernetes_namespace.tools"]
   depends_on = ["kubernetes_secret.vault_secret"]
 
   metadata {
@@ -111,6 +114,7 @@ resource "kubernetes_persistent_volume_claim" "vault_pvc" {
 }
 
 resource "kubernetes_service" "vault_service" {
+  depends_on = ["kubernetes_namespace.tools"]
   depends_on = ["kubernetes_secret.vault_secret"]
 
   metadata {
