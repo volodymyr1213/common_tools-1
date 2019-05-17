@@ -1,6 +1,8 @@
 variable    "grafana_password"            {}
 variable    "grafana_username"            {}
-variable    "namespace"                   {}
+variable    "namespace"                   {
+  default = "tools"
+}
 variable    "vault_token"                 {}
 
 variable    "grafana_service_port"        {
@@ -26,4 +28,14 @@ variable    "nexus_service_port"       {
 variable    "vault_service_port"       {
   default = 8084
   description = "Please do not change this ports."
+}
+
+variable "tiller_version" {
+  default = "v2.11.0"
+  description = "Please provide version of the tiller."
+}
+
+variable "tiller_namespace" {
+  default = "kube-system"
+  description = "Tiller by default will deploy to kube-system"
 }

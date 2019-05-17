@@ -13,33 +13,33 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: grafana-service
+          serviceName: grafana-fuchicorp-service
           servicePort: {{ .Values.grafanaport }}
 
   - host: jenkins.fuchicorp.com
     http:
       paths:
       - backend:
-          serviceName: jenkins-service
+          serviceName: jenkins-fuchicorp-service
           servicePort: {{ .Values.jenkinsport }}
 
   - host: jira.fuchicorp.com
     http:
       paths:
       - backend:
-          serviceName: jira-service
+          serviceName: jira-fuchicorp-service
           servicePort: {{ .Values.jiraport }}
 
   - host: nexus.fuchicorp.com
     http:
       paths:
       - backend:
-          serviceName: nexus-service
+          serviceName: nexus-fuchicorp-service
           servicePort: {{ .Values.nexusport }}
 
   - host: vault.fuchicorp.com
     http:
       paths:
       - backend:
-          serviceName: vault-service
+          serviceName: vault-fuchicorp-service
           servicePort: {{ .Values.vaultport }}

@@ -4,6 +4,7 @@ This page contains how to deploy  common_tools to Kubernetes  Cluster.
 ### Required Packages
 1. terraform
 2. kubectl (configured ) 
+3. helm v2.11.0
 
 
 ## What will be deployed to cluster?

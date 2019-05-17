@@ -1,5 +1,5 @@
 resource "kubernetes_persistent_volume_claim" "jira-pvc" {
-  depends_on = ["kubernetes_namespace.tools"]
+  depends_on = ["kubernetes_namespace.service_tools"]
   metadata {
     name = "jira-pvc"
 
@@ -23,8 +23,9 @@ resource "kubernetes_persistent_volume_claim" "jira-pvc" {
   }
 }
 
+## Jira deployment depends on service_tools
 resource "kubernetes_deployment" "jira-fuchicorp-deployment" {
-  depends_on = ["kubernetes_namespace.tools"]
+  depends_on = ["kubernetes_namespace.service_tools"]
   metadata {
     name = "jira-fuchicorp-deployment"
 
@@ -82,7 +83,7 @@ resource "kubernetes_deployment" "jira-fuchicorp-deployment" {
 }
 
 resource "kubernetes_service" "jira-fuchicorp-service" {
-  depends_on = ["kubernetes_namespace.tools"]
+  depends_on = ["kubernetes_namespace.service_tools"]
   metadata {
     name = "jira-fuchicorp-service"
 
