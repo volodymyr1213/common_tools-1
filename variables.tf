@@ -39,3 +39,11 @@ variable "tiller_namespace" {
   default = "kube-system"
   description = "Tiller by default will deploy to kube-system"
 }
+
+variable "repo_port" {
+  default = 8085
+}
+
+variable "email" {
+  default = "fuchicorpsolution@gmail.com"
+}
