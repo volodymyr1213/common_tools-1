@@ -1,7 +1,7 @@
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: ClusterIssuer
 metadata:
- name: letsencrypt-fuchicorp-docker-prod
+ name: letsencrypt-fuchiyama-docker-prod
 spec:
  acme:
    #The ACME server URL

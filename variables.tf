@@ -1,9 +1,15 @@
-variable    "grafana_password"            {}
-variable    "grafana_username"            {}
+variable    "grafana_password"            {
+  default = "Redhat"
+}
+variable    "grafana_username"            {
+  default = "grafuser"
+}
 variable    "namespace"                   {
   default = "tools"
 }
-variable    "vault_token"                 {}
+variable    "vault_token"                 {
+  default = "Redhat"
+}
 
 variable    "grafana_service_port"        {
   default = 8080
@@ -45,5 +51,5 @@ variable "repo_port" {
 }
 
 variable "email" {
-  default = "fuchicorpsolution@gmail.com"
+  default = "fuchicorpsolutions@gmail.com"
 }

@@ -15,7 +15,7 @@ resource "helm_release" "fuchicorp-services-ingress" {
   ]
   name = "fuchicorp-services-ingress-${var.namespace}"
   namespace = "${var.namespace}"
-  chart = "./helm-ingress-fuchicorp"
+  chart = "./helm-fuchicorp"
   set {
     name = "grafanaport"
     value = "${var.grafana_service_port}"
