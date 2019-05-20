@@ -1,4 +1,4 @@
-## Before deploy ingress for each services it will make sure all services available 
+## Before deploy ingress for each services it will make sure all services available
 resource "helm_release" "fuchicorp-services-ingress" {
   depends_on = [
     "helm_release.ingress-controller",
@@ -39,6 +39,16 @@ resource "helm_release" "fuchicorp-services-ingress" {
   set {
     name = "vaultport"
     value = "${var.vault_service_port}"
+  }
+
+  set {
+    name = "repo_port"
+    value = "${var.repo_port}"
+  }
+
+  set {
+    name = "email"
+    value = "${var.email}"
   }
 
 }

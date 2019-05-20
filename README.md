@@ -1,4 +1,4 @@
-# FuchiCorp Kubernetes Common Tools
+# fuchicorp Kubernetes Common Tools
 This page contains how to deploy  common_tools to Kubernetes  Cluster. 
 
 ### Required Packages
