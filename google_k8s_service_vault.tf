@@ -107,7 +107,7 @@ resource "kubernetes_persistent_volume_claim" "vault_pvc" {
 
     resources {
       requests {
-        storage = "10Gi"
+        storage = "1Gi"
       }
     }
   }
