@@ -1,28 +1,3 @@
-resource "kubernetes_persistent_volume_claim" "jira-pvc" {
-  depends_on = ["kubernetes_namespace.service_tools"]
-  metadata {
-    name = "jira-pvc"
-
-    namespace = "${var.namespace}"
-
-    labels {
-      app = "jira-fuchicorp-deployment"
-    }
-  }
-
-  spec {
-    access_modes = ["ReadWriteOnce"]
-
-    resources {
-      requests {
-        storage = "10Gi"
-      }
-    }
-
-    storage_class_name = "standard"
-  }
-}
-
 ## Jira deployment depends on service_tools
 resource "kubernetes_deployment" "jira-fuchicorp-deployment" {
   depends_on = ["kubernetes_namespace.service_tools"]
