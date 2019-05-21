@@ -75,7 +75,7 @@ resource "kubernetes_persistent_volume_claim" "jenkins-pvc" {
 
     resources {
       requests {
-        storage = "20Gi"
+        storage = "10Gi"
       }
     }
   }
