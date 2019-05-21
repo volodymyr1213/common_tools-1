@@ -15,7 +15,7 @@ resource "kubernetes_persistent_volume_claim" "nexus-pvc" {
 
     resources {
       requests {
-        storage = "10Gi"
+        storage = "20Gi"
       }
     }
 
@@ -89,7 +89,7 @@ resource "kubernetes_deployment" "nexus-fuchicorp-deployment" {
 
           volume_mount {
             name       = "nexus-pvc"
-            mount_path = "/var/lib/nexus"
+            mount_path = "/nexus-data"
           }
 
           image_pull_policy = "IfNotPresent"
