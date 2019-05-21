@@ -115,32 +115,7 @@ resource "kubernetes_secret" "grafana-secrets" {
 
   type = "Opaque"
 }
-
-resource "kubernetes_persistent_volume_claim" "grafana-pvc" {
-  depends_on = ["kubernetes_secret.grafana-secrets"]
-  depends_on = ["kubernetes_namespace.service_tools"]
-
-  metadata {
-    name = "grafana-pvc"
-
-    namespace = "${var.namespace}"
-
-    labels {
-      app = "grafana-fuchicorp-deployment"
-    }
-  }
-
-  spec {
-    access_modes = ["ReadWriteOnce"]
-
-    resources {
-      requests {
-        storage = "5Gi"
-      }
-    }
-  }
-}
-
+ 
 resource "kubernetes_service" "grafana-fuchicorp-service" {
   depends_on = ["kubernetes_secret.grafana-secrets"]
   depends_on = ["kubernetes_namespace.service_tools"]
