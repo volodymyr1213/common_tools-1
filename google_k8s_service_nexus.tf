@@ -89,7 +89,7 @@ resource "kubernetes_deployment" "nexus-fuchicorp-deployment" {
 
           volume_mount {
             name       = "nexus-pvc"
-            mount_path = "/var/lib/nexus"
+            mount_path = "/nexus-data"
           }
 
           image_pull_policy = "IfNotPresent"
