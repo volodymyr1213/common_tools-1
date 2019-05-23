@@ -43,6 +43,12 @@ spec:
       - backend:
           serviceName: vault-fuchicorp-service
           servicePort: {{ .Values.vaultport }}
+  - host: fuchicorp.com
+    http:
+      paths:
+      - backend:
+          serviceName: wordpress-tools
+          servicePort: {{ .Values.wordpressport }}
   tls:
   - hosts:
     - vault.fuchicorp.com
@@ -50,4 +56,5 @@ spec:
     - jira.fuchicorp.com
     - grafana.fuchicorp.com
     - jenkins.fuchicorp.com
+    - fuchicorp.com
     secretName: tls-prod-cert

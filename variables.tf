@@ -53,3 +53,14 @@ variable "repo_port" {
 variable "email" {
   default = "fuchicorpsolutions@gmail.com"
 }
+
+variable "mysql_password" {
+}
+
+variable "wordpress_service_port" {
+  default = 80
+}
+
+variable "wordpress_tools_service_port" {
+  default = 8086
+}
