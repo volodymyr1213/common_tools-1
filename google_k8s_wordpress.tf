@@ -1,4 +1,5 @@
 resource "kubernetes_secret" "mysql_secrets" {
+  depends_on = ["kubernetes_namespace.prod"]
   metadata {
     name = "mysql-secrets"
     namespace = "${var.wordpress_namespace}"
@@ -13,6 +14,7 @@ resource "kubernetes_secret" "mysql_secrets" {
 }
 
 resource "kubernetes_persistent_volume_claim" "mysql_pv_claim" {
+  depends_on = ["kubernetes_namespace.prod"]
   metadata {
     name = "mysql-pv-claim"
     namespace = "${var.wordpress_namespace}"
@@ -32,6 +34,7 @@ resource "kubernetes_persistent_volume_claim" "mysql_pv_claim" {
 }
 
 resource "kubernetes_persistent_volume_claim" "wp_lv_claim" {
+  depends_on = ["kubernetes_namespace.prod"]
   metadata {
     name = "wp-lv-claim"
     namespace = "${var.wordpress_namespace}"
@@ -52,6 +55,7 @@ resource "kubernetes_persistent_volume_claim" "wp_lv_claim" {
 }
 
 resource "kubernetes_deployment" "mysql_fuchicorp_deployment" {
+  depends_on = ["kubernetes_namespace.prod"]
   metadata {
     name = "mysql-fuchicorp-deployment"
     namespace = "${var.wordpress_namespace}"
@@ -136,6 +140,7 @@ resource "kubernetes_deployment" "mysql_fuchicorp_deployment" {
 }
 
 resource "kubernetes_deployment" "wordpress-fuchicorp-deployment" {
+  depends_on = ["kubernetes_namespace.prod"]
   metadata {
     name = "wordpress-fuchicorp-deployment"
     namespace = "${var.wordpress_namespace}"
@@ -214,6 +219,7 @@ resource "kubernetes_deployment" "wordpress-fuchicorp-deployment" {
 }
 
 resource "kubernetes_service" "fuchicorp_mysql_service" {
+  depends_on = ["kubernetes_namespace.prod"]
   metadata {
     name = "fuchicorp-mysql-service"
     namespace = "${var.wordpress_namespace}"
@@ -237,6 +243,7 @@ resource "kubernetes_service" "fuchicorp_mysql_service" {
 }
 
 resource "kubernetes_service" "fuchicorp_wordpress_service" {
+  depends_on = ["kubernetes_namespace.prod"]
   metadata {
     name = "fuchicorp-wordpress-service"
     namespace = "${var.wordpress_namespace}"
@@ -261,6 +268,7 @@ resource "kubernetes_service" "fuchicorp_wordpress_service" {
 }
 
 resource "kubernetes_service" "fuchicorp_wordpress_tools_service" {
+  depends_on = ["kubernetes_namespace.service_tools"]
   metadata {
     name      = "fuchicorp-wordpress-tools-service"
     namespace = "${var.namespace}"
