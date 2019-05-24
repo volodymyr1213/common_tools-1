@@ -62,5 +62,9 @@ variable "wordpress_service_port" {
 }
 
 variable "wordpress_tools_service_port" {
-  default = 8086
+  default = 7102
+}
+
+variable    "wordpress_namespace" {
+  default = "prod"
 }

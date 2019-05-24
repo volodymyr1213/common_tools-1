@@ -1,6 +1,7 @@
-resource "kubernetes_secret" "mysql_creds" {
+resource "kubernetes_secret" "mysql_secrets" {
   metadata {
-    name = "mysql-creds"
+    name = "mysql-secrets"
+    namespace = "${var.wordpress_namespace}"
   }
 
   data {
@@ -14,6 +15,7 @@ resource "kubernetes_secret" "mysql_creds" {
 resource "kubernetes_persistent_volume_claim" "mysql_pv_claim" {
   metadata {
     name = "mysql-pv-claim"
+    namespace = "${var.wordpress_namespace}"
   }
 
   spec {
@@ -32,7 +34,7 @@ resource "kubernetes_persistent_volume_claim" "mysql_pv_claim" {
 resource "kubernetes_persistent_volume_claim" "wp_lv_claim" {
   metadata {
     name = "wp-lv-claim"
-
+    namespace = "${var.wordpress_namespace}"
     labels {
       app = "wordpress"
     }
@@ -49,10 +51,10 @@ resource "kubernetes_persistent_volume_claim" "wp_lv_claim" {
   }
 }
 
-resource "kubernetes_deployment" "fuchicorp_mysql" {
+resource "kubernetes_deployment" "mysql_fuchicorp_deployment" {
   metadata {
-    name = "fuchicorp-mysql"
-
+    name = "mysql-fuchicorp-deployment"
+    namespace = "${var.wordpress_namespace}"
     labels {
       app = "fuchicorp"
     }
@@ -97,7 +99,7 @@ resource "kubernetes_deployment" "fuchicorp_mysql" {
 
             value_from {
               secret_key_ref {
-                name = "mysql-creds"
+                name = "mysql-secrets"
                 key  = "MYSQL_ROOT_PASSWORD"
               }
             }
@@ -108,7 +110,7 @@ resource "kubernetes_deployment" "fuchicorp_mysql" {
 
             value_from {
               secret_key_ref {
-                name = "mysql-creds"
+                name = "mysql-secrets"
                 key  = "MYSQL_USER_PASSWORD"
               }
             }
@@ -133,10 +135,10 @@ resource "kubernetes_deployment" "fuchicorp_mysql" {
   }
 }
 
-resource "kubernetes_deployment" "wordpress" {
+resource "kubernetes_deployment" "wordpress-fuchicorp-deployment" {
   metadata {
-    name = "wordpress"
-
+    name = "wordpress-fuchicorp-deployment"
+    namespace = "${var.wordpress_namespace}"
     labels {
       app = "wordpress"
     }
@@ -177,7 +179,7 @@ resource "kubernetes_deployment" "wordpress" {
 
           env {
             name  = "WORDPRESS_DB_HOST"
-            value = "fuchicorp-mysql"
+            value = "fuchicorp-mysql-service"
           }
 
           env {
@@ -190,7 +192,7 @@ resource "kubernetes_deployment" "wordpress" {
 
             value_from {
               secret_key_ref {
-                name = "mysql-creds"
+                name = "mysql-secrets"
                 key  = "MYSQL_USER_PASSWORD"
               }
             }
@@ -211,10 +213,10 @@ resource "kubernetes_deployment" "wordpress" {
   }
 }
 
-resource "kubernetes_service" "fuchicorp_mysql" {
+resource "kubernetes_service" "fuchicorp_mysql_service" {
   metadata {
-    name = "fuchicorp-mysql"
-
+    name = "fuchicorp-mysql-service"
+    namespace = "${var.wordpress_namespace}"
     labels {
       app = "fuchicorp"
     }
@@ -234,10 +236,10 @@ resource "kubernetes_service" "fuchicorp_mysql" {
   }
 }
 
-resource "kubernetes_service" "wordpress" {
+resource "kubernetes_service" "fuchicorp_wordpress_service" {
   metadata {
-    name = "wordpress"
-
+    name = "fuchicorp-wordpress-service"
+    namespace = "${var.wordpress_namespace}"
     labels {
       app = "wordpress"
     }
@@ -258,10 +260,10 @@ resource "kubernetes_service" "wordpress" {
   }
 }
 
-resource "kubernetes_service" "wordpress_tools" {
+resource "kubernetes_service" "fuchicorp_wordpress_tools_service" {
   metadata {
-    name      = "wordpress-tools"
-    namespace = "tools"
+    name      = "fuchicorp-wordpress-tools-service"
+    namespace = "${var.namespace}"
   }
 
   spec {
@@ -271,6 +273,6 @@ resource "kubernetes_service" "wordpress_tools" {
     }
 
     type          = "ExternalName"
-    external_name = "wordpress.default.svc.cluster.local"
+    external_name = "fuchicorp-wordpress-service.${var.wordpress_namespace}.svc.cluster.local"
   }
 }
