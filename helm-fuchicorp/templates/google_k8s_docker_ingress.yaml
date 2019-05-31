@@ -13,7 +13,7 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: nexus-service
+          serviceName: nexus-fuchicorp-service
           servicePort: {{ .Values.repo_port }}
   tls:
   - hosts:
