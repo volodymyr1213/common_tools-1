@@ -14,6 +14,14 @@ variable "mysql_password" {
   default = "Redhat"
 }
 
+variable "slack_python_token" {
+  default = "Redhat"
+}
+
+variable "monitor_image" {
+  default = "fuchicorp/fuchicorp-monitor:0.2"
+}
+
 variable    "grafana_service_port"        {
   default = 8080
   description = "Please do not change this ports."
