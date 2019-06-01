@@ -10,6 +10,9 @@ variable    "namespace"                   {
 variable    "vault_token"                 {
   default = "Redhat"
 }
+variable "mysql_password" {
+  default = "Redhat"
+}
 
 variable    "grafana_service_port"        {
   default = 8080
@@ -21,7 +24,7 @@ variable    "jenkins_service_port"     {
   description = "Please do not change this ports."
 }
 
-variable    "jira_service_port"        {
+variable    "vault_service_port"       {
   default = 8082
   description = "Please do not change this ports."
 }
@@ -31,10 +34,6 @@ variable    "nexus_service_port"       {
   description = "Please do not change this ports."
 }
 
-variable    "vault_service_port"       {
-  default = 8084
-  description = "Please do not change this ports."
-}
 
 variable "tiller_version" {
   default = "v2.11.0"
@@ -52,9 +51,6 @@ variable "repo_port" {
 
 variable "email" {
   default = "fuchicorpsolutions@gmail.com"
-}
-
-variable "mysql_password" {
 }
 
 variable "wordpress_service_port" {

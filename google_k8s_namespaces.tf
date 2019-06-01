@@ -1,16 +1,16 @@
- resource "kubernetes_namespace" "dev-namespace" {
+ resource "kubernetes_namespace" "dev_namespace" {
   metadata {
     name = "dev-students"
   }
 }
 
-resource "kubernetes_namespace" "qa-namespace" {
+resource "kubernetes_namespace" "qa_namespace" {
   metadata {
     name = "qa-students"
   }
 }
 
-resource "kubernetes_namespace" "prod-namespace" {
+resource "kubernetes_namespace" "prod_namespace" {
   metadata {
     name = "prod-students"
   }

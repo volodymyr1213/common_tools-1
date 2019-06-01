@@ -1,8 +1,11 @@
 ## jenkins deployment depens os services namespaces
-resource "kubernetes_deployment" "jenkins-fuchicorp-deployment" {
-  depends_on = ["kubernetes_namespace.service_tools"]
+resource "kubernetes_deployment" "jenkins_fuchicorp_deployment" {
+  depends_on = [
+    "kubernetes_namespace.service_tools",
+    "kubernetes_service_account.common_service_account"
+  ]
   metadata {
-    name = "jenkins-fuchicorp-deployment"
+    name = "jenkins_fuchicorp_deployment"
 
     namespace = "${var.namespace}"
 
@@ -26,9 +29,11 @@ resource "kubernetes_deployment" "jenkins-fuchicorp-deployment" {
           app = "jenkins-pod"
         }
       }
-
       spec {
+        service_account_name = "${kubernetes_service_account.common_service_account.metadata.0.name}"
+
         container {
+
           image = "fsadykov/centos_jenkins:0.3"
           name  = "jenkins"
 
@@ -40,6 +45,12 @@ resource "kubernetes_deployment" "jenkins-fuchicorp-deployment" {
           volume_mount {
             name       = "jenkins-home"
             mount_path = "/root/.jenkins"
+          }
+
+          env_from {
+            secret_ref {
+              name = "${kubernetes_secret.common_service_account_secret.metadata.0.name}"
+            }
           }
         }
 
@@ -81,7 +92,7 @@ resource "kubernetes_persistent_volume_claim" "jenkins-pvc" {
   }
 }
 
-resource "kubernetes_service" "jenkins-fuchicorp-service" {
+resource "kubernetes_service" "jenkins_fuchicorp_service" {
   depends_on = ["kubernetes_namespace.service_tools"]
   metadata {
     name      = "jenkins-fuchicorp-service"

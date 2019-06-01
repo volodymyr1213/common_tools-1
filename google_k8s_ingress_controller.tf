@@ -5,13 +5,13 @@ provider "helm" {
   }
 }
 
-## Deploy ingress controller 
-resource "helm_release" "ingress-controller" {
+## Deploy ingress controller
+resource "helm_release" "ingress_controller" {
   depends_on = [
     "kubernetes_namespace.service_tools",
     "kubernetes_service_account.tiller",
     "kubernetes_secret.tiller",
-    "kubernetes_cluster_role_binding.tiller-cluster-rule"
+    "kubernetes_cluster_role_binding.tiller_cluster_rule"
   ]
 
   name      = "fuchicorp-ingress-controller"

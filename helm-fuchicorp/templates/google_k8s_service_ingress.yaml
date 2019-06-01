@@ -5,9 +5,16 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     certmanager.k8s.io/cluster-issuer: letsencrypt-fuchicorp-prod
-
+    kubernetes.io/tls-acme: “true”
 spec:
   rules:
+
+  - host: fuchicorp.com
+    http:
+      paths:
+      - backend:
+          serviceName: wordpress-tools
+          servicePort: {{ .Values.wordpressport }}
 
   - host: grafana.fuchicorp.com
     http:
@@ -23,13 +30,6 @@ spec:
           serviceName: jenkins-fuchicorp-service
           servicePort: {{ .Values.jenkinsport }}
 
-  - host: jira.fuchicorp.com
-    http:
-      paths:
-      - backend:
-          serviceName: jira-fuchicorp-service
-          servicePort: {{ .Values.jiraport }}
-
   - host: nexus.fuchicorp.com
     http:
       paths:
@@ -43,17 +43,10 @@ spec:
       - backend:
           serviceName: vault-fuchicorp-service
           servicePort: {{ .Values.vaultport }}
-  - host: fuchicorp.com
-    http:
-      paths:
-      - backend:
-          serviceName: wordpress-tools
-          servicePort: {{ .Values.wordpressport }}
   tls:
   - hosts:
     - vault.fuchicorp.com
     - nexus.fuchicorp.com
-    - jira.fuchicorp.com
     - grafana.fuchicorp.com
     - jenkins.fuchicorp.com
     - fuchicorp.com

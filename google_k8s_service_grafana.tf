@@ -1,13 +1,14 @@
-resource "kubernetes_deployment" "grafana-fuchicorp-deployment" {
-  depends_on = ["kubernetes_secret.grafana-secrets"]
-  depends_on = ["kubernetes_namespace.service_tools"]
+resource "kubernetes_deployment" "grafana_fuchicorp_deployment" {
+  depends_on = [
+    "kubernetes_secret.grafana_secrets",
+    "kubernetes_namespace.service_tools" ]
 
   metadata {
     name      = "grafana-fuchicorp-deployment"
     namespace = "${var.namespace}"
 
     labels {
-      app = "grafana-fuchicorp-deployment"
+      app = "grafana_fuchicorp_deployment"
     }
   }
 
@@ -28,13 +29,6 @@ resource "kubernetes_deployment" "grafana-fuchicorp-deployment" {
       }
 
       spec {
-        volume {
-          name = "grafana-pvc"
-
-          persistent_volume_claim {
-            claim_name = "grafana-pvc"
-          }
-        }
 
         container {
           name  = "grafana-fuchicorp-deployment"
@@ -88,12 +82,6 @@ resource "kubernetes_deployment" "grafana-fuchicorp-deployment" {
               memory = "100Mi"
             }
           }
-
-          volume_mount {
-            name       = "grafana-pvc"
-            mount_path = "/var/lib/grafana"
-          }
-
           image_pull_policy = "IfNotPresent"
         }
       }
@@ -101,7 +89,7 @@ resource "kubernetes_deployment" "grafana-fuchicorp-deployment" {
   }
 }
 
-resource "kubernetes_secret" "grafana-secrets" {
+resource "kubernetes_secret" "grafana_secrets" {
   metadata {
     name = "grafana-secrets"
 
@@ -115,9 +103,9 @@ resource "kubernetes_secret" "grafana-secrets" {
 
   type = "Opaque"
 }
- 
-resource "kubernetes_service" "grafana-fuchicorp-service" {
-  depends_on = ["kubernetes_secret.grafana-secrets"]
+
+resource "kubernetes_service" "grafana_fuchicorp_service" {
+  depends_on = ["kubernetes_secret.grafana_secrets"]
   depends_on = ["kubernetes_namespace.service_tools"]
 
   metadata {
@@ -127,7 +115,7 @@ resource "kubernetes_service" "grafana-fuchicorp-service" {
 
   spec {
     selector {
-      app = "grafana-fuchicorp-deployment"
+      app = "grafana_fuchicorp_deployment"
     }
 
     port {

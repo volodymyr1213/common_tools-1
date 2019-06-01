@@ -18,7 +18,7 @@ resource "kubernetes_secret" "tiller" {
 }
 
 ## Cluster role binding for tiller
-resource "kubernetes_cluster_role_binding" "tiller-cluster-rule" {
+resource "kubernetes_cluster_role_binding" "tiller_cluster_rule" {
     depends_on = [
       "kubernetes_service_account.tiller",
       "kubernetes_secret.tiller"

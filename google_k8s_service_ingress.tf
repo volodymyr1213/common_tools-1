@@ -1,17 +1,15 @@
 ## Before deploy ingress for each services it will make sure all services available
-resource "helm_release" "fuchicorp-services-ingress" {
+resource "helm_release" "fuchicorp_services_ingress" {
   depends_on = [
-    "helm_release.ingress-controller",
-    "kubernetes_deployment.jenkins-fuchicorp-deployment",
-    "kubernetes_deployment.jira-fuchicorp-deployment",
-    "kubernetes_deployment.grafana-fuchicorp-deployment",
-    "kubernetes_deployment.vault-fuchicorp-deployment",
-    "kubernetes_deployment.nexus-fuchicorp-deployment",
-    "kubernetes_service.jenkins-fuchicorp-service",
-    "kubernetes_service.jira-fuchicorp-service",
-    "kubernetes_service.grafana-fuchicorp-service",
-    "kubernetes_service.vault-fuchicorp-service",
-    "kubernetes_service.nexus-fuchicorp-service"
+    "helm_release.ingress_controller",
+    "kubernetes_deployment.jenkins_fuchicorp_deployment",
+    "kubernetes_deployment.grafana_fuchicorp_deployment",
+    "kubernetes_deployment.vault_fuchicorp_deployment",
+    "kubernetes_deployment.nexus_fuchicorp_deployment",
+    "kubernetes_service.jenkins_fuchicorp_service",
+    "kubernetes_service.grafana_fuchicorp_service",
+    "kubernetes_service.vault_fuchicorp_service",
+    "kubernetes_service.nexus_fuchicorp_service"
   ]
   name = "fuchicorp-services-ingress-${var.namespace}"
   namespace = "${var.namespace}"
@@ -24,11 +22,6 @@ resource "helm_release" "fuchicorp-services-ingress" {
   set {
     name = "jenkinsport"
     value = "${var.jenkins_service_port}"
-  }
-
-  set {
-    name = "jiraport"
-    value = "${var.jira_service_port}"
   }
 
   set {

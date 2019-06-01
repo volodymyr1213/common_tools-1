@@ -1,25 +1,23 @@
 ## Deploy cert manger
-resource "helm_release" "cert-manager" {
+resource "helm_release" "cert_manager" {
  depends_on = [
    "kubernetes_namespace.service_tools",
    "kubernetes_service_account.tiller",
    "kubernetes_secret.tiller",
-   "kubernetes_cluster_role_binding.tiller-cluster-rule",
-   "helm_release.ingress-controller",
-   "kubernetes_deployment.jenkins-fuchicorp-deployment",
-   "kubernetes_deployment.jira-fuchicorp-deployment",
-   "kubernetes_deployment.grafana-fuchicorp-deployment",
-   "kubernetes_deployment.vault-fuchicorp-deployment",
-   "kubernetes_deployment.nexus-fuchicorp-deployment",
-   "kubernetes_service.jenkins-fuchicorp-service",
-   "kubernetes_service.jira-fuchicorp-service",
-   "kubernetes_service.grafana-fuchicorp-service",
-   "kubernetes_service.vault-fuchicorp-service",
-   "kubernetes_service.nexus-fuchicorp-service"
+   "kubernetes_cluster_role_binding.tiller_cluster_rule",
+   "helm_release.ingress_controller",
+   "kubernetes_deployment.jenkins_fuchicorp_deployment",
+   "kubernetes_deployment.grafana_fuchicorp_deployment",
+   "kubernetes_deployment.vault_fuchicorp_deployment",
+   "kubernetes_deployment.nexus_fuchicorp_deployment",
+   "kubernetes_service.jenkins_fuchicorp_service",
+   "kubernetes_service.grafana_fuchicorp_service",
+   "kubernetes_service.vault_fuchicorp_service",
+   "kubernetes_service.nexus_fuchicorp_service"
  ]
 
- name      = "fuchicorp-cert-manager"
- chart     = "stable/cert-manager"
+ name      = "fuchicorp-cert_manager"
+ chart     = "stable/cert_manager"
  namespace = "${var.namespace}"
  version   = "v0.3.0"
 

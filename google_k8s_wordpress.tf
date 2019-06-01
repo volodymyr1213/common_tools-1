@@ -139,7 +139,7 @@ resource "kubernetes_deployment" "mysql_fuchicorp_deployment" {
   }
 }
 
-resource "kubernetes_deployment" "wordpress-fuchicorp-deployment" {
+resource "kubernetes_deployment" "wordpress_fuchicorp_deployment" {
   depends_on = ["kubernetes_namespace.prod"]
   metadata {
     name = "wordpress-fuchicorp-deployment"
