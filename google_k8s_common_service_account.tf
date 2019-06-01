@@ -1,7 +1,4 @@
 resource "kubernetes_service_account" "common_service_account" {
-  depends_on = [
-    "kubernetes_namespace.service_tools"
-  ]
   metadata {
     name = "common-service-account"
     namespace = "${var.namespace}"
@@ -13,9 +10,6 @@ resource "kubernetes_service_account" "common_service_account" {
 }
 
 resource "kubernetes_secret" "common_service_account_secret" {
-  depends_on = [
-    "kubernetes_namespace.service_tools"
-  ]
   metadata {
     name = "common-service-account-secret"
     namespace = "${var.namespace}"

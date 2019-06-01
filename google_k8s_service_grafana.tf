@@ -8,7 +8,7 @@ resource "kubernetes_deployment" "grafana_fuchicorp_deployment" {
     namespace = "${var.namespace}"
 
     labels {
-      app = "grafana_fuchicorp_deployment"
+      app = "grafana-fuchicorp-deployment"
     }
   }
 
@@ -115,7 +115,7 @@ resource "kubernetes_service" "grafana_fuchicorp_service" {
 
   spec {
     selector {
-      app = "grafana_fuchicorp_deployment"
+      app = "grafana-fuchicorp-deployment"
     }
 
     port {

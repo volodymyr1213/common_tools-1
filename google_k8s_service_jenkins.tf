@@ -37,6 +37,23 @@ resource "kubernetes_deployment" "jenkins_fuchicorp_deployment" {
           image = "fsadykov/centos_jenkins:kube"
           name  = "jenkins"
 
+          env {
+            name = "SERVICE_CERT_FILENAME"
+            value = "/var/run/secrets/kubernetes.io/serviceaccount"
+          }
+
+          env_from {
+            secret_ref {
+              name = "${kubernetes_secret.common_service_account_secret.metadata.0.name}"
+            }
+          }
+
+          volume_mount {
+            mount_path = "/var/run/secrets/kubernetes.io/serviceaccount"
+            name = "${kubernetes_service_account.common_service_account.default_secret_name}"
+            read_only = true
+          }
+
           volume_mount {
             name       = "docker-sock"
             mount_path = "/var/run/docker.sock"
@@ -47,10 +64,13 @@ resource "kubernetes_deployment" "jenkins_fuchicorp_deployment" {
             mount_path = "/root/.jenkins"
           }
 
-          env_from {
-            secret_ref {
-              name = "${kubernetes_secret.common_service_account_secret.metadata.0.name}"
-            }
+
+        }
+
+        volume {
+          name = "${kubernetes_service_account.common_service_account.default_secret_name}"
+          secret {
+            secret_name = "${kubernetes_service_account.common_service_account.default_secret_name}"
           }
         }
 
