@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-# DATAFILE='/Users/fsadykov/Projects/fuchicorp-projects/variable.tfvars'
+DIR=$(pwd)
+DATAFILE="$DIR/$1"
 
 ENVIRONMENT=$(sed -nr 's/^environment\s*=\s*"([^"]*)".*$/\1/p' "$DATAFILE")
 BUCKET=$(sed -nr 's/^bucket_name\s*=\s*"([^"]*)".*$/\1/p' "$DATAFILE")
@@ -8,8 +9,6 @@ DEPLOYMENT=$(sed -nr 's/^deployment_name\s*=\s*"([^"]*)".*$/\1/p' "$DATAFILE")
 PROJECT=$(sed -nr 's/^project\s*=\s*"([^"]*)".*$/\1/p' "$DATAFILE")
 CREDENTIALS=$(sed -nr 's/^credentials\s*=\s*"([^"]*)".*$/\1/p' "$DATAFILE")
 
-DIR=$(pwd)
-DATAFILE="$DIR/$1"
 
 if [ ! -f "$DATAFILE" ]; then
     echo "setenv: Configuration file not found: $DATAFILE"
