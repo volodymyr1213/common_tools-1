@@ -16,10 +16,12 @@ resource "helm_release" "cert_manager" {
    "kubernetes_service.nexus_fuchicorp_service"
  ]
 
- name      = "fuchicorp-cert_manager"
- chart     = "stable/cert_manager"
+ name      = "fuchicorp-cert-manager"
+ chart     = "stable/cert-manager"
  namespace = "${var.namespace}"
  version   = "v0.3.0"
+ timeout:  = "600"
+ wait      =  true
 
  set {
    name  = "ingressShim.defaultIssuerName"

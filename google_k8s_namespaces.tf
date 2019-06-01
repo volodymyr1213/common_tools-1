@@ -17,12 +17,32 @@ resource "kubernetes_namespace" "prod_namespace" {
 }
 
 ## Create namespace for Dev, QA, Prod and Tools
-resource "kubernetes_namespace" "service_tools" { metadata { name = "${var.namespace}"}}
+resource "kubernetes_namespace" "service_tools" {
+  metadata {
+    name = "${var.namespace}"
+  }
+}
 
-resource "kubernetes_namespace" "qa" { metadata { name = "qa"}}
+resource "kubernetes_namespace" "qa" {
+   metadata {
+      name = "qa"
+    }
+}
 
-resource "kubernetes_namespace" "prod" { metadata { name = "prod"}}
+resource "kubernetes_namespace" "prod" {
+   metadata {
+     name = "prod"
+   }
+}
 
-resource "kubernetes_namespace" "test" { metadata { name = "test"}}
+resource "kubernetes_namespace" "test" {
+   metadata {
+     name = "test"
+   }
+}
 
-resource "kubernetes_namespace" "dev" { metadata { name = "dev"}}
+resource "kubernetes_namespace" "dev" {
+   metadata {
+     name = "dev"
+   }
+}

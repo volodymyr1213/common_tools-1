@@ -1,3 +1,4 @@
 *tfvars*
 *state*
 *.terraform*
+*json*

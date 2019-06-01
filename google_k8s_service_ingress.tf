@@ -43,9 +43,4 @@ resource "helm_release" "fuchicorp_services_ingress" {
     name = "email"
     value = "${var.email}"
   }
-
-  set {
-    name = "wordpressport"
-    value = "${var.wordpress_tools_service_port}"
-  }
 }

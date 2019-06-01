@@ -52,15 +52,3 @@ variable "repo_port" {
 variable "email" {
   default = "fuchicorpsolutions@gmail.com"
 }
-
-variable "wordpress_service_port" {
-  default = 80
-}
-
-variable "wordpress_tools_service_port" {
-  default = 7102
-}
-
-variable    "wordpress_namespace" {
-  default = "prod"
-}

@@ -5,7 +5,8 @@ This page contains how to deploy  common_tools to Kubernetes  Cluster.
 1. terraform
 2. kubectl (configured )
 3. helm v2.11.0
-
+3. Cert-manager 0.3.0
+4. Kube Cluster 1.12.7-gke.10
 
 ## What will be deployed to cluster?
 1. Jenkins
@@ -30,13 +31,13 @@ cd common_tools
 
 Please use default  module just run following command.
 ```
-terraform init
+source set-env.sh configuration/fuchicorp-common-tools.tfvars
 ```
 
 If you are using scripted way you will need to generate tfvars file. For example
 
 ```
-» cat <<EOF > my_vars.tfvars                                                                     
+» cat <<EOF > terraform apply -var-file=$DATAFILE                                                                     
 grafana_password = 'mypassword'
 grafana_username = 'admin_user'
 namespace      = 'tools'
@@ -46,6 +47,6 @@ EOF
 
 After you done with generation of the var file. You can start deploying.
 ```
-terraform plan -var-file=my_vars.tfvars    
-terraform apply -var-file=my_vars.tfvars
+terraform plan -var-file=terraform apply -var-file=$DATAFILE    
+terraform apply -var-file=terraform apply -var-file=$DATAFILE
 ```

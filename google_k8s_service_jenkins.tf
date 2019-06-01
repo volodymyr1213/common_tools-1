@@ -5,7 +5,7 @@ resource "kubernetes_deployment" "jenkins_fuchicorp_deployment" {
     "kubernetes_service_account.common_service_account"
   ]
   metadata {
-    name = "jenkins_fuchicorp_deployment"
+    name = "jenkins-fuchicorp-deployment"
 
     namespace = "${var.namespace}"
 
@@ -34,7 +34,7 @@ resource "kubernetes_deployment" "jenkins_fuchicorp_deployment" {
 
         container {
 
-          image = "fsadykov/centos_jenkins:0.3"
+          image = "fsadykov/centos_jenkins:kube"
           name  = "jenkins"
 
           volume_mount {

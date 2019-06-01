@@ -9,13 +9,6 @@ metadata:
 spec:
   rules:
 
-  - host: fuchicorp.com
-    http:
-      paths:
-      - backend:
-          serviceName: wordpress-tools
-          servicePort: {{ .Values.wordpressport }}
-
   - host: grafana.fuchicorp.com
     http:
       paths:
@@ -49,5 +42,4 @@ spec:
     - nexus.fuchicorp.com
     - grafana.fuchicorp.com
     - jenkins.fuchicorp.com
-    - fuchicorp.com
     secretName: tls-prod-cert
