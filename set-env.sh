@@ -49,8 +49,9 @@ terraform {
 }
 EOF
 
-echo "${GOOGLE_APPLICATION_CREDENTIALS}"
+
 GOOGLE_APPLICATION_CREDENTIALS="${CREDENTIALS}"
+echo "${GOOGLE_APPLICATION_CREDENTIALS}"
 
 echo "setenv: Initializing terraform"
 terraform init #> /dev/null
