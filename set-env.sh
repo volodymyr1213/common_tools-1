@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 DIR=$(pwd)
 DATAFILE="$DIR/$1"
@@ -51,6 +51,10 @@ EOF
 
 
 GOOGLE_APPLICATION_CREDENTIALS="${DIR}/${CREDENTIALS}"
-echo "${GOOGLE_APPLICATION_CREDENTIALS}"
+
+export GOOGLE_APPLICATION_CREDENTIALS
+export DATAFILE
+rm -rf "$DIR/.terraform"
+
 echo "setenv: Initializing terraform"
 terraform init #> /dev/null
