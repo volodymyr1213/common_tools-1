@@ -32,7 +32,7 @@ resource "kubernetes_deployment" "grafana_fuchicorp_deployment" {
 
         container {
           name  = "grafana-fuchicorp-deployment"
-          image = "grafana/grafana:4.2.0"
+          image = "grafana/grafana:v6.2.1"
 
           port {
             container_port = 3000
