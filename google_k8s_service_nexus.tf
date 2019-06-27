@@ -15,7 +15,7 @@ resource "kubernetes_persistent_volume_claim" "nexus_pvc" {
 
     resources {
       requests {
-        storage = "20Gi"
+        storage = "30Gi"
       }
     }
 
