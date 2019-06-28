@@ -34,7 +34,7 @@ resource "kubernetes_deployment" "jenkins_fuchicorp_deployment" {
 
         container {
 
-          image = "fsadykov/centos_jenkins:kube"
+          image = "fuchicorp/centos_jenkins:kube"
           name  = "jenkins"
 
           env {
