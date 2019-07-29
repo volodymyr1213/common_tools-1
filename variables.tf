@@ -60,3 +60,7 @@ variable "repo_port" {
 variable "email" {
   default = "fuchicorpsolutions@gmail.com"
 }
+
+variable "project" {
+  default = "fuchicorp-project"
+}
