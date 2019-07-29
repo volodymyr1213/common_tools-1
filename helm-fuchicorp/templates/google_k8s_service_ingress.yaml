@@ -5,6 +5,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     certmanager.k8s.io/cluster-issuer: letsencrypt-fuchicorp-prod
+    certmanager.k8s.io/acme-http01-edit-in-place: "true"
 
 spec:
   rules:
