@@ -1,0 +1,31 @@
+{{- $serviceName := include "jenkins.fullname" . -}}
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ template "jenkins.fullname" . }}-pod-cleanup
+  labels:
+    app: {{ template "jenkins.name" . }}-pod-cleanup
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+spec:
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 10
+  schedule: "{{ .Values.CronSchedule }}"
+  startingDeadlineSeconds: 300 #5 minutes
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: {{ $serviceName }}
+          restartPolicy: Never
+          containers:
+          - name: {{ template "jenkins.fullname" . }}-pod-cleanup-container
+            image: "{{ .Values.ToolsImage }}"
+            imagePullPolicy: "IfNotPresent"
+            command:
+            - "/bin/bash"
+            - "-ec"
+            - |
+               kubectl get pods -n jenkins | grep Error | cut -d' ' -f 1 | xargs kubectl delete pod -n jenkins

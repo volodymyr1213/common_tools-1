@@ -1,0 +1,38 @@
+{{- $serviceName := include "jenkins.fullname" . -}}
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ template "jenkins.fullname" . }}-label-node
+  labels:
+    app: {{ template "jenkins.name" . }}-label-node
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+spec:
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 10
+  schedule: "{{ .Values.CronSchedule }}"
+  startingDeadlineSeconds: 300 #5 minutes
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: {{ $serviceName }}
+          restartPolicy: Never
+          containers:
+          - name: {{ template "jenkins.fullname" . }}-label-node-container
+            image: "{{ .Values.ToolsImage }}"
+            imagePullPolicy: "IfNotPresent"
+
+            # This command removes "jenkinsPreferred=true" label from all nodes, and then adds it
+            # to the one that is currently running Jenkins. (only if Jenkins is running)
+            command:
+            - "/bin/bash"
+            - "-ec"
+            - |
+               NODE=$(kubectl get pod --selector=app=jenkins -n jenkins -o go-template --template '{{ "{{" }}range .items{{ "}}" }}{{ "{{" }}.spec.nodeName{{ "}}" }}{{ "{{" }}"\n"{{ "}}" }}{{ "{{" }}end{{ "}}" }}')
+               if [[ ! -z "$NODE" ]]; then
+                 kubectl get nodes --selector=jenkinsPreferred=true -o go-template --template '{{ "{{" }}range .items{{ "}}" }}{{ "{{" }}.metadata.name{{ "}}" }}{{ "{{" }}"\n"{{ "}}" }}{{ "{{" }}end{{ "}}" }}' |xargs -r -n 1 -I "{{ "{}" }}"  kubectl label nodes {{ "{}" }} jenkinsPreferred-
+                 kubectl label nodes $NODE jenkinsPreferred=true
+               fi

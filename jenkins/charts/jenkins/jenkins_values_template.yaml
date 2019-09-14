@@ -1,0 +1,617 @@
+# Default values for jenkins.
+# This is a YAML-formatted file.
+# Declare name/value pairs to be passed into your templates.
+# name: value
+
+## Overrides for generated resource names
+# See templates/_helpers.tpl
+# nameOverride:
+# fullnameOverride:
+
+#Common
+
+ToolsImage: "${vet_tools_image}"
+CronSchedule: "*/30 * * * *"
+
+Master:
+  Name: jenkins-master
+  Image: "jenkins/jenkins"
+  ImageTag: "lts"
+  ImagePullPolicy: "Always"
+# ImagePullSecret: jenkins
+  Component: "jenkins-master"
+  UseSecurity: true
+  AdminUser: '${jenkins_user}'
+  AdminPassword: '${jenkins_pass}'
+  Cpu: "2"
+  Memory: "18G"
+  CpuLimit: "4"
+  MemoryLimit: "18G"
+  Affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 1
+        preference:
+          matchExpressions:
+          - key: jenkinsPreferred
+            operator: In
+            values:
+            - "true"
+
+  # Environment variables that get added to the init container (useful for e.g. http_proxy)
+  # InitContainerEnv:
+  #   - name: http_proxy
+  #     value: "http://192.168.64.1:3128"
+  # ContainerEnv:
+  #   - name: http_proxy
+  #     value: "http://192.168.64.1:3128"
+  # Set min/max heap here if needed with:
+  JavaOpts: "-Xms8g -Xmx16g -Xloggc:/var/jenkins_home/gc-%t.log -XX:NumberOfGCLogFiles=5 -XX:+UseGCLogFileRotation -XX:GCLogFileSize=5m -XX:+PrintGC -XX:+PrintGCDateStamps -XX:+PrintGCDetails -XX:+PrintHeapAtGC -XX:+PrintGCCause -XX:+PrintTenuringDistribution -XX:+PrintReferenceGC -XX:+PrintAdaptiveSizePolicy -XX:+UseG1GC -XX:+ExplicitGCInvokesConcurrent -XX:+ParallelRefProcEnabled -XX:+UseStringDeduplication -XX:+UnlockExperimentalVMOptions -XX:G1NewSizePercent=20 -XX:+UnlockDiagnosticVMOptions -XX:G1SummarizeRSetStatsPeriod=1 -XX:NativeMemoryTracking=detail -Djenkins.model.Jenkins.logStartupPerformance=true ${java_agent_opt}"
+  # JenkinsOpts: ""
+  # JenkinsUriPrefix: "/jenkins"
+  # Set RunAsUser to 1000 to let Jenkins run as non-root user 'jenkins' which exists in 'jenkins/jenkins' docker image.
+  # When setting RunAsUser to a different value than 0 also set FsGroup to the same value:
+  # RunAsUser: <defaults to 0>
+  # FsGroup: <will be omitted in deployment if RunAsUser is 0>
+  ServicePort: 443
+  # For minikube, set this to NodePort, elsewhere use LoadBalancer
+  # Use ClusterIP if your setup includes ingress controller
+  ServiceType: ClusterIP
+  # Master Service annotations
+  ServiceAnnotations:
+    # service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+    nginx.ingress.kubernetes.io/secure-backends: "true"
+    # service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: '${tags}'
+    # service.beta.kubernetes.io/aws-load-balancer-backend-protocol: 'http'
+    # service.beta.kubernetes.io/aws-load-balancer-ssl-cert: '\$\{ssl_arn\}'
+    # service.beta.kubernetes.io/aws-load-balancer-internal: '0.0.0.0/0'
+  #   service.beta.kubernetes.io/aws-load-balancer-backend-protocol: https
+  # Used to create Ingress record (should used with ServiceType: ClusterIP)
+  HostName: jenkins.${clusterSubDomain}
+  HostNameAlias: builder.${clusterSubDomain}
+  ClusterSubDomain: ${clusterSubDomain}
+  # NodePort: <to set explicitly, choose port between 30000-32767
+  ContainerPort: 8080
+  # Enable Kubernetes Liveness and Readiness Probes
+  HealthProbes: true
+  HealthProbesTimeout: 180
+  HealthProbeLivenessFailureThreshold: 12
+  SlaveListenerPort: 50000
+  DisabledAgentProtocols:
+    - JNLP-connect
+    - JNLP2-connect
+  CSRF:
+    DefaultCrumbIssuer:
+      Enabled: true
+      ProxyCompatability: true
+  CLI: false
+  # Kubernetes service type for the JNLP slave service
+  # SETTING THIS TO "LoadBalancer" IS A HUGE SECURITY RISK: https://github.com/kubernetes/charts/issues/1341
+  SlaveListenerServiceType: ClusterIP
+  SlaveListenerServiceAnnotations: {}
+  LoadBalancerSourceRanges:
+  - 0.0.0.0/0
+  # Optionally assign a known public LB IP
+  # LoadBalancerIP: 1.2.3.4
+  # Optionally configure a JMX port
+  # requires additional JavaOpts, ie
+  # JavaOpts: >
+  #   -Dcom.sun.management.jmxremote.port=4000
+  #   -Dcom.sun.management.jmxremote.authenticate=false
+  #   -Dcom.sun.management.jmxremote.ssl=false
+  # JMXPort: 4000
+  # Jenkins Global Environment Variables to be created during Jenkins master initial setup
+  GlobalEnvVariables:
+    - name: artifactory_host_url
+      value: "https://artifactrepository.mcd.com/artifactory"
+    - name: git_server_host
+      value: "coderepository.mcd.com"
+    - name: sonar_host_url
+      value: "https://sonarqube.sharedtools.vet-tools.digitalecp.mcd.com"
+  # List of plugins to be install during Jenkins master start
+  InstallPlugins:
+    - ace-editor:1.1
+    - analysis-core:1.95
+    - ansicolor:0.5.2
+    - ant:1.8
+    - antisamy-markup-formatter:1.5
+    - apache-httpcomponents-client-4-api:4.5.5-2.1
+    - artifactory:3.2.4
+    - authentication-tokens:1.3
+    - authorize-project:1.3.0
+    - aws-java-sdk:1.11.329
+    - badge:1.8
+    - bitbucket:1.1.8
+    - blueocean:1.5.0
+    - blueocean-autofavorite:1.2.2
+    - blueocean-bitbucket-pipeline:1.5.0
+    - blueocean-commons:1.5.0
+    - blueocean-config:1.5.0
+    - blueocean-core-js:1.5.0
+    - blueocean-dashboard:1.5.0
+    - blueocean-display-url:2.2.0
+    - blueocean-events:1.5.0
+    - blueocean-git-pipeline:1.5.0
+    - blueocean-github-pipeline:1.5.0
+    - blueocean-i18n:1.5.0
+    - blueocean-jira:1.5.0
+    - blueocean-jwt:1.5.0
+    - blueocean-personalization:1.5.0
+    - blueocean-pipeline-api-impl:1.5.0
+    - blueocean-pipeline-editor:1.5.0
+    - blueocean-pipeline-scm-api:1.5.0
+    - blueocean-rest-impl:1.5.0
+    - blueocean-rest:1.5.0
+    - blueocean-web:1.5.0
+    - bouncycastle-api:2.16.3
+    - branch-api:2.0.20
+    - build-name-setter:1.6.9
+    - build-pipeline-plugin:1.5.8
+    - build-timeout:1.19
+    - build-user-vars-plugin:1.5
+    - built-on-column:1.1
+    - cloudbees-bitbucket-branch-source:2.2.11
+    - cloudbees-folder:6.4
+    - command-launcher:1.2
+    - conditional-buildstep:1.3.6
+    - config-file-provider:2.18
+    - credentials-binding:1.16
+    - credentials:2.2.0
+    - cucumber-reports:3.17.0
+    - dashboard-view:2.9.11
+    - display-url-api:2.2.0
+    - docker-commons:1.13
+    - docker-workflow:1.17
+    - durable-task:1.22
+    - email-ext:2.66
+    - envinject-api:1.5
+    - envinject:2.1.5
+    - extended-choice-parameter:0.76
+    - extensible-choice-parameter:1.6.0
+    - external-monitor-job:1.7
+    - favorite:2.3.2
+    - file-operations:1.7
+    - generic-webhook-trigger:1.32
+    - ghprb:1.41.0
+    - git:3.9.1
+    - git-client:2.7.2
+    - git-parameter:0.9.2
+    - git-server:1.7
+    - github-api:1.95
+    - github-branch-source:2.5.3
+    - github-organization-folder:1.6
+    - github:1.29.4
+    - gradle:1.28
+    - greenballs:1.15
+    - groovy-postbuild:2.4.1
+    - groovy:2.0
+    - handlebars:1.1.1
+    - handy-uri-templates-2-api:2.1.6-1.0
+    - hidden-parameter:0.0.4
+    - hockeyapp:1.3.3
+    - htmlpublisher:1.16
+    - icon-shim:2.0.3
+    - ivy:1.28
+    - jackson2-api:2.8.11.2
+    - javadoc:1.4
+    - jdk-tool:1.1
+    - jenkins-design-language:1.5.0
+    - jenkins-multijob-plugin:1.30
+    - jira:3.0.7
+    - job-dsl:1.69
+    - jquery-detached:1.2.1
+    - jquery:1.12.4-0
+    - jsch:0.1.54.2
+    - junit:1.28
+    - kubernetes:1.12.4
+    - kubernetes-credentials:0.3.1
+    - kubernetes-pipeline-devops-steps:1.5
+    - kubernetes-pipeline-steps:1.5
+    - ldap:1.20
+    - mailer:1.21
+    - mapdb-api:1.0.9.0
+    - mask-passwords:2.12.0
+    - matrix-auth:2.2
+    - matrix-project:1.13
+    - maven-plugin:3.1.2
+    - mercurial:2.3
+    - metrics:3.1.2.12
+    - momentjs:1.1.1
+    - mstest:0.23
+    - nuget:0.7
+    - pam-auth:1.3
+    - parameter-separator:1.0
+    - parameterized-scheduler:0.6.3
+    - parameterized-trigger:2.35.2
+    - performance:3.10
+    - pipeline-build-step:2.7
+    - pipeline-github-lib:1.0
+    - pipeline-graph-analysis:1.6
+    - pipeline-input-step:2.8
+    - pipeline-milestone-step:1.3.1
+    - pipeline-model-api:1.3.2
+    - pipeline-model-declarative-agent:1.1.1
+    - pipeline-model-definition:1.3.2
+    - pipeline-model-extensions:1.3.2
+    - pipeline-rest-api:2.10
+    - pipeline-stage-step:2.3
+    - pipeline-stage-tags-metadata:1.3.2
+    - pipeline-stage-view:2.10
+    - pipeline-utility-steps:2.1.0
+    - plain-credentials:1.4
+    - publish-over-ssh:1.19.1
+    - publish-over:0.22
+    - pubsub-light:1.12
+    - rebuild:1.31
+    - resource-disposer:0.12
+    - role-strategy:2.8.1
+    - run-condition:1.0
+    - scm-api:2.2.7
+    - script-security:1.44
+    - sse-gateway:1.15
+    - ssh-agent:1.17
+    - ssh-credentials:1.16
+    - ssh-slaves:1.26
+    - ssh:2.6.1
+    - sonar-quality-gates:1.3.1
+    - sonar:2.8.1
+    - structs:1.14
+    - subversion:2.10.6
+    - timestamper:1.8.10
+    - token-macro:2.7
+    - uno-choice:2.1
+    - validating-string-parameter:2.4
+    - variant:1.1
+    - warnings:4.67
+    - windows-slaves:1.3.1
+    - workflow-aggregator:2.5
+    - workflow-api:2.27
+    - workflow-basic-steps:2.7
+    - workflow-cps-global-lib:2.9
+    - workflow-cps:2.49
+    - workflow-durable-task-step:2.19
+    - workflow-job:2.20
+    - workflow-multibranch:2.18
+    - workflow-remote-loader:1.4
+    - workflow-scm-step:2.6
+    - workflow-step-api:2.16
+    - workflow-support:2.18
+    - ws-cleanup:0.34
+    - xunit:2.0.0
+    - log-parser:2.1
+    - logfilesizechecker:1.642.3
+  # Used to approve a list of groovy functions in pipelines used the script-security plugin. Can be viewed under /scriptApproval
+  ScriptApproval:
+    - "method hudson.model.Saveable save"
+    - "method com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy addRole java.lang.String com.michelin.cio.hudson.plugins.rolestrategy.Role"
+    - "staticMethod hudson.model.Hudson getInstance"
+    - "method jenkins.model.Jenkins getAuthorizationStrategy"
+    - "method java.lang.Class isInstance java.lang.Object"
+    - "method java.lang.Class getConstructors"
+    - "method java.lang.reflect.AccessibleObject setAccessible boolean"
+    - "method java.lang.Class getDeclaredMethod java.lang.String java.lang.Class[]"
+    - "staticMethod hudson.security.Permission fromId java.lang.String"
+    - "new com.michelin.cio.hudson.plugins.rolestrategy.Role java.lang.String java.lang.String java.util.Set"
+    - "staticField com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy PROJECT"
+    - "method com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy addRole"
+    - "method com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy assignRole java.lang.String com.michelin.cio.hudson.plugins.rolestrategy.Role java.lang.String"
+    - "new com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy"
+    - "method jenkins.model.Jenkins setAuthorizationStrategy hudson.security.AuthorizationStrategy"
+    - "staticMethod org.codehaus.groovy.runtime.EncodingGroovyMethods decodeBase64 java.lang.String"
+    - "method io.fabric8.kubernetes.api.model.KubernetesResourceList getItems"
+    - "method hudson.plugins.git.UserRemoteConfig getUrl"
+    - "method io.fabric8.kubernetes.client.dsl.KubernetesDSL nodes"
+    - "method io.fabric8.kubernetes.client.dsl.Listable list"
+    - "method groovy.json.JsonSlurper parse java.io.Reader"
+    - "method groovy.json.JsonSlurperClassic parse java.io.Reader"
+    - "method groovy.lang.GString plus java.lang.String"
+    - "method groovy.lang.GroovyObject getProperty java.lang.String"
+    - "method io.fabric8.kubernetes.client.Client isAdaptable java.lang.Class"
+    - "method groovy.lang.GroovyObject invokeMethod java.lang.String java.lang.Object"
+    - "method groovy.util.ConfigSlurper parse java.net.URL"
+    - "method groovy.util.ConfigSlurper parse java.util.Properties"
+    - "method groovy.util.XmlSlurper parse java.lang.String"
+    - "method groovy.util.XmlSlurper parseText java.lang.String"
+    - "method groovy.util.slurpersupport.GPathResult text"
+    - "method groovy.xml.DOMBuilder parseText java.lang.String"
+    - "method hudson.model.ItemGroup getItem java.lang.String"
+    - "method io.fabric8.kubernetes.client.Client getNamespace"
+    - "method io.fabric8.kubernetes.client.KubernetesClient nodes"
+    - "method io.fabric8.kubernetes.client.KubernetesClient services"
+    - "method java.io.File toURL"
+    - "method java.io.File newOutputStream"
+    - "method java.io.File close"
+    - "method java.io.File exists"
+    - "method java.io.Flushable flush"
+    - "method java.io.Writer write java.lang.String"
+    - "method java.lang.AutoCloseable close"
+    - "method java.lang.Object getClass"
+    - "method java.lang.String isEmpty"
+    - "method java.lang.String replaceAll java.lang.String java.lang.String"
+    - "method java.lang.String substring int"
+    - "method java.lang.Throwable printStackTrace"
+    - "method java.net.HttpURLConnection disconnect"
+    - "method java.net.HttpURLConnection setRequestMethod java.lang.String"
+    - "method java.net.URL openConnection"
+    - "method java.net.URL openStream"
+    - "method java.net.URLConnection connect"
+    - "method java.net.URLConnection getInputStream"
+    - "method java.net.URLConnection getOutputStream"
+    - "method java.net.URLConnection setDoInput boolean"
+    - "method org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildRecorder$BadgeManager getBuild"
+    - "method java.util.Properties load java.io.InputStream"
+    - "method org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildRecorder$BadgeManager getListener"
+    - "method java.util.regex.Matcher group java.lang.String"
+    - "method hudson.model.Run getCause java.lang.Class"
+    - "method hudson.model.Run getResult"
+    - "method java.util.regex.Matcher matches"
+    - "method hudson.model.TaskListener getLogger"
+    - "method java.io.PrintStream println java.lang.String"
+    - "method java.net.URLConnection setDoOutput boolean"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods putAt java.lang.Object java.lang.String java.lang.Object"
+    - "method hudson.plugins.git.GitSCM getUserRemoteConfigs"
+    - "new io.fabric8.kubernetes.client.DefaultKubernetesClient"
+    - "method java.net.URLConnection setRequestProperty java.lang.String java.lang.String"
+    - "method org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper getRawBuild"
+    - "method org.jenkinsci.plugins.workflow.job.WorkflowRun getChangeSets"
+    - "method hudson.model.Cause$UserIdCause getUserId"
+    - "staticMethod hudson.model.User get org.acegisecurity.Authentication"
+    - "method org.w3c.dom.Document getDocumentElement"
+    - "method org.w3c.dom.Document getElementsByTagName java.lang.String"
+    - "method org.w3c.dom.Element getElementsByTagName java.lang.String"
+    - "method org.w3c.dom.Node getChildNodes"
+    - "method org.w3c.dom.Node getNodeName"
+    - "method org.w3c.dom.Node getTextContent"
+    - "method org.w3c.dom.Node setTextContent java.lang.String"
+    - "method org.w3c.dom.NodeList getLength"
+    - "method org.w3c.dom.NodeList item int"
+    - "method io.fabric8.openshift.client.OpenShiftClient imageStreams"
+    - "method io.fabric8.kubernetes.client.dsl.Nameable withName java.lang.String"
+    - "method io.fabric8.kubernetes.client.dsl.Gettable get"
+    - "method io.fabric8.openshift.api.model.ImageStream getStatus"
+    - "method io.fabric8.openshift.api.model.ImageStreamStatus getTags"
+    - "method io.fabric8.openshift.api.model.NamedTagEventList getItems"
+    - "method io.fabric8.openshift.api.model.TagEvent getImage"
+    - "method se.bjurr.gitchangelog.api.GitChangelogApi withFromRepo java.lang.String"
+    - "method se.bjurr.gitchangelog.api.GitChangelogApi withTemplateContent java.lang.String"
+    - "new groovy.json.JsonSlurper"
+    - "new groovy.json.JsonSlurperClassic"
+    - "new groovy.util.ConfigSlurper"
+    - "new groovy.util.XmlSlurper"
+    - "new java.io.File java.lang.String"
+    - "new java.io.FileInputStream java.io.File"
+    - "new java.io.InputStreamReader java.io.InputStream"
+    - "new java.io.InputStreamReader java.io.InputStream java.lang.String"
+    - "new java.io.OutputStreamWriter java.io.OutputStream"
+    - "new java.lang.String java.lang.String"
+    - "new java.util.Properties"
+    - "new hudson.triggers.SCMTrigger java.lang.String"
+    - "method org.jenkinsci.plugins.workflow.job.WorkflowJob addTrigger hudson.triggers.Trigger"
+    - "staticField groovy.io.FileType FILES"
+    - "staticMethod groovy.grape.Grape grab java.util.Map java.util.Map[]"
+    - "staticMethod groovy.xml.DOMBuilder newInstance"
+    - "staticMethod groovy.xml.XmlUtil serialize org.w3c.dom.Element"
+    - "staticMethod java.lang.System getenv"
+    - "method jenkins.model.Jenkins createProject java.lang.Class java.lang.String"
+    - "method hudson.model.ViewGroup getView java.lang.String"
+    - "new hudson.model.ListView java.lang.String hudson.model.ViewGroup"
+    - "method hudson.model.ModifiableViewGroup addView hudson.model.View"
+    - "method hudson.model.ListView setRecurse boolean"
+    - "staticMethod hudson.views.ListViewColumn createDefaultInitialColumnList hudson.model.View"
+    - "method hudson.model.ListView setColumns java.util.List"
+    - "method hudson.model.ListView setIncludeRegex java.lang.String"
+    - "new java.lang.String byte[]"
+    - "staticMethod java.util.UUID randomUUID"
+    - "staticMethod org.apache.commons.lang.RandomStringUtils randomAlphanumeric int"
+    - "staticMethod jenkins.model.Jenkins getInstance"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods get java.util.Map java.lang.Object java.lang.Object"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods each java.lang.Object groovy.lang.Closure"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods eachDirRecurse java.io.File groovy.lang.Closure"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods eachFile java.io.File groovy.lang.Closure"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods eachFileMatch java.io.File java.lang.Object groovy.lang.Closure"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods eachFileRecurse java.io.File groovy.io.FileType groovy.lang.Closure"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods eachFileRecurse java.io.File groovy.lang.Closure"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods withInputStream java.io.File groovy.lang.Closure"
+    - "staticMethod org.codehaus.groovy.runtime.ScriptBytecodeAdapter bitwiseNegate java.lang.Object"
+    - "staticMethod io.fabric8.kubernetes.client.Adapters get java.lang.Class"
+    - "staticMethod io.fabric8.utils.Strings isNotBlank java.lang.String"
+    - "staticMethod io.fabric8.kubernetes.api.KubernetesHelper getServiceURL io.fabric8.kubernetes.client.KubernetesClient java.lang.String java.lang.String java.lang.String boolean"
+    - "new io.fabric8.openshift.client.DefaultOpenShiftClient"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods eachLine java.io.File groovy.lang.Closure"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods eachLine java.lang.String groovy.lang.Closure"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods eachWithIndex java.lang.Object groovy.lang.Closure"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods get java.util.Map java.lang.Object java.lang.Object"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods getCount java.util.regex.Matcher"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods getText java.net.URL"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods getText java.io.File java.lang.String"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods invokeMethod java.lang.Object java.lang.String java.lang.Object"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods isNumber java.lang.String"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods leftShift java.util.Collection java.lang.Object"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods minus java.lang.String java.lang.Object"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods newReader java.net.URL"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods println groovy.lang.Closure java.lang.Object"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods size java.lang.Object[]"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods take java.lang.CharSequence int"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods toInteger java.lang.String"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods use java.lang.Object java.lang.Class groovy.lang.Closure"
+    - "staticMethod org.codehaus.groovy.runtime.ScriptBytecodeAdapter compareGreaterThan java.lang.Object java.lang.Object"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods leftShift java.io.OutputStream java.lang.Object"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods leftShift java.io.OutputStream java.io.InputStream"
+    - "staticMethod java.lang.Thread sleep long"
+    - "staticMethod se.bjurr.gitchangelog.api.GitChangelogApi gitChangelogApiBuilder"
+    - "method jenkins.model.Jenkins getCloud java.lang.String"
+    - "method io.fabric8.kubernetes.client.KubernetesClient namespaces"
+    - "method io.fabric8.kubernetes.client.Client adapt java.lang.Class"
+    - "method io.fabric8.openshift.client.OpenShiftClient projects"
+    - "method io.fabric8.kubernetes.api.model.ObjectMeta getName"
+    - "method io.fabric8.openshift.client.OpenShiftClient projectrequests"
+    - "method io.fabric8.kubernetes.client.dsl.Createable createNew"
+    - "method io.fabric8.openshift.api.model.ProjectRequestFluent withNewMetadata"
+    - "method io.fabric8.kubernetes.api.model.ObjectMetaFluent withName java.lang.String"
+    - "method io.fabric8.openshift.api.model.ProjectRequestFluent$MetadataNested endMetadata"
+    - "method io.fabric8.openshift.api.model.ProjectRequestFluent withDisplayName java.lang.String"
+    - "method io.fabric8.openshift.api.model.Route getSpec"
+    - "method io.fabric8.openshift.client.OpenShiftClient builds"
+    - "method io.fabric8.kubernetes.client.dsl.Editable edit"
+    - "method io.fabric8.openshift.api.model.BuildFluent editMetadata"
+    - "method io.fabric8.kubernetes.api.model.ObjectMetaFluent addToAnnotations java.lang.String java.lang.String"
+    - "method io.fabric8.openshift.api.model.BuildFluent$MetadataNested endMetadata"
+    - "field hudson.plugins.git.GitSCM branches"
+    - "field org.jenkinsci.plugins.workflow.job.WorkflowJob authToken"
+    - "method jenkins.model.Jenkins reload"
+    - "method org.jenkinsci.plugins.workflow.job.WorkflowJob setDefinition org.jenkinsci.plugins.workflow.flow.FlowDefinition"
+    - "new hudson.plugins.git.BranchSpec java.lang.String"
+    - "new hudson.plugins.git.GitSCM java.lang.String"
+    - "new org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition java.lang.String boolean"
+    - "new org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition hudson.scm.SCM java.lang.String"
+    - "new org.jenkinsci.plugins.workflow.job.WorkflowJob hudson.model.ItemGroup java.lang.String"
+    - "new hudson.model.BuildAuthorizationToken java.lang.String"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods toURL java.lang.String"
+    - "method hudson.model.Job getBuilds"
+    - "method hudson.model.Run getNumber"
+    - "new hudson.model.BooleanParameterDefinition java.lang.String boolean java.lang.String"
+    - "new hudson.model.ParametersDefinitionProperty java.util.List"
+    - "method hudson.model.Actionable addAction hudson.model.Action"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods take java.util.List int"
+    - "method hudson.security.HudsonPrivateSecurityRealm getAllUsers"
+    - "new hudson.security.HudsonPrivateSecurityRealm boolean"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods flatten java.util.List"
+    - "field hudson.model.View name"
+    - "method com.cloudbees.plugins.credentials.common.PasswordCredentials getPassword"
+    - "method com.cloudbees.plugins.credentials.common.UsernameCredentials getUsername"
+    - "method groovy.lang.GString getBytes"
+    - "method groovy.lang.Script println java.lang.Object"
+    - "method hudson.model.Cause$UserIdCause getUserId"
+    - "method hudson.model.Item getName"
+    - "method hudson.model.Job _getRuns"
+    - "method hudson.model.Job getAllProperties"
+    - "method hudson.model.Job getLastSuccessfulBuild"
+    - "method hudson.model.Queue$Task getSubTasks"
+    - "method hudson.model.View getItems"
+    - "method hudson.model.ViewGroup getViews"
+    - "method hudson.plugins.git.GitSCM getBranches"
+    - "method hudson.plugins.git.UserRemoteConfig getRefspec"
+    - "method io.fabric8.openshift.api.model.BuildFluent$MetadataNested endMetadata"
+    - "method io.fabric8.openshift.api.model.ProjectRequestFluent$MetadataNested endMetadata"
+    - "method java.lang.Throwable getCause"
+    - "method java.net.HttpURLConnection getErrorStream"
+    - "method jenkins.triggers.SCMTriggerItem getSCMs"
+    - "method org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition getScm"
+    - "method org.jenkinsci.plugins.workflow.job.WorkflowJob getDefinition"
+    - "method org.jenkinsci.plugins.workflow.job.WorkflowJob getTypicalSCM"
+    - "method org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildRecorder$BadgeManager getBuild"
+    - "method org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildRecorder$BadgeManager getListener"
+    - "method org.yaml.snakeyaml.Yaml load java.lang.String"
+    - "new hudson.model.BooleanParameterValue java.lang.String boolean java.lang.String"
+    - "new hudson.model.ParametersAction java.util.List"
+    - "new org.apache.commons.lang.builder.ReflectionToStringBuilder java.lang.Object"
+    - "new org.jenkinsci.plugins.workflow.job.WorkflowRun org.jenkinsci.plugins.workflow.job.WorkflowJob"
+    - "new org.yaml.snakeyaml.Yaml"
+    - "staticMethod com.cloudbees.plugins.credentials.CredentialsProvider findCredentialById java.lang.String java.lang.Class hudson.model.Run com.cloudbees.plugins.credentials.domains.DomainRequirement[]"
+    - "staticMethod hudson.util.Secret toString hudson.util.Secret"
+    - "staticMethod javax.xml.bind.DatatypeConverter printBase64Binary byte[]"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods getAt java.lang.Iterable int"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods getAt java.lang.Object java.lang.String"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods getText java.io.InputStream"
+# List of groovy init scripts to be executed during Jenkins master start
+  InitScripts:
+  #  - |
+  #    print 'adding global pipeline libraries, register properties, bootstrap jobs...'
+  # Kubernetes secret that contains a 'credentials.xml' for Jenkins
+  # CredentialsXmlSecret: jenkins-credentials
+  # Kubernetes secret that contains files to be put in the Jenkins 'secrets' directory,
+  # useful to manage encryption keys used for credentials.xml for instance (such as
+  # master.key and hudson.util.Secret)
+  # SecretsFilesSecret: jenkins-secrets
+  # Jenkins XML job configs to provision
+  # Jobs: |-
+  #   test: |-
+  #     <<xml here>>
+  CustomConfigMap: false
+  # Node labels and tolerations for pod assignment
+  # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
+  # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#taints-and-tolerations-beta-feature
+  NodeSelector: {}
+  Tolerations: {}
+  Ingress:
+    ApiVersion: extensions/v1beta1
+    Annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/enable-cors: "true"
+    # kubernetes.io/tls-acme: "true"
+    TLS:
+    - hosts:
+      - builder.ingress.${clusterSubDomain}
+      - builder.${clusterSubDomain}
+Agent:
+  Enabled: true
+  Image: jenkins/jnlp-slave
+  ImageTag: 3.27-1
+# ImagePullSecret: jenkins
+  Component: "jenkins-slave"
+  Privileged: false
+  Cpu: "200m"
+  Memory: "512Mi"
+  # You may want to change this to true while testing a new image
+  AlwaysPullImage: false
+  # You can define the volumes that you want to mount for this container
+  # Allowed types are: ConfigMap, EmptyDir, HostPath, Nfs, Pod, Secret
+  # Configure the attributes as they appear in the corresponding Java class for that type
+  # https://github.com/jenkinsci/kubernetes-plugin/tree/master/src/main/java/org/csanchez/jenkins/plugins/kubernetes/volumes
+  volumes:
+  # - type: Secret
+  #   secretName: mysecret
+  #   mountPath: /var/myapp/mysecret
+  NodeSelector: {}
+  # Key Value selectors. Ex:
+  # jenkins-agent: v1
+
+Persistence:
+  Enabled: true
+  ## A manually managed Persistent Volume and Claim
+  ## Requires Persistence.Enabled: true
+  ## If defined, PVC must be created manually before volume will be bound
+  # ExistingClaim: jenkins2
+  ${existing_pvc}
+
+  ## jenkins data Persistent Volume Storage Class
+  ## If defined, storageClassName: <storageClass>
+  ## If set to "-", storageClassName: "", which disables dynamic provisioning
+  ## If undefined (the default) or set to null, no storageClassName spec is
+  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+  ##   GKE, AWS & OpenStack)
+  ##
+  # StorageClass: "-"
+
+  # No inode limits with btrfs
+  StorageClass: "gp2btrfs"
+  Annotations: {}
+  AccessMode: ReadWriteOnce
+  Size: 100Gi
+  volumes:
+  #  - name: nothing
+  #    emptyDir: {}
+  mounts:
+  #  - mountPath: /var/nothing
+  #    name: nothing
+  #    readOnly: true
+
+NetworkPolicy:
+  # Enable creation of NetworkPolicy resources.
+  Enabled: false
+  # For Kubernetes v1.4, v1.5 and v1.6, use 'extensions/v1beta1'
+  # For Kubernetes v1.7, use 'networking.k8s.io/v1'
+  ApiVersion: extensions/v1beta1
+
+## Install Default RBAC roles and bindings
+rbac:
+  install: true
+  serviceAccountName: default
+  # RBAC api version (currently either v1beta1 or v1alpha1)
+  apiVersion: v1beta1
+  # Cluster role reference
+  roleRef: cluster-admin
+NewRelic:
+  LicenseKey: "${newrelic_license}"
