@@ -20,8 +20,8 @@ Master:
 # ImagePullSecret: jenkins
   Component: "jenkins-master"
   UseSecurity: true
-  AdminUser: '${jenkins_user}'
-  AdminPassword: '${jenkins_pass}'
+  AdminUser: 'admin'
+  AdminPassword: 'B1JsVZtr4rvJfmnnafqRjTEKLsT'
   Cpu: "1"
   Memory: "1G"
   CpuLimit: "2"
@@ -66,9 +66,9 @@ Master:
     # service.beta.kubernetes.io/aws-load-balancer-internal: '0.0.0.0/0'
   #   service.beta.kubernetes.io/aws-load-balancer-backend-protocol: https
   # Used to create Ingress record (should used with ServiceType: ClusterIP)
-  HostName: jenkins.${clusterSubDomain}
-  HostNameAlias: builder.${clusterSubDomain}
-  ClusterSubDomain: ${clusterSubDomain}
+  HostName: jenkins.fuchicorp.com
+  HostNameAlias: builder.fuchicorp.com
+  ClusterSubDomain: fuchicorp.com
   # NodePort: <to set explicitly, choose port between 30000-32767
   ContainerPort: 8080
   # Enable Kubernetes Liveness and Readiness Probes
@@ -508,8 +508,8 @@ Master:
     # kubernetes.io/tls-acme: "true"
     TLS:
     - hosts:
-      - builder.ingress.${clusterSubDomain}
-      - builder.${clusterSubDomain}
+      - builder.ingress.fuchicorp.com
+      - builder.fuchicorp.com
 Agent:
   Enabled: true
   Image: jenkins/jnlp-slave
