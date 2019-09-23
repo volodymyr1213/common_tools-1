@@ -30,8 +30,7 @@ resource "null_resource" "jenkins_destroy" {
     when = "destroy"
 
     command = <<EOF
-      echo 'helm delete --dry-run --purge jenkins '
-      true
+      helm delete --purge jenkins
     EOF
   }
 }
