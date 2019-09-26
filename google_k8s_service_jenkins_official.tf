@@ -21,7 +21,7 @@ resource "null_resource" "jenkins" {
   }
 
   provisioner "local-exec" {
-    command = "helm upgrade --install --namespace test --values charts/.cache/jenkins_values.yaml jenkins ./charts/jenkins"
+    command = "helm upgrade --install --namespace tools --values charts/.cache/jenkins_values.yaml jenkins-fuchicorp ./charts/jenkins"
   }
 }
 
