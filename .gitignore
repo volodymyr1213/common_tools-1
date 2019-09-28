@@ -3,3 +3,4 @@
 *.terraform*
 *json*
 *backend.tf*
+*cache*

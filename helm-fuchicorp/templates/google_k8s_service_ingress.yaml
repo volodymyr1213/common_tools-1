@@ -17,7 +17,7 @@ spec:
           serviceName: grafana-fuchicorp-service
           servicePort: {{ .Values.grafanaport }}
 
-  - host: jenkins.fuchicorp.com
+  - host: old-jenkins.fuchicorp.com
     http:
       paths:
       - backend:
