@@ -1,6 +1,6 @@
 
 data "template_file" "values" {
-  template = "${file("charts/jenkins/jenkins_values_template.yaml")}"
+  template = "${file("helm-jenkins/jenkins/jenkins_values_template.yaml")}"
 
   vars {
     jenkins_user     = "${var.jenkins["admin_user"]}"
@@ -11,26 +11,25 @@ data "template_file" "values" {
 
 resource "local_file" "jenkins_helm_chart_values" {
   content  = "${trimspace(data.template_file.values.rendered)}"
-  filename = "charts/.cache/jenkins_values.yaml"
+  filename = "helm-jenkins/.cache/jenkins_values.yaml"
 }
 
-resource "null_resource" "jenkins" {
-
-  triggers {
-    values = "${md5(data.template_file.values.rendered)}"
-  }
-
-  provisioner "local-exec" {
-    command = "helm upgrade --install --namespace tools --values charts/.cache/jenkins_values.yaml jenkins-fuchicorp ./charts/jenkins"
-  }
-}
-
-resource "null_resource" "jenkins_destroy" {
-  provisioner "local-exec" {
-    when = "destroy"
-
-    command = <<EOF
-      helm delete --purge jenkins
-    EOF
-  }
+resource "helm_release" "helm_jenkins_fuchicorp" {
+  depends_on = [
+    "helm_release.ingress_controller",
+    "kubernetes_deployment.jenkins_fuchicorp_deployment",
+    "kubernetes_deployment.grafana_fuchicorp_deployment",
+    "kubernetes_deployment.vault_fuchicorp_deployment",
+    "kubernetes_deployment.nexus_fuchicorp_deployment",
+    "kubernetes_service.jenkins_fuchicorp_service",
+    "kubernetes_service.grafana_fuchicorp_service",
+    "kubernetes_service.vault_fuchicorp_service",
+    "kubernetes_service.nexus_fuchicorp_service"
+  ]
+  values = [
+    "${data.template_file.values.rendered}"
+  ]
+  name = "jenkins-fuchicorp"
+  namespace = "${var.namespace}"
+  chart = "./helm-jenkins/jenkins"
 }

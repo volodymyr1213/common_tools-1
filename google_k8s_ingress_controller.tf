@@ -15,6 +15,6 @@ resource "helm_release" "ingress_controller" {
   ]
 
   name      = "fuchicorp-ingress-controller"
-  chart     = "stable/nginx-ingress"
+  chart     = "./helm-ingress-controller"
   namespace = "${var.namespace}"
 }
