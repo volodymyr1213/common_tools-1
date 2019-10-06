@@ -41,5 +41,5 @@ spec:
     - vault.fuchicorp.com
     - nexus.fuchicorp.com
     - grafana.fuchicorp.com
-    - jenkins.fuchicorp.com
+    - old-jenkins.fuchicorp.com
     secretName: tls-prod-cert
