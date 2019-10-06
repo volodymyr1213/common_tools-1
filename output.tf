@@ -18,12 +18,6 @@ output "jenkins_password" {
 }
 
 
-// FuchiCorp Slack Python Token
-output "slack_python_token" {
-  value = "${var.slack_python_token}"
-}
-
-
 // FuchiCorp Vault Token
 output "fuchicorp_vault_token" {
   value = "${var.vault_token}"

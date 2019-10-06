@@ -1,5 +1,5 @@
 
-data "template_file" "values" {
+data "template_file" "jenkins_values" {
   template = "${file("helm-jenkins/jenkins/jenkins_values_template.yaml")}"
 
   vars {
@@ -10,7 +10,7 @@ data "template_file" "values" {
 }
 
 resource "local_file" "jenkins_helm_chart_values" {
-  content  = "${trimspace(data.template_file.values.rendered)}"
+  content  = "${trimspace(data.template_file.jenkins_values.rendered)}"
   filename = "helm-jenkins/.cache/jenkins_values.yaml"
 }
 
@@ -27,7 +27,7 @@ resource "helm_release" "helm_jenkins_fuchicorp" {
     "kubernetes_service.nexus_fuchicorp_service"
   ]
   values = [
-    "${data.template_file.values.rendered}"
+    "${data.template_file.jenkins_values.rendered}"
   ]
   name = "jenkins-fuchicorp"
   namespace = "${var.namespace}"

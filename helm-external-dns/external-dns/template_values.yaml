@@ -164,7 +164,7 @@ digitalocean:
 google:
   ## Google Project to use
   ##
-  project: "fuchicorp-project-88"
+  project: ${google_project}
   ## Google Application Credentials
   ##
   serviceAccountSecret: "fuchicorp-service-account"
