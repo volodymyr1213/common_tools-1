@@ -73,7 +73,7 @@ Master:
   ContainerPort: 8080
   # Enable Kubernetes Liveness and Readiness Probes
   HealthProbes: true
-  HealthProbesTimeout: 180
+  HealthProbesTimeout: 100
   HealthProbeLivenessFailureThreshold: 12
   SlaveListenerPort: 50000
   DisabledAgentProtocols:
@@ -114,6 +114,9 @@ Master:
     - workflow-aggregator:2.6
     - credentials-binding:1.19
     - git:3.11.0
+    - docker-build-step:2.4
+    - oki-docki:1.1
+    - slack:2.34
   # Used to approve a list of groovy functions in pipelines used the script-security plugin. Can be viewed under /scriptApproval
   ScriptApproval:
     - "method hudson.model.Saveable save"
@@ -133,7 +136,7 @@ Master:
   # Jenkins XML job configs to provision
   # Jobs: |-
   #   test: |-
-  #     <<xml here>>
+  #     
   CustomConfigMap: false
   # Node labels and tolerations for pod assignment
   # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
