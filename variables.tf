@@ -65,3 +65,10 @@ variable "project"  {
 variable "jenkins"  {
   type = "map"
 }
+
+# Github Integration for Jenkins Master
+variable "jenkins_auth_client_id" {
+}
+
+variable "jenkins_auth_secret" {
+}

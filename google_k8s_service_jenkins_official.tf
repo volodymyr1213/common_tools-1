@@ -3,9 +3,11 @@ data "template_file" "jenkins_values" {
   template = "${file("helm-jenkins/jenkins/jenkins_values_template.yaml")}"
 
   vars {
-    jenkins_user     = "${var.jenkins["admin_user"]}"
-    jenkins_pass     = "${var.jenkins["admin_password"]}"
-    clusterSubDomain = "fuchicorp.com"
+    jenkins_user           = "${var.jenkins["admin_user"]}"
+    jenkins_pass           = "${var.jenkins["admin_password"]}"
+    cluster_sub_domain       = "fuchicorp.com"
+    jenkins_auth_secret    = "${var.jenkins_auth_secret}"
+    jenkins_auth_client_id = "${var.jenkins_auth_client_id}"
   }
 }
 
