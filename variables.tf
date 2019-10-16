@@ -18,13 +18,12 @@ variable "mysql_password"  {
   default = "Redhat"
 }
 
-variable "grafana_service_port"     {
-  default = 8080
-  description = "Please do not change this ports."
+variable "git_token"  {
+  default = "this-is-git-token"
 }
 
-variable "jenkins_service_port"     {
-  default = 8081
+variable "grafana_service_port"     {
+  default = 8080
   description = "Please do not change this ports."
 }
 

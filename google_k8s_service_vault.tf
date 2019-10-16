@@ -138,6 +138,6 @@ resource "kubernetes_service" "vault_fuchicorp_service" {
       target_port = 8200
     }
 
-    type = "NodePort"
+    type = "ClusterIP"
   }
 }

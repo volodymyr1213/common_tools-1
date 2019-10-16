@@ -2,11 +2,9 @@
 resource "helm_release" "fuchicorp_services_ingress" {
   depends_on = [
     "helm_release.ingress_controller",
-    "kubernetes_deployment.jenkins_fuchicorp_deployment",
     "kubernetes_deployment.grafana_fuchicorp_deployment",
     "kubernetes_deployment.vault_fuchicorp_deployment",
     "kubernetes_deployment.nexus_fuchicorp_deployment",
-    "kubernetes_service.jenkins_fuchicorp_service",
     "kubernetes_service.grafana_fuchicorp_service",
     "kubernetes_service.vault_fuchicorp_service",
     "kubernetes_service.nexus_fuchicorp_service"
@@ -17,11 +15,6 @@ resource "helm_release" "fuchicorp_services_ingress" {
   set {
     name = "grafanaport"
     value = "${var.grafana_service_port}"
-  }
-
-  set {
-    name = "jenkinsport"
-    value = "${var.jenkins_service_port}"
   }
 
   set {

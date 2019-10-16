@@ -6,11 +6,9 @@ resource "helm_release" "cert_manager" {
    "kubernetes_secret.tiller",
    "kubernetes_cluster_role_binding.tiller_cluster_rule",
    "helm_release.ingress_controller",
-   "kubernetes_deployment.jenkins_fuchicorp_deployment",
    "kubernetes_deployment.grafana_fuchicorp_deployment",
    "kubernetes_deployment.vault_fuchicorp_deployment",
    "kubernetes_deployment.nexus_fuchicorp_deployment",
-   "kubernetes_service.jenkins_fuchicorp_service",
    "kubernetes_service.grafana_fuchicorp_service",
    "kubernetes_service.vault_fuchicorp_service",
    "kubernetes_service.nexus_fuchicorp_service"

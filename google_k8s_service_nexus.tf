@@ -126,6 +126,6 @@ resource "kubernetes_service" "nexus_fuchicorp_service" {
       app = "nexus-fuchicorp-deployment"
     }
 
-    type = "NodePort"
+    type = "ClusterIP"
   }
 }

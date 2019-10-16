@@ -124,6 +124,6 @@ resource "kubernetes_service" "grafana_fuchicorp_service" {
       target_port = 3000
     }
 
-    type = "NodePort"
+    type = "ClusterIP"
   }
 }

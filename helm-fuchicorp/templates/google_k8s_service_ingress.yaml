@@ -16,13 +16,6 @@ spec:
           serviceName: grafana-fuchicorp-service
           servicePort: {{ .Values.grafanaport }}
 
-  - host: old-jenkins.fuchicorp.com
-    http:
-      paths:
-      - backend:
-          serviceName: jenkins-fuchicorp-service
-          servicePort: {{ .Values.jenkinsport }}
-
   - host: nexus.fuchicorp.com
     http:
       paths:
@@ -41,5 +34,4 @@ spec:
     - vault.fuchicorp.com
     - nexus.fuchicorp.com
     - grafana.fuchicorp.com
-    - old-jenkins.fuchicorp.com
     secretName: tls-prod-cert
