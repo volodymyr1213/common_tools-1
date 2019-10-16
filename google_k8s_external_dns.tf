@@ -4,7 +4,7 @@ data "template_file" "external_dns_values" {
   template = "${file("helm-external-dns/external-dns/template_values.yaml")}"
 
   vars {
-    clusterSubDomain = "fuchicorp.com"
+    cluster_sub_domain = "fuchicorp.com"
     google_project   = "${var.project}"
   }
 }
