@@ -58,7 +58,7 @@ variable "email"  {
 }
 
 variable "project"  {
-  default = "fuchicorp-project"
+  default = "fuchicorp-project-256020"
 }
 
 
