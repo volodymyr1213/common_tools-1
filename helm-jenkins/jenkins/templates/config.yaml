@@ -187,16 +187,6 @@ data:
     echo "false" > /usr/share/jenkins/ref/secrets/slave-to-master-security-kill-switch;
     cp -n /var/jenkins_config/config.xml /var/jenkins_home;
     cp -n /var/jenkins_config/jenkins.CLI.xml /var/jenkins_home;
-{{- if .Values.NewRelic.LicenseKey }}
-    curl http://artifactrepository.mcd.com/artifactory/vet-tools/newrelic-apm/newrelic-java.zip -o /var/jenkins_home/newrelic.zip
-    unzip /var/jenkins_home/newrelic.zip -d /var/jenkins_home
-    sed -i "s/<%= license_key %>/{{ .Values.NewRelic.LicenseKey }}/g" /var/jenkins_home/newrelic/newrelic.yml # add license key
-    sed -i "s/My Application/{{ .Values.Master.HostName }}/g" /var/jenkins_home/newrelic/newrelic.yml # rename app
-    echo "Contents of /var/jenkins_home/newrelic/newrelic.yml:"
-    cat /var/jenkins_home/newrelic/newrelic.yml | grep -v "license_key"
-    chown jenkins /var/jenkins_home/newrelic/newrelic.yml
-    chmod 600 /var/jenkins_home/newrelic/newrelic.yml
-{{- end }}
 {{- if .Values.Master.InstallPlugins }}
     # Install missing plugins
     cp /var/jenkins_config/plugins.txt /var/jenkins_home/;
