@@ -19,12 +19,11 @@ resource "local_file" "jenkins_helm_chart_values" {
 resource "helm_release" "helm_jenkins_fuchicorp" {
   depends_on = [
     "helm_release.ingress_controller",
-    "helm_release.grafana",
     "kubernetes_deployment.vault_fuchicorp_deployment",
     "kubernetes_deployment.nexus_fuchicorp_deployment",
     "kubernetes_service.vault_fuchicorp_service",
     "kubernetes_service.nexus_fuchicorp_service",
-  ]
+  ] # "helm_release.grafana",
 
   values = [
     "${data.template_file.jenkins_values.rendered}",

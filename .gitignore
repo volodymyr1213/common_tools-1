@@ -1,7 +1,7 @@
 *tfvars*
 *state*
 *.terraform*
-*.json
+fuchicorp-service-account.json
 *backend.tf*
 *cache*
 set-env
