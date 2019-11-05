@@ -1,10 +1,33 @@
-variable "grafana_password" {
-  default = "Redhat"
+###############                             ######################
+############### Grafana Section Starts Right Here ################
+###############                             ######################
+variable "grafana-deployment_environment" {
+  default = "tools"
 }
 
-variable "grafana_username" {
-  default = "grafuser"
+variable "grafana-dns_endpoint_grafana" {
+  type = "map"
+
+  default = {
+    tools = "grafana.fuchicorp.com"
+  }
 }
+variable "version" {
+  default = "6.0.1"
+}
+
+########### Put datasource or Prometheus endpoint as below ##############
+
+variable "grafana-datasource_dns_endpoint" {
+  default = "https://test-prometheus.fuchicorp.com"
+}
+
+variable "grafana-name" {
+  default = "grafana"
+}
+###############                             ######################
+############### Grafana Section Ends Right Here ################
+###############                             ######################
 
 variable "namespace" {
   default = "tools"
