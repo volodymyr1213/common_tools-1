@@ -12,6 +12,7 @@ variable "grafana-dns_endpoint_grafana" {
     tools = "grafana.fuchicorp.com"
   }
 }
+
 variable "version" {
   default = "6.0.1"
 }
@@ -22,9 +23,20 @@ variable "grafana-datasource_dns_endpoint" {
   default = "https://test-prometheus.fuchicorp.com"
 }
 
+variable "grafana-version" {
+  default = "6.0.1"
+}
+
 variable "grafana-name" {
   default = "grafana"
 }
+
+variable "grafana_username" {
+  default = "admin"
+}
+
+variable "grafana_password" {}
+
 ###############                             ######################
 ############### Grafana Section Ends Right Here ################
 ###############                             ######################

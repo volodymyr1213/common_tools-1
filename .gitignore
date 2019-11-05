@@ -1,7 +1,7 @@
 *tfvars*
 *state*
 *.terraform*
-*json*
+*.json
 *backend.tf*
 *cache*
 set-env
