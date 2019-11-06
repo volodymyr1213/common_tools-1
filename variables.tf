@@ -1,10 +1,44 @@
-variable "grafana_password" {
-  default = "Redhat"
+variable "grafana-deployment_environment" {
+  default = "tools"
+}
+
+variable "grafana-dns_endpoint_grafana" {
+  type = "map"
+
+  default = {
+    tools = "grafana.fuchicorp.com"
+  }
+}
+
+variable "version" {
+  default = "6.0.1"
+}
+
+variable "cert_manager_version" {
+  default = "v0.11.0"
+}
+
+variable "grafana-datasource_dns_endpoint" {
+  default = "https://test-prometheus.fuchicorp.com"
+}
+
+variable "grafana-version" {
+  default = "6.0.1"
+}
+
+variable "grafana-name" {
+  default = "grafana"
 }
 
 variable "grafana_username" {
-  default = "grafuser"
+  default = "admin"
 }
+
+variable "grafana_password" {}
+
+###############                             ######################
+############### Grafana Section Ends Right Here ################
+###############                             ######################
 
 variable "namespace" {
   default = "tools"

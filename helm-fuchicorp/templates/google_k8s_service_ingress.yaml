@@ -4,17 +4,10 @@ metadata:
   name: fuchicorp-ingress
   annotations:
     kubernetes.io/ingress.class: nginx
-    certmanager.k8s.io/cluster-issuer: letsencrypt-fuchicorp-prod
+    cert-manager.io/cluster-issuer: letsencrypt-fuchicorp-prod
 
 spec:
   rules:
-
-  - host: grafana.fuchicorp.com
-    http:
-      paths:
-      - backend:
-          serviceName: grafana-fuchicorp-service
-          servicePort: {{ .Values.grafanaport }}
 
   - host: nexus.fuchicorp.com
     http:

@@ -124,7 +124,7 @@ Master:
     ApiVersion: extensions/v1beta1
     Annotations:
       kubernetes.io/ingress.class: nginx
-      certmanager.k8s.io/cluster-issuer: letsencrypt-fuchicorp-prod
+      cert-manager.io/cluster-issuer: letsencrypt-fuchicorp-prod
     # kubernetes.io/tls-acme: "true"
     TLS:
     - hosts:
