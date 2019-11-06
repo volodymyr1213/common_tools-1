@@ -9,26 +9,31 @@ resource "helm_release" "fuchicorp_services_ingress" {
   ]
 
   # "helm_release.grafana",
-
+  wait      = true
   name      = "fuchicorp-services-ingress-${var.namespace}"
   namespace = "${var.namespace}"
   chart     = "./helm-fuchicorp"
+
   set {
     name  = "grafanaport"
     value = "${var.grafana_service_port}"
   }
+
   set {
     name  = "nexusport"
     value = "${var.nexus_service_port}"
   }
+
   set {
     name  = "vaultport"
     value = "${var.vault_service_port}"
   }
+
   set {
     name  = "repo_port"
     value = "${var.repo_port}"
   }
+
   set {
     name  = "email"
     value = "${var.email}"

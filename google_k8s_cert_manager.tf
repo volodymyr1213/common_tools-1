@@ -1,4 +1,4 @@
-## Deploy cert manger
+# Deploy cert manger
 resource "helm_release" "cert_manager" {
   depends_on = [
     "kubernetes_namespace.service_tools",
@@ -13,18 +13,13 @@ resource "helm_release" "cert_manager" {
   ] # "helm_release.grafana",
 
   name      = "fuchicorp-cert-manager"
-  chart     = "stable/cert-manager"
+  chart     = "jetstack/cert-manager"
   namespace = "${var.namespace}"
-  version   = "v0.3.0"
-  wait      = true
 
-  set {
-    name  = "ingressShim.defaultIssuerName"
-    value = "letsencrypt-fuchicorp-prod"
-  }
+  wait = true
 
-  set {
-    name  = "ingressShim.defaultIssuerKind"
-    value = "ClusterIssuer"
-  }
+  # set {
+  #   name  = "webhook.enabled"
+  #   value = false
+  # }
 }

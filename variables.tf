@@ -1,6 +1,3 @@
-###############                             ######################
-############### Grafana Section Starts Right Here ################
-###############                             ######################
 variable "grafana-deployment_environment" {
   default = "tools"
 }
@@ -17,7 +14,9 @@ variable "version" {
   default = "6.0.1"
 }
 
-########### Put datasource or Prometheus endpoint as below ##############
+variable "cert_manager_version" {
+  default = "v0.11.0"
+}
 
 variable "grafana-datasource_dns_endpoint" {
   default = "https://test-prometheus.fuchicorp.com"
