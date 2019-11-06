@@ -14,7 +14,7 @@ resource "helm_release" "cert_manager" {
 
   name      = "fuchicorp-cert-manager"
   chart     = "jetstack/cert-manager"
-  namespace = "${var.namespace}"
+  namespace = "${var.deployment_environment}"
 
   wait = true
 

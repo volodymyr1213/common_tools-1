@@ -5,8 +5,8 @@ data "template_file" "jenkins_values" {
     jenkins_user           = "${var.jenkins["admin_user"]}"
     jenkins_pass           = "${var.jenkins["admin_password"]}"
     cluster_sub_domain     = "fuchicorp.com"
-    jenkins_auth_secret    = "${var.jenkins_auth_secret}"
-    jenkins_auth_client_id = "${var.jenkins_auth_client_id}"
+    jenkins_auth_secret    = "${var.jenkins["jenkins_auth_secret"]}"
+    jenkins_auth_client_id = "${var.jenkins["jenkins_auth_client_id"]}"
     git_token              = "${var.git_token}"
   }
 }
@@ -23,13 +23,13 @@ resource "helm_release" "helm_jenkins_fuchicorp" {
     "kubernetes_deployment.nexus_fuchicorp_deployment",
     "kubernetes_service.vault_fuchicorp_service",
     "kubernetes_service.nexus_fuchicorp_service",
-  ] # "helm_release.grafana",
+  ]
 
   values = [
     "${data.template_file.jenkins_values.rendered}",
   ]
 
   name      = "jenkins-fuchicorp"
-  namespace = "${var.namespace}"
+  namespace = "${var.deployment_environment}"
   chart     = "./helm-jenkins/jenkins"
 }

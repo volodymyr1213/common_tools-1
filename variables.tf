@@ -1,4 +1,4 @@
-variable "grafana-deployment_environment" {
+variable "deployment_environment" {
   default = "tools"
 }
 
@@ -10,35 +10,13 @@ variable "grafana-dns_endpoint_grafana" {
   }
 }
 
-variable "version" {
-  default = "6.0.1"
+variable "grafana-datasource_dns_endpoint" {
+  default = "https://test-prometheus.fuchicorp.com"
 }
 
 variable "cert_manager_version" {
   default = "v0.11.0"
 }
-
-variable "grafana-datasource_dns_endpoint" {
-  default = "https://test-prometheus.fuchicorp.com"
-}
-
-variable "grafana-version" {
-  default = "6.0.1"
-}
-
-variable "grafana-name" {
-  default = "grafana"
-}
-
-variable "grafana_username" {
-  default = "admin"
-}
-
-variable "grafana_password" {}
-
-###############                             ######################
-############### Grafana Section Ends Right Here ################
-###############                             ######################
 
 variable "namespace" {
   default = "tools"
@@ -50,11 +28,6 @@ variable "vault_token" {
 
 variable "git_token" {
   default = "this-is-git-token"
-}
-
-variable "grafana_service_port" {
-  default     = 8080
-  description = "Please do not change this ports."
 }
 
 variable "vault_service_port" {
@@ -91,9 +64,24 @@ variable "project" {
 
 variable "jenkins" {
   type = "map"
+
+  default = {
+    jenkins_endpoint       = "https://jenkins.fuchicorp.com"
+    admin_user             = "admin"
+    admin_password         = "password"
+    jenkins_auth_client_id = "id"
+    jenkins_auth_secret    = "secret"
+  }
 }
 
-# Github Integration for Jenkins Master
-variable "jenkins_auth_client_id" {}
+variable "grafana" {
+  type = "map"
 
-variable "jenkins_auth_secret" {}
+  default = {
+    grafana_endpoint = "https://grafana.fuchicorp.com"
+    grafana-version  = "6.0.1"
+    grafana_username = "admin"
+    grafana_password = "password"
+    grafana-name     = "grafana"
+  }
+}
