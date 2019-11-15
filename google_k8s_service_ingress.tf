@@ -8,16 +8,10 @@ resource "helm_release" "fuchicorp_services_ingress" {
     "kubernetes_service.nexus_fuchicorp_service",
   ]
 
-  # "helm_release.grafana",
   wait      = true
-  name      = "fuchicorp-services-ingress-${var.namespace}"
-  namespace = "${var.namespace}"
+  name      = "fuchicorp-services-ingress-${var.deployment_environment}"
+  namespace = "${var.deployment_environment}"
   chart     = "./helm-fuchicorp"
-
-  set {
-    name  = "grafanaport"
-    value = "${var.grafana_service_port}"
-  }
 
   set {
     name  = "nexusport"
@@ -38,4 +32,17 @@ resource "helm_release" "fuchicorp_services_ingress" {
     name  = "email"
     value = "${var.email}"
   }
+}
+
+resource "kubernetes_secret" "example" {
+  metadata {
+    name      = "google-service-account"
+    namespace = "${var.deployment_environment}"
+  }
+
+  data = {
+    "credentials.json" = "${file("${path.module}/fuchicorp-service-account.json")}"
+  }
+
+  type = "generic"
 }

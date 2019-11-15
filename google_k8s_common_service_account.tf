@@ -1,7 +1,7 @@
 resource "kubernetes_service_account" "common_service_account" {
   metadata {
     name = "common-service-account"
-    namespace = "${var.namespace}"
+    namespace = "${var.deployment_environment}"
   }
   secret {
     name = "${kubernetes_secret.common_service_account_secret.metadata.0.name}"
@@ -12,7 +12,7 @@ resource "kubernetes_service_account" "common_service_account" {
 resource "kubernetes_secret" "common_service_account_secret" {
   metadata {
     name = "common-service-account-secret"
-    namespace = "${var.namespace}"
+    namespace = "${var.deployment_environment}"
   }
 }
 

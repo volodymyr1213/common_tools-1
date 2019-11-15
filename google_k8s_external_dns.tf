@@ -29,7 +29,7 @@ resource "helm_release" "external_dns_controller" {
   ]
   name      = "fuchicorp-external-dns"
   chart     = "./helm-external-dns/external-dns"
-  namespace = "${var.namespace}"
+  namespace = "${var.deployment_environment}"
 }
 
 

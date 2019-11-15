@@ -4,7 +4,7 @@ resource "kubernetes_persistent_volume_claim" "nexus_pvc" {
   metadata {
     name = "nexus-pvc"
 
-    namespace = "${var.namespace}"
+    namespace = "${var.deployment_environment}"
 
     labels {
       app = "nexus-fuchicorp-deployment"
@@ -30,7 +30,7 @@ resource "kubernetes_deployment" "nexus_fuchicorp_deployment" {
   metadata {
     name = "nexus-fuchicorp-deployment"
 
-    namespace = "${var.namespace}"
+    namespace = "${var.deployment_environment}"
 
     labels {
       app = "nexus-fuchicorp-deployment"
@@ -107,7 +107,7 @@ resource "kubernetes_service" "nexus_fuchicorp_service" {
   metadata {
     name = "nexus-fuchicorp-service"
 
-    namespace = "${var.namespace}"
+    namespace = "${var.deployment_environment}"
   }
 
   spec {

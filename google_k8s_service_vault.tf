@@ -6,7 +6,7 @@ resource "kubernetes_deployment" "vault_fuchicorp_deployment" {
   metadata {
     name = "vault-fuchicorp-deployment"
 
-    namespace = "${var.namespace}"
+    namespace = "${var.deployment_environment}"
 
     labels {
       app = "vault-fuchicorp-deployment"
@@ -83,7 +83,7 @@ resource "kubernetes_persistent_volume_claim" "vault_pvc" {
   metadata {
     name = "vault-pvc"
 
-    namespace = "${var.namespace}"
+    namespace = "${var.deployment_environment}"
 
     labels {
       app = "vault-fuchicorp-deployment"
@@ -107,7 +107,7 @@ resource "kubernetes_secret" "vault_secret" {
   metadata {
     name = "vault-secret"
 
-    namespace = "${var.namespace}"
+    namespace = "${var.deployment_environment}"
   }
 
   data {
@@ -124,7 +124,7 @@ resource "kubernetes_service" "vault_fuchicorp_service" {
   metadata {
     name = "vault-fuchicorp-service"
 
-    namespace = "${var.namespace}"
+    namespace = "${var.deployment_environment}"
   }
 
   spec {

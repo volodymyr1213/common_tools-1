@@ -32,5 +32,5 @@ resource "helm_release" "ingress_controller" {
 
   name      = "fuchicorp-ingress-controller"
   chart     = "./helm-ingress-controller/ingress-controller"
-  namespace = "${var.namespace}"
+  namespace = "${var.deployment_environment}"
 }

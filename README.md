@@ -5,7 +5,7 @@ This page contains how to deploy  common_tools to Kubernetes  Cluster.
 1. terraform
 2. kubectl (configured )
 3. helm v2.11.0
-3. Cert-manager 0.3.0
+3. Cert-manager v0.11.0
 4. Kube Cluster 1.12.7-gke.10
 
 ## What will be deployed to cluster?

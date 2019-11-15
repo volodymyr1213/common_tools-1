@@ -1,42 +1,14 @@
-
-
-// Print admin user name after deployment
-output "jenkins_endpoint" {
-  value = "jenkins.fuchicorp.com"
+// Print how looks like Jenkins data
+output "jenkins" {
+  value = "${var.jenkins}"
 }
 
-
-// Print admin user name after deployment
-output "jenkins_user" {
-  value = "${var.jenkins["admin_user"]}"
-}
-
-
-// Print admin password after deployment
-output "jenkins_password" {
-  value = "${var.jenkins["admin_password"]}"
-}
-
-
-// FuchiCorp Vault Token
-output "fuchicorp_vault_token" {
+// FuchiCorp Vault output
+output "vault_token" {
   value = "${var.vault_token}"
 }
 
-
-// FuchiCorp Grafana Username
-output "grafana_username" {
-  value = "${var.grafana_username}"
-}
-
-
-// FuchiCorp Grafana Username
-output "grafana_password" {
-  value = "${var.grafana_password}"
-}
-
-
-// FuchiCorp Grafana url
-output "grafana_endpoint" {
-  value = "grafana.fuchicorp.com"
+// FuchiCorp Grafana deployment output
+output "grafana" {
+  value = "${var.grafana}"
 }

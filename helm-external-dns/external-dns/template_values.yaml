@@ -167,7 +167,7 @@ google:
   project: ${google_project}
   ## Google Application Credentials
   ##
-  serviceAccountSecret: "fuchicorp-service-account"
+  serviceAccountSecret: "google-service-account"
 
   # serviceAccountKey: "fuchicorp-service-account.json"
 
