@@ -1,8 +1,8 @@
 rbac:
-  create: false
+  create: true
 
 podSecurityPolicy:
-  enabled: true
+  enabled: false
 
 imagePullSecrets:
 # - name: "image-pull-secret"
@@ -93,12 +93,13 @@ alertmanager:
   ingress:
     ## If true, alertmanager Ingress will be created
     ##
-    enabled: false
+    enabled: true
 
     ## alertmanager Ingress annotations
     ##
-    annotations: {}
-    #   kubernetes.io/ingress.class: nginx
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      certmanager.k8s.io/cluster-issuer: letsencrypt-fuchicorp-prod
     #   kubernetes.io/tls-acme: 'true'
 
     ## alertmanager Ingress additional labels
@@ -108,17 +109,18 @@ alertmanager:
     ## alertmanager Ingress hostnames with optional path
     ## Must be provided if Ingress is enabled
     ##
-    hosts: []
+    hosts:
+      - ${deployment_endpoint}
     #   - alertmanager.domain.com
     #   - domain.com/alertmanager
 
     ## alertmanager Ingress TLS configuration
     ## Secrets must be manually created in the namespace
     ##
-    tls: []
-    #   - secretName: prometheus-alerts-tls
-    #     hosts:
-    #       - alertmanager.domain.com
+    tls:
+      - secretName: prometheus-alerts-tls
+        hosts:
+          - ${deployment_endpoint}
 
   ## Alertmanager Deployment Strategy type
   # strategy:
@@ -653,7 +655,7 @@ server:
     ##
     annotations:
       kubernetes.io/ingress.class: nginx
-      cert-manager.io/cluster-issuer: letsencrypt-fuchicorp-prod
+      certmanager.k8s.io/cluster-issuer: letsencrypt-fuchicorp-prod
     #   kubernetes.io/tls-acme: 'true'
 
     ## Prometheus server Ingress additional labels
@@ -664,16 +666,17 @@ server:
     ## Must be provided if Ingress is enabled
     ##
     hosts:
-    - ${deployment_endpoint}
+      - ${deployment_endpoint}
+    #   - prometheus.domain.com
     #   - domain.com/prometheus
 
     ## Prometheus server Ingress TLS configuration
     ## Secrets must be manually created in the namespace
     ##
     tls:
-    - secretName: prometheus-server-tls
-      hosts:
-      - ${deployment_endpoint}
+      - secretName: prometheus-server-tls
+        hosts:
+          - ${deployment_endpoint}
 
   ## Server Deployment Strategy type
   # strategy:
@@ -730,7 +733,7 @@ server:
 
     ## Prometheus server data Persistent Volume size
     ##
-    size: 5Gi
+    size: 8Gi
 
     ## Prometheus server data Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>
@@ -876,28 +879,30 @@ pushgateway:
   ingress:
     ## If true, pushgateway Ingress will be created
     ##
-    enabled: false
+    enabled: true
 
     ## pushgateway Ingress annotations
     ##
-    annotations: {}
-    #   kubernetes.io/ingress.class: nginx
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      certmanager.k8s.io/cluster-issuer: letsencrypt-fuchicorp-prod
     #   kubernetes.io/tls-acme: 'true'
 
     ## pushgateway Ingress hostnames with optional path
     ## Must be provided if Ingress is enabled
     ##
-    hosts: []
+    hosts:
+      - ${deployment_endpoint}
     #   - pushgateway.domain.com
     #   - domain.com/pushgateway
 
     ## pushgateway Ingress TLS configuration
     ## Secrets must be manually created in the namespace
     ##
-    tls: []
-    #   - secretName: prometheus-alerts-tls
-    #     hosts:
-    #       - pushgateway.domain.com
+    tls:
+      - secretName: prometheus-alerts-tls
+        hosts:
+          - ${deployment_endpoint}
 
   ## Node tolerations for pushgateway scheduling to nodes with taints
   ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
