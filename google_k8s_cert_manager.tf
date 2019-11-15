@@ -17,9 +17,4 @@ resource "helm_release" "cert_manager" {
   namespace = "${var.deployment_environment}"
 
   wait = true
-
-  # set {
-  #   name  = "webhook.enabled"
-  #   value = false
-  # }
 }
