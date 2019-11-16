@@ -359,7 +359,7 @@ dashboards:
       # revision: 1
       # datasource: Prometheus
     Kubernetes-Pods:
-      file: dashboards/7670.json
+      file: dashboards/6781.json
       # gnetId: 7670
       # revision: 1
       # datasource: Prometheus
