@@ -348,18 +348,13 @@ dashboards:
       # gnetId: 6912
       # revision: 1
       # datasource: Prometheus
-    Kubernetes-Cluster-Health:
-      file: dashboards/5312.json
-      # gnetId: 5312
-      # revision: 1
-      # datasource: Prometheus
     Kubernetes-Deployment:
       file: dashboards/5303.json
       # gnetId: 5303
       # revision: 1
       # datasource: Prometheus
     Kubernetes-Pods:
-      file: dashboards/7670.json
+      file: dashboards/6781.json
       # gnetId: 7670
       # revision: 1
       # datasource: Prometheus
