@@ -11,7 +11,7 @@ variable "grafana-dns_endpoint_grafana" {
 }
 
 variable "grafana-datasource_dns_endpoint" {
-  default = "https://test-prometheus.fuchicorp.com"
+  default = "https://prometheus.fuchicorp.com/graph"
 }
 
 variable "cert_manager_version" {
@@ -66,7 +66,7 @@ variable "jenkins" {
   type = "map"
 
   default = {
-    jenkins_endpoint       = "https://jenkins.fuchicorp.com"
+    jenkins_endpoint       = "jenkins.fuchicorp.com"
     admin_user             = "admin"
     admin_password         = "password"
     jenkins_auth_client_id = "id"
@@ -78,10 +78,18 @@ variable "grafana" {
   type = "map"
 
   default = {
-    grafana_endpoint = "https://grafana.fuchicorp.com"
+    grafana_endpoint = "grafana.fuchicorp.com"
     grafana-version  = "6.0.1"
     grafana_username = "admin"
     grafana_password = "password"
     grafana-name     = "grafana"
+  }
+}
+
+variable "prometheus" {
+  type = "map"
+
+  default = {
+    prometheus_endpoint = "prometheus.fuchicorp.com"
   }
 }

@@ -120,7 +120,7 @@ ingress:
   # labels: {}
   # path: /
   hosts:
-    - ${deployment_endpoint}
+  - ${deployment_endpoint}
   ## Extra paths to prepend to every host configuration. This is useful when working with annotation based services.
   extraPaths: []
   # - path: /*
@@ -130,7 +130,7 @@ ingress:
   tls:
    - secretName: grafana-tls
      hosts:
-       - ${deployment_endpoint}
+     - ${deployment_endpoint}
 
 resources: {}
 #  limits:
