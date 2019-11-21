@@ -1,12 +1,10 @@
 ## Before deploy ingress for each services it will make sure all services available
 resource "helm_release" "fuchicorp_services_ingress" {
   depends_on = [
-    "helm_release.ingress_controller",
     "kubernetes_deployment.vault_fuchicorp_deployment",
-    "kubernetes_deployment.nexus_fuchicorp_deployment",
     "kubernetes_service.vault_fuchicorp_service",
     "kubernetes_service.nexus_fuchicorp_service",
-  ]
+  ] # "kubernetes_deployment.nexus_fuchicorp_deployment",
 
   wait      = true
   name      = "fuchicorp-services-ingress-${var.deployment_environment}"

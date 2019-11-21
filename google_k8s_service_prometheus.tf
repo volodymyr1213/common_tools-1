@@ -13,11 +13,7 @@ resource "local_file" "prometheus_helm_chart_values" {
 
 resource "helm_release" "helm_prometheus_fuchicorp" {
   depends_on = [
-    "helm_release.ingress_controller",
-    "kubernetes_deployment.vault_fuchicorp_deployment",
-    "kubernetes_deployment.nexus_fuchicorp_deployment",
     "kubernetes_service.vault_fuchicorp_service",
-    "kubernetes_service.nexus_fuchicorp_service",
   ]
 
   values = [

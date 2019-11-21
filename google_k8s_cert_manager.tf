@@ -5,9 +5,7 @@ resource "helm_release" "cert_manager" {
     "kubernetes_service_account.tiller",
     "kubernetes_secret.tiller",
     "kubernetes_cluster_role_binding.tiller_cluster_rule",
-    "helm_release.ingress_controller",
     "kubernetes_deployment.vault_fuchicorp_deployment",
-    "kubernetes_deployment.nexus_fuchicorp_deployment",
     "kubernetes_service.vault_fuchicorp_service",
     "kubernetes_service.nexus_fuchicorp_service",
   ] # "helm_release.grafana",
@@ -18,3 +16,7 @@ resource "helm_release" "cert_manager" {
 
   wait = true
 }
+
+## Code should run first bellow comamnd and then deploy the code
+# kubectl apply --validate=false  -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.12/deploy/manifests/00-crds.yaml
+
