@@ -1,5 +1,6 @@
 *tfvars*
 *.state*
+*.tfstate*
 *.terraform*
 fuchicorp-service-account.json
 *backend.tf*
