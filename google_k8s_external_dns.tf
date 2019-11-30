@@ -5,7 +5,7 @@ data "template_file" "external_dns_values" {
 
   vars {
     cluster_sub_domain = "fuchicorp.com"
-    google_project   = "${var.project}"
+    google_project   = "${var.google_project_id}"
   }
 }
 

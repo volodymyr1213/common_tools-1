@@ -58,8 +58,8 @@ variable "email" {
   default = "fuchicorpsolutions@gmail.com"
 }
 
-variable "project" {
-  default = "fuchicorp-project-256020"
+variable "google_project_id" {
+  default = "fuchicorp-project-260600"
 }
 
 variable "jenkins" {
