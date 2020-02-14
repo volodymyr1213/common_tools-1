@@ -34,3 +34,15 @@ resource "helm_release" "external_dns_controller" {
 
 
 # External DNS needs secret serviceAccountSecret: "fuchicorp-service-account"
+resource "kubernetes_secret" "external_dns_secret" {
+  metadata {
+    name      = "google-service-account"
+    namespace = "${var.deployment_environment}"
+  }
+
+  data = {
+    "credentials.json" = "${file("${path.module}/fuchicorp-service-account.json")}"
+  }
+
+  type = "generic"
+}

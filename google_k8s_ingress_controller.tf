@@ -1,6 +1,7 @@
 provider "helm" {
   tiller_image = "gcr.io/kubernetes-helm/tiller:${var.tiller_version}"
   service_account = "tiller"
+  version = "0.10.4"
   kubernetes {
   }
 }

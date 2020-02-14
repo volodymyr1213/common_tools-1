@@ -32,15 +32,4 @@ resource "helm_release" "fuchicorp_services_ingress" {
   }
 }
 
-resource "kubernetes_secret" "example" {
-  metadata {
-    name      = "google-service-account"
-    namespace = "${var.deployment_environment}"
-  }
 
-  data = {
-    "credentials.json" = "${file("${path.module}/fuchicorp-service-account.json")}"
-  }
-
-  type = "generic"
-}
