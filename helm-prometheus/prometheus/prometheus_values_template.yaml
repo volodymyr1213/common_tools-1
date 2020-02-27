@@ -110,7 +110,7 @@ alertmanager:
     ## Must be provided if Ingress is enabled
     ##
     hosts:
-      - ${deployment_endpoint}
+      - ${deployment_endpoint}#
     #   - alertmanager.domain.com
     #   - domain.com/alertmanager
 
