@@ -2,9 +2,8 @@ data "template_file" "template_values" {
   template = "${file("./helm-grafana/template_values.yaml")}"
 
   vars = {
-    deployment_endpoint = "${lookup(var.grafana-dns_endpoint_grafana, "${var.deployment_environment}")}"
-
-    datasource_dns_endpoint = "${var.grafana["grafana-datasource_dns_endpoint"]}"
+    deployment_endpoint     = "grafana.${var.google_domain_name}"
+    datasource_dns_endpoint = "https://prometheus.${var.google_domain_name}"
     grafana_password        = "${var.grafana["grafana_password"]}"
     grafana_username        = "${var.grafana["grafana_username"]}"
     grafana_client_secret   = "${var.grafana["grafana_client_secret"]}"
@@ -18,6 +17,12 @@ resource "local_file" "grafana_values_local_file" {
 }
 
 resource "helm_release" "grafana" {
+  depends_on = [
+    "kubernetes_namespace.service_tools",
+    "kubernetes_service_account.tiller",
+    "kubernetes_secret.tiller",
+    "kubernetes_cluster_role_binding.tiller_cluster_rule"
+  ]
   name      = "${var.grafana["grafana-name"]}"
   namespace = "${var.deployment_environment}"
   chart     = "./helm-grafana"

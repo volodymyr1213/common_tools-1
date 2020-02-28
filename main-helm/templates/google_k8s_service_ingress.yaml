@@ -4,27 +4,27 @@ metadata:
   name: fuchicorp-ingress
   annotations:
     kubernetes.io/ingress.class: nginx
-    cert-manager.io/cluster-issuer: letsencrypt-fuchicorp-prod
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 
 spec:
   rules:
 
-  - host: nexus.fuchicorp.com
+  - host: nexus.{{ .Values.domain_name}}
     http:
       paths:
       - backend:
-          serviceName: nexus-fuchicorp-service
+          serviceName: nexus-service
           servicePort: {{ .Values.nexusport }}
 
-  - host: vault.fuchicorp.com
+  - host: vault.{{ .Values.domain_name}}
     http:
       paths:
       - backend:
-          serviceName: vault-fuchicorp-service
+          serviceName: vault-service
           servicePort: {{ .Values.vaultport }}
   tls:
   - hosts:
-    - vault.fuchicorp.com
-    - nexus.fuchicorp.com
-    - grafana.fuchicorp.com
+    - vault.{{ .Values.domain_name}}
+    - nexus.{{ .Values.domain_name}}
+    - grafana.{{ .Values.domain_name}}
     secretName: tls-prod-cert

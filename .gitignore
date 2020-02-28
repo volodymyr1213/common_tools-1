@@ -2,7 +2,7 @@
 *.state*
 *.tfstate*
 *.terraform*
-fuchicorp-service-account.json
+common-service-account.json
 *backend.tf*
 *cache*
 set-env

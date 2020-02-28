@@ -1,15 +1,20 @@
 ## Before deploy ingress for each services it will make sure all services available
-resource "helm_release" "fuchicorp_services_ingress" {
+resource "helm_release" "services_ingress" {
   depends_on = [
-    "kubernetes_deployment.vault_fuchicorp_deployment",
-    "kubernetes_service.vault_fuchicorp_service",
-    "kubernetes_service.nexus_fuchicorp_service",
-  ] # "kubernetes_deployment.nexus_fuchicorp_deployment",
+    "kubernetes_deployment.vault_deployment",
+    "kubernetes_service.vault_service",
+    "kubernetes_service.nexus_service",
+    "kubernetes_namespace.service_tools",
+    "kubernetes_service_account.tiller",
+    "kubernetes_secret.tiller",
+    "kubernetes_service.vault_service",
+    "kubernetes_cluster_role_binding.tiller_cluster_rule"
+  ]
 
   wait      = true
-  name      = "fuchicorp-services-ingress-${var.deployment_environment}"
+  name      = "services-ingress-${var.deployment_environment}"
   namespace = "${var.deployment_environment}"
-  chart     = "./helm-fuchicorp"
+  chart     = "./main-helm"
 
   set {
     name  = "nexusport"
@@ -29,6 +34,11 @@ resource "helm_release" "fuchicorp_services_ingress" {
   set {
     name  = "email"
     value = "${var.email}"
+  }
+
+  set {
+    name = "domain_name"
+    value = "${var.google_domain_name}"
   }
 }
 

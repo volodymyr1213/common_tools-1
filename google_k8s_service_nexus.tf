@@ -7,7 +7,7 @@ resource "kubernetes_persistent_volume_claim" "nexus_pvc" {
     namespace = "${var.deployment_environment}"
 
     labels {
-      app = "nexus-fuchicorp-deployment"
+      app = "nexus-deployment"
     }
   }
 
@@ -24,16 +24,16 @@ resource "kubernetes_persistent_volume_claim" "nexus_pvc" {
   }
 }
 
-resource "kubernetes_deployment" "nexus_fuchicorp_deployment" {
+resource "kubernetes_deployment" "nexus_deployment" {
   depends_on = ["kubernetes_namespace.service_tools"]
 
   metadata {
-    name = "nexus-fuchicorp-deployment"
+    name = "nexus-deployment"
 
     namespace = "${var.deployment_environment}"
 
     labels {
-      app = "nexus-fuchicorp-deployment"
+      app = "nexus-deployment"
     }
   }
 
@@ -42,14 +42,14 @@ resource "kubernetes_deployment" "nexus_fuchicorp_deployment" {
 
     selector {
       match_labels {
-        app = "nexus-fuchicorp-deployment"
+        app = "nexus-deployment"
       }
     }
 
     template {
       metadata {
         labels {
-          app = "nexus-fuchicorp-deployment"
+          app = "nexus-deployment"
         }
       }
 
@@ -101,11 +101,11 @@ resource "kubernetes_deployment" "nexus_fuchicorp_deployment" {
   }
 }
 
-resource "kubernetes_service" "nexus_fuchicorp_service" {
+resource "kubernetes_service" "nexus_service" {
   depends_on = ["kubernetes_namespace.service_tools"]
 
   metadata {
-    name = "nexus-fuchicorp-service"
+    name = "nexus-service"
 
     namespace = "${var.deployment_environment}"
   }
@@ -126,7 +126,7 @@ resource "kubernetes_service" "nexus_fuchicorp_service" {
     }
 
     selector {
-      app = "nexus-fuchicorp-deployment"
+      app = "nexus-deployment"
     }
 
     type = "ClusterIP"

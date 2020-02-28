@@ -1,4 +1,6 @@
 provider "helm" {
+  install_tiller = true 
+  namespace = "kube-system"
   tiller_image = "gcr.io/kubernetes-helm/tiller:${var.tiller_version}"
   service_account = "tiller"
   version = "0.10.4"
@@ -10,7 +12,7 @@ data "template_file" "ingress_controller_values" {
   template = "${file("helm-ingress-controller/ingress-controller/values.yaml")}"
 
   vars {
-    cluster_sub_domain = "fuchicorp.com"
+    deployment_endpoint = "${var.google_domain_name}"
   }
 }
 
@@ -31,7 +33,7 @@ resource "helm_release" "ingress_controller" {
     "${data.template_file.ingress_controller_values.rendered}"
   ]
 
-  name      = "fuchicorp-ingress-controller"
+  name      = "ingress-controller"
   chart     = "./helm-ingress-controller/ingress-controller"
   namespace = "${var.deployment_environment}"
 }

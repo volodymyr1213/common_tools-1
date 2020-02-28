@@ -5,12 +5,12 @@ resource "helm_release" "cert_manager" {
     "kubernetes_service_account.tiller",
     "kubernetes_secret.tiller",
     "kubernetes_cluster_role_binding.tiller_cluster_rule",
-    "kubernetes_deployment.vault_fuchicorp_deployment",
-    "kubernetes_service.vault_fuchicorp_service",
-    "kubernetes_service.nexus_fuchicorp_service",
+    "kubernetes_deployment.vault_deployment",
+    "kubernetes_service.vault_service",
+    "kubernetes_service.nexus_service",
   ] # "helm_release.grafana",
 
-  name      = "fuchicorp-cert-manager"
+  name      = "cert-manager"
   chart     = "jetstack/cert-manager"
   namespace = "${var.deployment_environment}"
 

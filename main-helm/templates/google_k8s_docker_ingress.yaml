@@ -2,25 +2,25 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-fuchicorp-prod
+    cert-manager.io/cluster-issuer: letsencrypt-prod
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/proxy-body-size: 2000m
     nginx.org/client-max-body-size: 2000m
   name: fuchicorp-docker-ingress
 spec:
   rules:
-  - host: docker.fuchicorp.com
+  - host: docker.{{ .Values.domain_name}}
     http:
       paths:
       - path: /
         backend:
-          serviceName: nexus-fuchicorp-service
+          serviceName: nexus-service
           servicePort: {{ .Values.nexusport }}
       - path: /v2/
         backend:
-          serviceName: nexus-fuchicorp-service
+          serviceName: nexus-service
           servicePort: {{ .Values.repo_port }}
   tls:
   - hosts:
-    - docker.fuchicorp.com
+    - docker.{{ .Values.domain_name}}
     secretName: tls-docker-prod-cert
