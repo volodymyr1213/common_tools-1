@@ -73,9 +73,9 @@ Master:
     # service.beta.kubernetes.io/aws-load-balancer-internal: '0.0.0.0/0'
   #   service.beta.kubernetes.io/aws-load-balancer-backend-protocol: https
   # Used to create Ingress record (should used with ServiceType: ClusterIP)
-  HostName: jenkins.${cluster_sub_domain}
-  HostNameAlias: builder.${cluster_sub_domain}
-  cluster_sub_domain: ${cluster_sub_domain}
+  HostName: ${deployment_endpoint}
+  HostNameAlias: ${deployment_endpoint}
+  cluster_sub_domain: ${deployment_endpoint}
   # NodePort: <to set explicitly, choose port between 30000-32767
   ContainerPort: 8080
   # Enable Kubernetes Liveness and Readiness Probes
@@ -124,12 +124,12 @@ Master:
     ApiVersion: extensions/v1beta1
     Annotations:
       kubernetes.io/ingress.class: nginx
-      cert-manager.io/cluster-issuer: letsencrypt-fuchicorp-prod
+      cert-manager.io/cluster-issuer: letsencrypt-prod
     # kubernetes.io/tls-acme: "true"
     TLS:
     - hosts:
-      - jenkins.${cluster_sub_domain}
-      secretName: "jenkins-letsencrypt-fuchicorp-prod"
+      - ${deployment_endpoint}
+      secretName: "jenkins-letsencrypt-prod"
   # List of plugins to be install during Jenkins master start
   InstallPlugins:
     - kubernetes:1.18.2

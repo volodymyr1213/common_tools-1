@@ -4,7 +4,7 @@ data "template_file" "external_dns_values" {
   template = "${file("helm-external-dns/external-dns/template_values.yaml")}"
 
   vars {
-    cluster_sub_domain = "fuchicorp.com"
+    deployment_endpoint = "${var.google_domain_name}"
     google_project   = "${var.google_project_id}"
   }
 }
@@ -27,13 +27,13 @@ resource "helm_release" "external_dns_controller" {
   values = [
     "${data.template_file.external_dns_values.rendered}"
   ]
-  name      = "fuchicorp-external-dns"
+  name      = "external-dns"
   chart     = "./helm-external-dns/external-dns"
   namespace = "${var.deployment_environment}"
 }
 
 
-# External DNS needs secret serviceAccountSecret: "fuchicorp-service-account"
+# External DNS needs secret serviceAccountSecret: "common-service-account"
 resource "kubernetes_secret" "external_dns_secret" {
   metadata {
     name      = "google-service-account"
@@ -41,7 +41,7 @@ resource "kubernetes_secret" "external_dns_secret" {
   }
 
   data = {
-    "credentials.json" = "${file("${path.module}/fuchicorp-service-account.json")}"
+    "credentials.json" = "${file("${path.module}/common-service-account.json")}"
   }
 
   type = "generic"

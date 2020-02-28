@@ -1,33 +1,10 @@
 variable "deployment_environment" {
   default = "tools"
-}
-
-variable "grafana-dns_endpoint_grafana" {
-  type = "map"
-
-  default = {
-    tools = "grafana.fuchicorp.com"
-  }
-}
-
-variable "grafana-datasource_dns_endpoint" {
-  default = "https://prometheus.fuchicorp.com/graph"
-}
-
-variable "cert_manager_version" {
-  default = "v0.11.0"
-}
-
-variable "namespace" {
-  default = "tools"
+  description = "Namespace of the deployment <It will be created>"
 }
 
 variable "vault_token" {
-  default = "Redhat"
-}
-
-variable "git_token" {
-  default = "this-is-git-token"
+  description = "Please enter token for Vault."
 }
 
 variable "vault_service_port" {
@@ -66,11 +43,11 @@ variable "jenkins" {
   type = "map"
 
   default = {
-    jenkins_endpoint       = "jenkins.fuchicorp.com"
     admin_user             = "admin"
     admin_password         = "password"
     jenkins_auth_client_id = "id"
     jenkins_auth_secret    = "secret"
+    git_token              = "awdiahwd12ehhaiodd"
   }
 }
 
@@ -78,7 +55,6 @@ variable "grafana" {
   type = "map"
 
   default = {
-    grafana_endpoint = "grafana.fuchicorp.com"
     grafana-version  = "6.0.1"
     grafana_username = "admin"
     grafana_password = "password"
@@ -86,10 +62,7 @@ variable "grafana" {
   }
 }
 
-variable "prometheus" {
-  type = "map"
-
-  default = {
-    prometheus_endpoint = "prometheus.fuchicorp.com"
-  }
+variable "google_domain_name" {
+  default = "fuchicorp.com"
+  description = "Please change to your domain name"
 }

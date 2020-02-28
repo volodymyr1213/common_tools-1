@@ -169,7 +169,7 @@ google:
   ##
   serviceAccountSecret: "google-service-account"
 
-  # serviceAccountKey: "fuchicorp-service-account.json"
+  # serviceAccountKey: "common-service-account.json"
 
 ## Infoblox configuration to be set via arguments/env. variables
 ##
@@ -191,9 +191,9 @@ infoblox:
 ## RFC 2136 configuration to be set via arguments/env. variables
 ##
 rfc2136:
-  host: "elb-class.com"
+  host: ${deployment_endpoint}
   port: 53
-  zone: "team1-fuchicorp"
+  zone: "fuchicorp"
   tsigSecret: ""
   tsigSecretAlg: hmac-sha256
   tsigKeyname: externaldns-key

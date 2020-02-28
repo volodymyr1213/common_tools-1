@@ -1,0 +1,29 @@
+================================================================
+Hello,
+Congrats, You were able to configure and deploy all common tools.
+Please use bellow information to access to your applicaions. 
+             
+######################## Jenkins ########################
+
+Username: ${jenkins_username}
+Password: ${jenkins_password}
+URL:      https://jenkins.${deployment_endpoint}
+##########################################################
+                       
+###################### Grafana ######################
+Username: ${grafana_username}
+Password: ${grafana_password}
+URL:      https://grafana.${deployment_endpoint}
+##########################################################
+
+                       
+####################### Vault ############################
+Username: ${vault_username}
+Password: ${vault_password}
+URL:      https://vault.${deployment_endpoint}
+##########################################################
+
+####################### Prometheus ############################
+URL:      https://prometheus.${deployment_endpoint}
+##########################################################
+================================================================

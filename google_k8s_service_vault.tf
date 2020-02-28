@@ -1,15 +1,15 @@
 ## FuchiCorp Vault Deployment
-resource "kubernetes_deployment" "vault_fuchicorp_deployment" {
+resource "kubernetes_deployment" "vault_deployment" {
   depends_on = ["kubernetes_namespace.service_tools"]
   depends_on = ["kubernetes_secret.vault_secret"]
 
   metadata {
-    name = "vault-fuchicorp-deployment"
+    name = "vault-deployment"
 
     namespace = "${var.deployment_environment}"
 
     labels {
-      app = "vault-fuchicorp-deployment"
+      app = "vault-deployment"
     }
   }
 
@@ -18,14 +18,14 @@ resource "kubernetes_deployment" "vault_fuchicorp_deployment" {
 
     selector {
       match_labels {
-        app = "vault-fuchicorp-deployment"
+        app = "vault-deployment"
       }
     }
 
     template {
       metadata {
         labels {
-          app = "vault-fuchicorp-deployment"
+          app = "vault-deployment"
         }
       }
 
@@ -86,7 +86,7 @@ resource "kubernetes_persistent_volume_claim" "vault_pvc" {
     namespace = "${var.deployment_environment}"
 
     labels {
-      app = "vault-fuchicorp-deployment"
+      app = "vault-deployment"
     }
   }
 
@@ -117,19 +117,19 @@ resource "kubernetes_secret" "vault_secret" {
   type = "Opaque"
 }
 
-resource "kubernetes_service" "vault_fuchicorp_service" {
+resource "kubernetes_service" "vault_service" {
   depends_on = ["kubernetes_namespace.service_tools"]
   depends_on = ["kubernetes_secret.vault_secret"]
 
   metadata {
-    name = "vault-fuchicorp-service"
+    name = "vault-service"
 
     namespace = "${var.deployment_environment}"
   }
 
   spec {
     selector {
-      app = "vault-fuchicorp-deployment"
+      app = "vault-deployment"
     }
 
     port {
