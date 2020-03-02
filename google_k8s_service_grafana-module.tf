@@ -1,4 +1,4 @@
-module "grafana_deploy" {
+module "helm_deploy" {
   source                 = "git::https://github.com/fuchicorp/helm-deploy.git"
   deployment_name        = "${var.grafana["grafana-name"]}"
   deployment_environment = "${var.deployment_environment}"
