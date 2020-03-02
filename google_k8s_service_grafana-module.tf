@@ -14,6 +14,4 @@ module "helm_deploy" {
     grafana_auth_client_id   = "${var.grafana["grafana_client_secret"]}"
     grafana_client_secret    = "${var.grafana["grafana_auth_client_id"]}"
   }
- 
-
 }
