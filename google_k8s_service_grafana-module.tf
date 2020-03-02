@@ -1,5 +1,5 @@
-module "helm_deploy" {
-  source                 = "git::https://github.com/fuchicorp/helm-deploy.git"
+module "grafana_deploy" {
+  source                 = "fuchicorp/chart/helm"
   deployment_name        = "${var.grafana["grafana-name"]}"
   deployment_environment = "${var.deployment_environment}"
   deployment_endpoint    = "grafana.${var.google_domain_name}"
