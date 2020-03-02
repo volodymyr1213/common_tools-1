@@ -1,4 +1,4 @@
-module "grafana_deploy" {
+module "helm_deploy" {
   source  = "fuchicorp/chart/helm"
   deployment_name        = "${var.grafana["grafana-name"]}"
   deployment_environment = "${var.deployment_environment}"
