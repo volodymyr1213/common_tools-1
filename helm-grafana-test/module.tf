@@ -4,4 +4,7 @@ module "helm_deploy" {
   deployment_environment = "default"
   deployment_endpoint    = "graf.tazagul.net"
   deployment_path        = "grafana"
+  grafana_username      = "admin"
+  grafana_password      = "password"
+  
 }
