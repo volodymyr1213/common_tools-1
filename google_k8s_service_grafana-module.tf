@@ -1,5 +1,6 @@
 module "grafana_deploy" {
   source                 = "fuchicorp/chart/helm"
+  version                = "0.0.2"
   deployment_name        = "${var.grafana["grafana-name"]}"
   deployment_environment = "${var.deployment_environment}"
   deployment_endpoint    = "grafana.${var.google_domain_name}"
