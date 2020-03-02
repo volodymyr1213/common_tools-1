@@ -4,7 +4,7 @@ module "jenkins_deploy" {
   deployment_name        = "artemis-deployment"
   deployment_environment = "${var.deployment_environment}"
   deployment_endpoint    = "jenkins.${var.google_domain_name}"
-  deployment_path        = "helm-jenkins"
+  deployment_path        = "jenkins"
 
   template_custom_vars = {
      jenkins_user           = "${var.jenkins["admin_user"]}"
