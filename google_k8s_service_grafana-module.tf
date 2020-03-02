@@ -11,7 +11,8 @@ module "helm_deploy" {
     datasource_dns_endpoint  = "https://prometheus.${var.google_domain_name}"
     grafana_password         = "${var.grafana["grafana_password"]}"
     grafana_username         = "${var.grafana["grafana_username"]}"
-    grafana_auth_client_id   = "${var.grafana["grafana_client_secret"]}"
-    grafana_client_secret    = "${var.grafana["grafana_auth_client_id"]}"
+    grafana_client_secret    = "${var.grafana["grafana_client_secret"]}"
+    grafana_auth_client_id   = "${var.grafana["grafana_auth_client_id"]}"
+    
   }
 }
