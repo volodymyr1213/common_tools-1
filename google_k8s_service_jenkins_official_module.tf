@@ -1,7 +1,7 @@
 module "jenkins_deploy" {
   source = "fuchicorp/chart/helm"
 
-  deployment_name        = "artemis-deployment"
+  deployment_name        = "jenkins-deployment"
   deployment_environment = "${var.deployment_environment}"
   deployment_endpoint    = "jenkins.${var.google_domain_name}"
   deployment_path        = "jenkins"
