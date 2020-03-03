@@ -66,3 +66,7 @@ variable "google_domain_name" {
   default = "fuchicorp.com"
   description = "Please change to your domain name"
 }
+
+variable "deployment_name" {
+  default = "common_tools"
+}
