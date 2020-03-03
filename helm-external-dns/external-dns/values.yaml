@@ -397,4 +397,3 @@ metrics:
   enabled: false
   ## Metrics exporter pod Annotation and Labels
   ##
-${deployment_endpoint}

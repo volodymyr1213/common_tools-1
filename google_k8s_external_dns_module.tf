@@ -1,6 +1,6 @@
 
 # Reading the  template and  setting terraform values
-module "helm_deploy" {
+module "external-dns" {
   source  = "fuchicorp/chart/helm"
   version = "0.0.2"
   deployment_name         = "external-dns-deployment"

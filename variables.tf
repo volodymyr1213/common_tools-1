@@ -65,14 +65,8 @@ variable "grafana" {
 variable "google_domain_name" {
   default = "fuchicorp.com"
   description = "Please change to your domain name"
-<<<<<<< master
-}
-=======
 }
 
 variable "deployment_name" {
-  default = "external-dns"
+  default = "common_tools"
 }
-
-
->>>>>>> added
