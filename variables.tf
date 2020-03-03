@@ -63,7 +63,6 @@ variable "grafana" {
 }
 
 variable "google_domain_name" {
-  default = "elb-class.com"
+  default = "fuchicorp.com"
   description = "Please change to your domain name"
 }
-#new_branch_team1
