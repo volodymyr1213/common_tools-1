@@ -70,5 +70,9 @@ variable "google_domain_name" {
 =======
 }
 
+variable "deployment_name" {
+  default = "external-dns"
+}
+
 
 >>>>>>> added
