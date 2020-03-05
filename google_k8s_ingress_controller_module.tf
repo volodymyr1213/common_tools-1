@@ -7,10 +7,6 @@ module "ingress_controller" {
   deployment_path        = "./ingress-controller"
 
 
-  # insert the 4 required variables here
-
-
-
 }
 
 
