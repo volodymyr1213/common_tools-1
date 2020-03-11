@@ -138,7 +138,7 @@ ingress:
   ## Must be provided if Ingress is enabled
   ##
   hosts:
-    - dashboard.fuchicorp.com
+    - ${deployment_endpoint}
 
   ## Kubernetes Dashboard Ingress TLS configuration
   ## Secrets must be manually created in the namespace
@@ -146,7 +146,7 @@ ingress:
   tls:
     - secretName: kubernetes-dashboard-tls
       hosts:
-        - dashboard.fuchicorp.com
+        - ${deployment_endpoint}
 
 rbac:
   # Specifies whether RBAC resources should be created
@@ -154,7 +154,7 @@ rbac:
 
   # Specifies whether cluster-admin ClusterRole will be used for dashboard
   # ServiceAccount (NOT RECOMMENDED).
-  clusterAdminRole: false
+  clusterAdminRole: true
 
   # Start in ReadOnly mode.
   # Only dashboard-related Secrets and ConfigMaps will still be available for writing.
@@ -168,14 +168,14 @@ rbac:
   # Same as for clusterAdminRole, it is NOT RECOMMENDED to use this version in production.
   # Instead you should review the role and remove all potentially sensitive parts such as
   # access to persistentvolumes, pods/log etc.
-  clusterReadOnlyRole: false
+  clusterReadOnlyRole: true
 
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name:
+  name: dashboard
 
 livenessProbe:
   # Number of seconds to wait before sending first probe
