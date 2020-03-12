@@ -2,7 +2,6 @@
 # Reading the  template and  setting terraform values
 module "external-dns" {
   source  = "fuchicorp/chart/helm"
-  version = "0.0.2"
   deployment_name         = "external-dns-deployment"
   deployment_environment  = "${var.deployment_environment}"
   deployment_endpoint     = "${var.google_domain_name}"
