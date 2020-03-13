@@ -28,7 +28,7 @@ resource "kubernetes_secret" "ns_cleaner_secret" {
 
 resource "kubernetes_cluster_role_binding" "ns_cleaner" {
   depends_on = [
-    "kubernetes_secret.ns_cleaner",
+    "kubernetes_secret.ns_cleaner_secret",
     "kubernetes_namespace.service_tools",
     "kubernetes_service_account.tiller",
     "kubernetes_secret.tiller"
