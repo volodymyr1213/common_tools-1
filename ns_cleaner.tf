@@ -45,7 +45,7 @@ resource "kubernetes_cron_job" "ns_cleaner_cronjob" {
   spec {
     successful_jobs_history_limit = 3
     failed_jobs_history_limit     = 1
-    schedule                      = "* * * * *"
+    schedule                      = "55 23 * * 0"
     job_template {
       metadata {}
       spec {
