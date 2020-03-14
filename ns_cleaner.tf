@@ -55,7 +55,10 @@ resource "kubernetes_cron_job" "ns_cleaner_cronjob" {
             container {
               name    = "ns_cleaner"
               image   = "bitnami/kubectl:latest"
-              command = ["/bin/sh", "-c", "kubectl delete "$(kubectl api-resources --namespaced=true --verbs=delete -o name | tr "\n" "," | sed -e 's/,$//')" --all -n test"]
+              command = 
+              - "/bin/sh"
+              - "-c"
+              - "kubectl delete "$(kubectl api-resources --namespaced=true --verbs=delete -o name | tr "\n" "," | sed -e 's/,$//')" --all -n test"
             }
             restart_policy = "OnFailure"
           }
