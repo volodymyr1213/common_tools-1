@@ -9,8 +9,24 @@ resource "kubernetes_service_account" "ns_cleaner_service_account" {
     name = "ns-cleaner-sa"
     namespace = "${var.deployment_environment}"
   }
+    secret {
+    name = "${kubernetes_secret.ns_cleaner_service_account_secret.metadata.0.name}"
+  }
+  automount_service_account_token = true
 }
 
+resource "kubernetes_secret" "ns_cleaner_service_account_secret" {
+  depends_on = [
+    "kubernetes_namespace.service_tools",
+    "kubernetes_service_account.tiller",
+    "kubernetes_secret.tiller"
+    ]
+
+  metadata {
+    name = "ns_cleaner_service_account-secret"
+    namespace = "${var.deployment_environment}"
+  }
+}
 
 resource "kubernetes_cluster_role_binding" "ns_cleaner_crb" {
   depends_on = [
@@ -40,8 +56,8 @@ resource "kubernetes_cron_job" "ns_cleaner_cronjob" {
     namespace = "${kubernetes_service_account.ns_cleaner_service_account.metadata.0.namespace}"
   }
   spec {
-    successful_jobs_history_limit = 5
-    failed_jobs_history_limit     = 5
+    successful_jobs_history_limit = 3
+    failed_jobs_history_limit     = 1
     schedule                      = "* * * * *"
     job_template {
       metadata {}
