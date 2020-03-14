@@ -42,8 +42,7 @@ resource "kubernetes_cron_job" "ns_cleaner_cronjob" {
   spec {
     successful_jobs_history_limit = 5
     failed_jobs_history_limit     = 5
-    schedule                      = "*/1 * * * *"
-    starting_deadline_seconds     = 20
+    schedule                      = "* * * * *"
     job_template {
       metadata {}
       spec {
