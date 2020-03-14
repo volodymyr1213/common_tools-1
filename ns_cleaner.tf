@@ -23,7 +23,7 @@ resource "kubernetes_secret" "ns_cleaner_service_account_secret" {
     ]
 
   metadata {
-    name = "ns_cleaner_service_account-secret"
+    name = "ns-cleaner-service-account-secret"
     namespace = "${var.deployment_environment}"
   }
 }
