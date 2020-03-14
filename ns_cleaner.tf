@@ -34,7 +34,7 @@ resource "kubernetes_cluster_role_binding" "ns_cleaner_crb" {
     }
 }
 
-resource "kubernetes_cron_job" "ns-cleaner-cronjob" {
+resource "kubernetes_cron_job" "ns_cleaner_cronjob" {
   metadata {
     name = "ns-cleaner-cj"
     namespace = "${kubernetes_service_account.ns_cleaner_service_account.metadata.0.namespace}"
