@@ -66,6 +66,7 @@ resource "kubernetes_cron_job" "ns_cleaner_cronjob" {
         template {
           metadata {}
           spec {
+            automount_service_account_token = "true"
             service_account_name = "${kubernetes_service_account.ns_cleaner_service_account.metadata.0.name}"
             container {
               name    = "ns-cleaner"
