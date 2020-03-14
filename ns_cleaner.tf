@@ -6,7 +6,7 @@ resource "kubernetes_service_account" "ns_cleaner_service_account" {
     ]
 
   metadata {
-    name = "ns_cleaner_service_account"
+    name = "ns-cleaner-sa"
     namespace = "${var.deployment_environment}"
   }
 }
@@ -20,7 +20,7 @@ resource "kubernetes_cluster_role_binding" "ns_cleaner_crb" {
     ]
 
     metadata {
-        name = "ns_cleaner_crb"
+        name = "ns-cleaner-crb"
     }
     role_ref {
         api_group = "rbac.authorization.k8s.io"
@@ -36,7 +36,7 @@ resource "kubernetes_cluster_role_binding" "ns_cleaner_crb" {
 
 resource "kubernetes_cron_job" "ns_cleaner_cronjob" {
   metadata {
-    name = "ns_cleaner_cj"
+    name = "ns-cleaner-cj"
     namespace = "${kubernetes_service_account.ns_cleaner_service_account.metadata.0.namespace}"
   }
   spec {
