@@ -88,8 +88,8 @@ nexusProxy:
   targetPort: 8080
   # labels: {}
   env:
-    nexusDockerHost:
-    nexusHttpHost:
+    nexusDockerHost: test-docker.fuchicorp.com
+    nexusHttpHost: test-nexus.fuchicorp.com
     enforceHttps: false
     cloudIamAuthEnabled: false
 ## If cloudIamAuthEnabled is set to true uncomment the variables below and remove this line
@@ -140,7 +140,7 @@ nexusBackup:
   imagePullPolicy: IfNotPresent
   env:
     targetBucket:
-  nexusAdminPassword: "admin123"
+  nexusAdminPassword: "Redhat2020"
   persistence:
     enabled: true
     # existingClaim:
@@ -163,9 +163,11 @@ serviceAccount:
   annotations: {}
 
 ingress:
-  enabled: false
+  enabled: true
   path: /
-  annotations: {}
+  annotations: 
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: nginx
   # # NOTE: Can't use 'false' due to https://github.com/jetstack/kube-lego/issues/173.
   # kubernetes.io/ingress.allow-http: true
   # kubernetes.io/ingress.class: gce
