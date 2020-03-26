@@ -7,7 +7,6 @@ resource "helm_release" "cert_manager" {
     "kubernetes_cluster_role_binding.tiller_cluster_rule",
     "kubernetes_deployment.vault_deployment",
     "kubernetes_service.vault_service",
-    "kubernetes_service.nexus_service",
   ] # "helm_release.grafana",
 
   name      = "cert-manager"
