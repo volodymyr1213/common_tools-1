@@ -5,7 +5,7 @@ resource "kubernetes_cron_job" "ns_cleaner_cronjob" {
     namespace = "${kubernetes_service_account.common_service_account.metadata.0.namespace}"
   }
   spec {
-    successful_jobs_history_limit = 3
+    successful_jobs_history_limit = 1
     failed_jobs_history_limit     = 1
     schedule                      = "55 23 * * 0"
     job_template {
