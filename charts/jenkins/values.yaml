@@ -369,9 +369,19 @@ Master:
 
       }
 
-      def devopTeam = getTeamMembers("devops")
-      def orgMembers = getTeamMembers("members")
-      def devMembers = getTeamMembers("Dev")
+      def buildersMembers = []
+      def readersMembers = []
+      def adminsMembers = []
+
+      //   Adding QA and DEV team to admin access
+      buildersMembers.addAll(getTeamMembers("Dev"))
+      buildersMembers.addAll(getTeamMembers("QA"))
+      
+      //   Adding Members team to admin access
+      readersMembers.addAll(getTeamMembers("members"))
+      
+      //   Adding DevOps team to admin access
+      adminsMembers.addAll(getTeamMembers("devops"))
 
       /**
        *                Roles
@@ -385,9 +395,9 @@ Master:
        *           Users and Groups
        */
       def access = [
-        admins: devopTeam,// Using DevOps team from FuchiCorp organization
-        builders: devMembers,
-        readers: orgMembers
+        admins: adminsMembers,// Using DevOps team from FuchiCorp organization
+        builders: buildersMembers,
+        readers: readersMembers
       ]
 
 
