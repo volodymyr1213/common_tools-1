@@ -7,12 +7,13 @@ module "jenkins_deploy" {
   deployment_path        = "jenkins"
 
   template_custom_vars = {
-    
+
     null_depends_on        = "${null_resource.cert_manager.id}"
     jenkins_user           = "${var.jenkins["admin_user"]}"
     jenkins_pass           = "${var.jenkins["admin_password"]}"
     jenkins_auth_secret    = "${var.jenkins["jenkins_auth_secret"]}"
     jenkins_auth_client_id = "${var.jenkins["jenkins_auth_client_id"]}"
+    jenkins_pvc            = "${var.jenkins["jenkins_pvc"]}"
     git_token              = "${var.jenkins["git_token"]}"
   }
 }
