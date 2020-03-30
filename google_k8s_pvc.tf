@@ -24,7 +24,7 @@ resource "kubernetes_persistent_volume_claim" "fuchicorp_pv_claim" {
     access_modes = ["ReadWriteOnce"]
     resources {
       requests {
-        storage = "1Gi"
+        storage = "15Gi"
       }
     }
     storage_class_name = "${kubernetes_storage_class.fuchicorp_storage_class.metadata.0.name}"
