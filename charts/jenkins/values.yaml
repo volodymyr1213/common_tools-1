@@ -376,10 +376,10 @@ Master:
       //   Adding QA and DEV team to builder access
       buildersMembers.addAll(getTeamMembers("Dev"))
       buildersMembers.addAll(getTeamMembers("QA"))
-      
+
       //   Adding FuchiCorp Members team to read access
       readersMembers.addAll(getTeamMembers("members"))
-      
+
       //   Adding DevOps team to admin access
       adminsMembers.addAll(getTeamMembers("devops"))
 
@@ -806,6 +806,8 @@ Persistence:
   ## Requires Persistence.Enabled: true
   ## If defined, PVC must be created manually before volume will be bound
   # ExistingClaim: jenkins2
+  ExistingClaim: ${jenkins_pvc}
+
 
   ## jenkins data Persistent Volume Storage Class
   ## If defined, storageClassName: <storageClass>
