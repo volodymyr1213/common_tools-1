@@ -33,20 +33,17 @@ server:
   # Ingress allows ingress services to be created to allow external access 
   # from Kubernetes to access Vault pods.
   ingress:
-    enabled: false
-    labels: {}
-      # traffic: external
-    annotations: {}
-      # kubernetes.io/ingress.class: nginx
-      # kubernetes.io/tls-acme: "true"
+    enabled: true
+    annotations: 
+      kubernetes.io/ingress.class: nginx
+      cert-manager.io/cluster-issuer: letsencrypt-prod  
     hosts:
-      - host: chart-example.local
-        paths: []
+      - ${deployment_endpoint}
 
-    tls: []
-    #  - secretName: chart-example-tls
-    #    hosts:
-    #      - chart-example.local
+    tls:
+     - secretName: vault-tls
+       hosts:
+         - ${deployment_endpoint}
 
 
   # authDelegator enables a cluster role binding to be attached to the service
@@ -122,9 +119,10 @@ server:
     # used to communicate with pods directly through DNS instead of a round robin
     # load balancer.
     # clusterIP: None
+    type: ClusterIP
 
     # Port on which Vault server is listening
-    port: 8200
+    port: 80
     # Target port to which the service should be mapped to
     targetPort: 8200
     # Extra annotations for the service definition

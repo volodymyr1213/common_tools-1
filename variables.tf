@@ -3,15 +3,6 @@ variable "deployment_environment" {
   description = "Namespace of the deployment <It will be created>"
 }
 
-variable "vault_token" {
-  description = "Please enter token for Vault."
-}
-
-variable "vault_service_port" {
-  default     = 8082
-  description = "Please do not change this ports."
-}
-
 variable "nexus_service_port" {
   default     = 8083
   description = "Please do not change this ports."
@@ -62,6 +53,17 @@ variable "grafana" {
     smtp_username    = "smtp-user"
     smtp_password    = "password"
     smtp_host        = "smtp.gmail.com:587"
+  }
+}
+
+variable "vault" {
+  type = "map"
+
+  default = {
+    vault_token        = "yourtoken"
+    vault_username     = "admin"
+    vault_service_port = "8200"
+    vault-name         = "test-vault"
   }
 }
 
