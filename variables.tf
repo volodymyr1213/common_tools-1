@@ -1,5 +1,5 @@
 variable "deployment_environment" {
-  default = "tools"
+  default     = "tools"
   description = "Namespace of the deployment <It will be created>"
 }
 
@@ -68,7 +68,7 @@ variable "vault" {
 }
 
 variable "google_domain_name" {
-  default = "fuchicorp.com"
+  default     = "fuchicorp.com"
   description = "Please change to your domain name"
 }
 

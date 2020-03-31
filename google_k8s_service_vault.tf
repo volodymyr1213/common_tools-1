@@ -1,6 +1,6 @@
 ## FuchiCorp Vault Deployment
 module "vault_deploy" {
-  source  = "fuchicorp/chart/helm"
+  source                 = "fuchicorp/chart/helm"
   deployment_name        = "${var.vault["vault-name"]}"
   deployment_environment = "${kubernetes_namespace.service_tools.metadata.0.name}"
   deployment_endpoint    = "test-vault.${var.google_domain_name}"
@@ -8,11 +8,11 @@ module "vault_deploy" {
 
   template_custom_vars = {
 
-    null_depends_on          = "${null_resource.cert_manager.id}"
-    vault_username           = "${var.vault["vault_username"]}"
-    vault_service_port       = "${var.vault["vault_service_port"]}"
-    vault_token              = "${var.vault["vault_token"]}"
-    
+    null_depends_on    = "${null_resource.cert_manager.id}"
+    vault_username     = "${var.vault["vault_username"]}"
+    vault_service_port = "${var.vault["vault_service_port"]}"
+    vault_token        = "${var.vault["vault_token"]}"
+
   }
 }
 
