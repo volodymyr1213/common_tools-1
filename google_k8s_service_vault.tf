@@ -17,145 +17,145 @@ module "vault_deploy" {
 }
 
 
-resource "kubernetes_deployment" "vault_deployment" {
-  depends_on = ["kubernetes_namespace.service_tools"]
-  depends_on = ["kubernetes_secret.vault_secret"]
+# resource "kubernetes_deployment" "vault_deployment" {
+#   depends_on = ["kubernetes_namespace.service_tools"]
+#   depends_on = ["kubernetes_secret.vault_secret"]
 
-  metadata {
-    name = "vault-deployment"
+#   metadata {
+#     name = "vault-deployment"
 
-    namespace = "${kubernetes_namespace.service_tools.metadata.0.name}"
+#     namespace = "${kubernetes_namespace.service_tools.metadata.0.name}"
 
-    labels {
-      app = "vault-deployment"
-    }
-  }
+#     labels {
+#       app = "vault-deployment"
+#     }
+#   }
 
-  spec {
-    replicas = 1
+#   spec {
+#     replicas = 1
 
-    selector {
-      match_labels {
-        app = "vault-deployment"
-      }
-    }
+#     selector {
+#       match_labels {
+#         app = "vault-deployment"
+#       }
+#     }
 
-    template {
-      metadata {
-        labels {
-          app = "vault-deployment"
-        }
-      }
+#     template {
+#       metadata {
+#         labels {
+#           app = "vault-deployment"
+#         }
+#       }
 
-      spec {
-        volume {
-          name = "vault-pvc"
+#       spec {
+#         volume {
+#           name = "vault-pvc"
 
-          persistent_volume_claim {
-            claim_name = "vault-pvc"
-          }
-        }
+#           persistent_volume_claim {
+#             claim_name = "vault-pvc"
+#           }
+#         }
 
-        container {
-          name  = "vault"
-          image = "vault"
+#         container {
+#           name  = "vault"
+#           image = "vault"
 
-          port {
-            container_port = 8200
-            protocol       = "TCP"
-          }
+#           port {
+#             container_port = 8200
+#             protocol       = "TCP"
+#           }
 
-          security_context {
-            capabilities {
-              add = ["IPC_LOCK"]
-            }
-          }
+#           security_context {
+#             capabilities {
+#               add = ["IPC_LOCK"]
+#             }
+#           }
 
-          env {
-            name = "VAULT_DEV_ROOT_TOKEN_ID"
+#           env {
+#             name = "VAULT_DEV_ROOT_TOKEN_ID"
 
-            value_from {
-              secret_key_ref {
-                name = "vault-secret"
-                key  = "token"
-              }
-            }
-          }
+#             value_from {
+#               secret_key_ref {
+#                 name = "vault-secret"
+#                 key  = "token"
+#               }
+#             }
+#           }
 
-          volume_mount {
-            name       = "vault-pvc"
-            mount_path = "/var/run"
-          }
-        }
-      }
-    }
-  }
-}
+#           volume_mount {
+#             name       = "vault-pvc"
+#             mount_path = "/var/run"
+#           }
+#         }
+#       }
+#     }
+#   }
+# }
 
-## Vault Persistent Volume Claim
-resource "kubernetes_persistent_volume_claim" "vault_pvc" {
-  depends_on = [
-    "kubernetes_namespace.service_tools",
-    "kubernetes_secret.vault_secret" ]
+# ## Vault Persistent Volume Claim
+# resource "kubernetes_persistent_volume_claim" "vault_pvc" {
+#   depends_on = [
+#     "kubernetes_namespace.service_tools",
+#     "kubernetes_secret.vault_secret" ]
 
-  metadata {
-    name = "vault-pvc"
+#   metadata {
+#     name = "vault-pvc"
 
-    namespace = "${kubernetes_namespace.service_tools.metadata.0.name}"
+#     namespace = "${kubernetes_namespace.service_tools.metadata.0.name}"
 
-    labels {
-      app = "vault-deployment"
-    }
-  }
+#     labels {
+#       app = "vault-deployment"
+#     }
+#   }
 
-  spec {
-    access_modes = ["ReadWriteOnce"]
+#   spec {
+#     access_modes = ["ReadWriteOnce"]
 
-    resources {
-      requests {
-        storage = "1Gi"
-      }
-    }
-  }
-}
+#     resources {
+#       requests {
+#         storage = "1Gi"
+#       }
+#     }
+#   }
+# }
 
-## FuchiCorp vault secret
-resource "kubernetes_secret" "vault_secret" {
-  depends_on = ["kubernetes_namespace.service_tools"]
-  metadata {
-    name = "vault-secret"
+# ## FuchiCorp vault secret
+# resource "kubernetes_secret" "vault_secret" {
+#   depends_on = ["kubernetes_namespace.service_tools"]
+#   metadata {
+#     name = "vault-secret"
 
-    namespace = "${kubernetes_namespace.service_tools.metadata.0.name}"
-  }
+#     namespace = "${kubernetes_namespace.service_tools.metadata.0.name}"
+#   }
 
-  data {
-    token = "${var.vault_token}"
-  }
+#   data {
+#     token = "${var.vault_token}"
+#   }
 
-  type = "Opaque"
-}
+#   type = "Opaque"
+# }
 
-resource "kubernetes_service" "vault_service" {
-  depends_on = ["kubernetes_namespace.service_tools"]
-  depends_on = ["kubernetes_secret.vault_secret"]
+# resource "kubernetes_service" "vault_service" {
+#   depends_on = ["kubernetes_namespace.service_tools"]
+#   depends_on = ["kubernetes_secret.vault_secret"]
 
-  metadata {
-    name = "vault-service"
+#   metadata {
+#     name = "vault-service"
 
-    namespace = "${kubernetes_namespace.service_tools.metadata.0.name}"
-  }
+#     namespace = "${kubernetes_namespace.service_tools.metadata.0.name}"
+#   }
 
-  spec {
-    selector {
-      app = "vault-deployment"
-    }
+#   spec {
+#     selector {
+#       app = "vault-deployment"
+#     }
 
-    port {
-      protocol    = "TCP"
-      port        = "${var.vault_service_port}"
-      target_port = 8200
-    }
+#     port {
+#       protocol    = "TCP"
+#       port        = "${var.vault_service_port}"
+#       target_port = 8200
+#     }
 
-    type = "ClusterIP"
-  }
-}
+#     type = "ClusterIP"
+#   }
+# }
