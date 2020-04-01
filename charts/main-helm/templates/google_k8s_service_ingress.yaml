@@ -13,7 +13,7 @@ spec:
       paths:
       - backend:
           serviceName: vault-service
-          servicePort: {{ .Values.vaultport }}
+          servicePort: {{ .Values.vault_service_port }}
   tls:
   - hosts:
     - vault.{{ .Values.domain_name}}
