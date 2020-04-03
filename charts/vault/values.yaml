@@ -123,7 +123,7 @@ server:
     type: ClusterIP
 
     # Port on which Vault server is listening
-    port: 8200
+    port: ${vault_service_port}
     # Target port to which the service should be mapped to
     targetPort: 8200
     # Extra annotations for the service definition

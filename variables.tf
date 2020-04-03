@@ -60,8 +60,6 @@ variable "vault" {
   type = "map"
 
   default = {
-    vault_token        = "yourtoken"
-    vault_username     = "admin"
     vault_service_port = "8200"
     vault-name         = "test-vault"
   }
