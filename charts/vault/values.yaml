@@ -39,7 +39,8 @@ server:
       cert-manager.io/cluster-issuer: letsencrypt-prod  
     hosts:
       - ${deployment_endpoint}
-
+        paths:
+        - /
     tls:
      - secretName: vault-tls
        hosts:
