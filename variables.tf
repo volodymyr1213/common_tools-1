@@ -56,6 +56,7 @@ variable "grafana" {
   }
 }
 
+
 variable "vault" {
   type = "map"
 
