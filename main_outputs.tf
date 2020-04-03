@@ -12,8 +12,8 @@ data "template_file" "success_output" {
     grafana_password = "${var.grafana["grafana_password"]}"
 
     # Vault information 
-    # vault_username = "admin"
-    # vault_token = "${var.vault["vault_token"]}"
+    vault_username = "admin"
+    vault_token = "${var.vault["vault_token"]}"
 
     ## Main domain name
     deployment_endpoint = "${var.google_domain_name}"
