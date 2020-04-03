@@ -31,7 +31,7 @@ spec:
 {{- end }}
   rules:
   {{- range .Values.server.ingress.hosts }}
-    - host: {{ .host | quote }}
+    - host: {{ . }}
       http:
         paths:
         {{- range .paths }}
