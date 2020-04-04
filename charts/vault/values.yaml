@@ -59,15 +59,6 @@ server:
     # GOOGLE_REGION: global
     # GOOGLE_PROJECT: myproject
     # GOOGLE_APPLICATION_CREDENTIALS: /vault/userconfig/myproject/myproject-creds.json
-  ContainerEnv:
-    - name: GIT_TOKEN
-      value: ${git_token}
-
-    - name: VAULT_GITHUB_AUTH_ID
-      value: ${vault_auth_client_id}
-
-    - name: VAULT_GITHUB_AUTH_SECRET
-      value: ${vault_auth_secret}
 
   # extraSecretEnvironmentVars is a list of extra enviroment variables to set with the stateful set.
   # These variables take value from existing Secret objects.
@@ -100,6 +91,16 @@ server:
   # Toleration Settings for server pods
   # This should be a multi-line string matching the Toleration array
   # in a PodSpec.
+
+  ContainerEnv:
+    - name: GIT_TOKEN
+      value: ${git_token}
+
+    - name: VAULT_GITHUB_AUTH_ID
+      value: ${vault_auth_client_id}
+
+    - name: VAULT_GITHUB_AUTH_SECRET
+      value: ${vault_auth_secret}
   tolerations: {}
 
   # nodeSelector labels for server pod assignment, formatted as a muli-line string.
