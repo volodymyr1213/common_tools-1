@@ -60,10 +60,13 @@ variable "vault" {
   type = "map"
 
   default = {
-    vault_token        = "yourtoken"
-    vault_username     = "admin"
-    vault_service_port = "8200"
-    vault-name         = "test-vault"
+    vault_token            = "yourtoken"
+    vault_username         = "admin"
+    vault_service_port     = "8200"
+    vault-name             = "test-vault"
+    vault_auth_client_id   = "vault-id"
+    vault_auth_secret      = "vault-secret"
+    git_token              = "git-token"
   }
 }
 
