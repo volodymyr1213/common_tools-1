@@ -6,6 +6,7 @@ module "nexus_deploy" {
   deployment_path        = "sonatype-nexus"
 
   template_custom_vars = {
+    null_depends_on          = "${null_resource.helm_init.id}"
     docker_endpoint          = "docker.${var.google_domain_name}"
     repo_port                = "${var.repo_port}"
   }
