@@ -5,7 +5,6 @@ module "nexus_deploy" {
   deployment_endpoint    = "nexus.${var.google_domain_name}"
   deployment_path        = "sonatype-nexus"
 
-  
   template_custom_vars = {
     docker_endpoint          = "docker.${var.google_domain_name}"
     repo_port                = "${var.repo_port}"

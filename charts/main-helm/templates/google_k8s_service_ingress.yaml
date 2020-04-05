@@ -8,14 +8,6 @@ metadata:
 
 spec:
   rules:
-
-  - host: nexus.{{ .Values.domain_name}}
-    http:
-      paths:
-      - backend:
-          serviceName: nexus-service
-          servicePort: {{ .Values.nexusport }}
-
   - host: vault.{{ .Values.domain_name}}
     http:
       paths:
@@ -25,6 +17,4 @@ spec:
   tls:
   - hosts:
     - vault.{{ .Values.domain_name}}
-    - nexus.{{ .Values.domain_name}}
-    - grafana.{{ .Values.domain_name}}
     secretName: tls-prod-cert
