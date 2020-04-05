@@ -88,8 +88,8 @@ nexusProxy:
   targetPort: 8080
   # labels: {}
   env:
-    nexusDockerHost: test-docker.fuchicorp.com
-    nexusHttpHost: test-nexus.fuchicorp.com
+    nexusDockerHost: docker.fuchicorp.com
+    nexusHttpHost: nexus.fuchicorp.com
     enforceHttps: false
     cloudIamAuthEnabled: false
 ## If cloudIamAuthEnabled is set to true uncomment the variables below and remove this line
