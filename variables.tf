@@ -65,6 +65,17 @@ variable "grafana" {
   }
 }
 
+variable "kube_dashboard" {
+  type = "map"
+  default {
+    github_auth_client_id = "id"
+    github_auth_secret    = "secret"
+    github_organization   = "mkarimi20"
+    proxy_cookie_secret   = "exampleproxysecret"
+  }
+}
+
+
 variable "google_domain_name" {
   default = "fuchicorp.com"
   description = "Please change to your domain name"
