@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   annotations:
-{{ toYaml .Values.ingress.annotations | indent 4 }}
+{{ toYaml .Values.annotations | indent 4 }}
   name: dashboard-proxy
 spec:
   rules:
