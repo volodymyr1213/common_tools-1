@@ -17,6 +17,12 @@ variable "nexus_service_port" {
   description = "Please do not change this ports."
 }
 
+variable "nexus_password" {
+  default     = "fuchicorp"
+  description = "Please pass your password in tfvars."
+}
+
+
 variable "tiller_version" {
   default     = "v2.11.0"
   description = "Please provide version of the tiller."

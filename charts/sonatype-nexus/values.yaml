@@ -8,6 +8,10 @@ deploymentStrategy: {}
   #   maxUnavailable: 25%
   # type: RollingUpdate
 
+password:
+  current: admin123
+  new: ${nexus_password}
+
 nexus:
   imageName: sonatype/nexus3
   imageTag: 3.20.1
