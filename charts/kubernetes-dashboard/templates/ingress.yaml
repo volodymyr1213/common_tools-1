@@ -15,10 +15,10 @@ spec:
       http:
         paths:
   {{- range $p := $paths }}
-          - path: {{ $p }}
-            backend:
-              serviceName: dashboard-proxy
-              servicePort: 80
+        - path: {{ $p }}
+          backend:
+            serviceName: dashboard-proxy
+            servicePort: 80
   {{- end -}}
   {{- end -}}
   {{- if .Values.ingress.tls }}
