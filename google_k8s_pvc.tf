@@ -29,7 +29,7 @@ resource "kubernetes_persistent_volume_claim" "fuchicorp_pv_claim" {
     }
     storage_class_name = "${kubernetes_storage_class.fuchicorp_storage_class.metadata.0.name}"
   }
-  # lifecycle {
-  #   prevent_destroy = "true"
-  # }
+  lifecycle {
+     prevent_destroy = "true"
+  }
 }
