@@ -16,8 +16,6 @@ spec:
           backend:
             serviceName: dashboard-proxy
             servicePort: 80
-  {{- end -}}
-  {{- end -}}
   {{- if .Values.ingress.tls }}
   tls:
 {{ toYaml .Values.ingress.tls | indent 4 }}
