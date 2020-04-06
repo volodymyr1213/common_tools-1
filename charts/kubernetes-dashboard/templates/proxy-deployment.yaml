@@ -20,7 +20,7 @@ spec:
         - --provider=github
         - --upstream=http://{{ template "kubernetes-dashboard.fullname" . }}.kube-system.svc.cluster.local
         - --http-address=0.0.0.0:8080
-        - --redirect-url=https://{{ .Values. }}/oauth2/callback
+        - --redirect-url=https://{{ .Values.ingress.hosts }}/oauth2/callback
         - --email-domain=*
         - --github-org={{ .Values.githubProxy.githubOrganization }}
         - --pass-basic-auth={{ .Values.githubProxy.passBasicAuth }}
