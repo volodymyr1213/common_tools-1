@@ -1,3 +1,0 @@
-# domain_name: ${deployment_endpoint}
-# vault_service_port: ${vault_service_port}
-# email: ${email}
