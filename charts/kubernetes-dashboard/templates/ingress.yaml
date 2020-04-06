@@ -9,13 +9,18 @@ metadata:
 {{- end }}
 spec:
   rules:
-    - host: {{ .Values.ingress.hosts | quote }}
+  {{- if .Values.ingress.hosts }}
+  {{- range $host := .Values.ingress.hosts }}
+    - host: {{ $host }}
       http:
-        paths: 
-          - path: /
+        paths:
+  {{- range $p := $paths }}
+          - path: {{ $p }}
             backend:
               serviceName: dashboard-proxy
               servicePort: 80
+  {{- end -}}
+  {{- end -}}
   {{- if .Values.ingress.tls }}
   tls:
 {{ toYaml .Values.ingress.tls | indent 4 }}
