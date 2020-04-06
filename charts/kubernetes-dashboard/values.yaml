@@ -148,8 +148,7 @@ ingress:
   ## Kubernetes Dashboard Ingress hostnames
   ## Must be provided if Ingress is enabled
   ##
-  hosts:
-    - ${deployment_endpoint}
+  hosts: ${deployment_endpoint}
 
   ## Kubernetes Dashboard Ingress TLS configuration
   ## Secrets must be manually created in the namespace
