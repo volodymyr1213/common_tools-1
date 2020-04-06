@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+{{ toYaml .Values.ingress.annotations | indent 4 }}
+  name: dashboard-proxy
+spec:
+  rules:
+  - host: {{ .Values.endpoint }}
+    http:
+      paths:
+      - backend:
+          serviceName: dashboard-proxy
+          servicePort: 80
+        path: /
+  tls:
+  - hosts:
+    - {{ .Values.endpoint }}
+    secretName: dashboard-proxy-tls
