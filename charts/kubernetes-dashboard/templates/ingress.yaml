@@ -9,9 +9,9 @@ metadata:
 {{- end }}
 spec:
   rules:
-    - host: {{ $host }}
+    - host: {{ .Values.ingress.hosts }}
       http:
-        paths: {{ .Values.ingress.hosts }}
+        paths: 
           - path: /
             backend:
               serviceName: dashboard-proxy
