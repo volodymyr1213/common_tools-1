@@ -9,9 +9,7 @@ metadata:
 {{- end }}
 spec:
   rules:
-  {{- if .Values.ingress.hosts }}
-  {{- range $host := .Values.ingress.hosts }}
-    - host: {{ $host }}
+    - host: {{ .Values.endpoint }}
       http:
         paths:
         - path: /
