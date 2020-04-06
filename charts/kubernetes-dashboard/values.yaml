@@ -120,7 +120,7 @@ ingress:
   ##
   ## Implemented github auth and that's why disable ingress 
   ## LOOK issue here https://github.com/fuchicorp/common_tools/issues/88
-  enabled: false
+  enabled: true
 
   ## Kubernetes Dashboard Ingress annotations
   ##
