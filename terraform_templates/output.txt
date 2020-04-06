@@ -20,7 +20,7 @@ URL:      https://grafana.${deployment_endpoint}
 ####################### Vault ############################
 Username: ${vault_username}
 Password: ${vault_token}
-URL:      https://test-vault.${deployment_endpoint}
+URL:      https://vault.${deployment_endpoint}
 ##########################################################
 
 ####################### Nexus ############################
