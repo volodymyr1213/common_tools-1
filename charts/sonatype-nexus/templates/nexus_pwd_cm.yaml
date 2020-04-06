@@ -25,6 +25,29 @@ data:
       sleep 4
     done
 
+    curl --location --request POST 'https://nexus.ggl.huseyinakten.net/service/rest/beta/repositories/docker/hosted' \
+    --header 'Content-Type: application/json' \
+    -u admin:admin123 \
+    --header 'Content-Type: text/plain' \
+    --data-raw '{
+    "name": "fuchicorp",
+    "online": true,
+    "storage": {
+    "blobStoreName": "default",
+    "strictContentTypeValidation": true,
+    "writePolicy": "allow"
+    },
+    "cleanup": {
+    "policyNames": ["cleanup"]
+    },
+    "docker": {
+    "v1Enabled": true,
+    "forceBasicAuth": true,
+    "httpPort": 8085
+    }
+    }'
+
+
 
     CHECK_SCRIPT_STATUS=`curl  -s -o /dev/null -I -w "%{http_code}" -u "admin:${NEXUS_OLD_PWD}" "${NEXUS_URL}/service/rest/v1/script/${SCRIPT_NAME}"`
 
