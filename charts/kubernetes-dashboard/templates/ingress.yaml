@@ -12,6 +12,7 @@ spec:
   {{- if .Values.ingress.hosts }}
   {{- range $host := .Values.ingress.hosts }}
     - host: {{ $host }}
+    {{- end }}
       http:
         paths:
           - path: /
