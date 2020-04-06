@@ -3,13 +3,11 @@ module "nexus_deploy" {
   deployment_name        = "nexus"
   deployment_environment = "${kubernetes_namespace.service_tools.metadata.0.name}"
   deployment_endpoint    = "nexus.${var.google_domain_name}"
-  deployment_path        = "nexus"
+  deployment_path        = "sonatype-nexus"
 
-  
   template_custom_vars = {
-    null_depends_on          = "${null_resource.cert_manager.id}"
+    null_depends_on          = "${null_resource.helm_init.id}"
     docker_endpoint          = "docker.${var.google_domain_name}"
-    nexus_port               = "${var.nexus_service_port}"
     repo_port                = "${var.repo_port}"
   }
 }
