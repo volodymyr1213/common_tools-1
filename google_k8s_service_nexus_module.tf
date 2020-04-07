@@ -9,5 +9,6 @@ module "nexus_deploy" {
     null_depends_on          = "${null_resource.helm_init.id}"
     docker_endpoint          = "docker.${var.google_domain_name}"
     repo_port                = "${var.repo_port}"
+    nexus_password           = "${var.nexus_password}"
   }
 }
