@@ -185,7 +185,7 @@ rbac:
   # Same as for clusterAdminRole, it is NOT RECOMMENDED to use this version in production.
   # Instead you should review the role and remove all potentially sensitive parts such as
   # access to persistentvolumes, pods/log etc.
-  clusterReadOnlyRole: true
+  clusterReadOnlyRole: false
 
 serviceAccount:
   # Specifies whether a service account should be created

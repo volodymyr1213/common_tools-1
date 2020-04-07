@@ -118,3 +118,7 @@ Upgrade from 0.x.x version to 1.x.x version is seamless if you use default `ingr
 Notes:
 
 - The proxy url changed please refer to the [usage section](#using-the-dashboard-with-kubectl-proxy)
+
+
+######INSTRUCTURE FOR GITHUB AUTHENTICATION FEATURE USING OAUTH2 PROXY######
+

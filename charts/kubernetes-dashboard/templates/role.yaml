@@ -38,6 +38,7 @@ rules:
     - get
     - update
     - delete
+    - create
 
   # Allow Dashboard to get and update 'kubernetes-dashboard-settings' config map.
 - apiGroups:
