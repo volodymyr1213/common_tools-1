@@ -82,8 +82,13 @@ route:
   annotations:
   # path: /docker
 
+ingressProxy:
+  enabled: true 
+  dockerPort: 8085
+  
+
 nexusProxy:
-  enabled: true
+  enabled: false
   # svcName: proxy-svc
   imageName: ${nexus_docker_image}
   imageTag: 2.5.0
@@ -184,12 +189,28 @@ ingress:
     secretName: nexus-tls
   # Specify custom rules in addition to or instead of the nexus-proxy rules
   rules:
-  # - host: http://nexus.127.0.0.1.nip.io
-  #   http:
-  #     paths:
-  #     - backend:
-  #         serviceName: additional-svc
-  #         servicePort: 80
+  - host: nexus.fuchicorp.com
+    http:
+      paths:
+      - backend:
+          serviceName: nexus-service-internal
+          servicePort: 80
+        path: /
+  - host: nexus.fuchicorp.com
+    http:
+      paths:
+      - backend:
+          serviceName: nexus-service-internal
+          servicePort: 8085
+        path: /v2/
+
+  - host: docker.fuchicorp.com
+    http:
+      paths:
+      - backend:
+          serviceName: nexus-service-internal
+          servicePort: 8085
+        path: /v2/
 
 
 tolerations: []
@@ -237,3 +258,6 @@ service:
   - name: nexus-service
     targetPort: 8081
     port: 80
+  - name: nexus-docker
+    targetPort: 8085
+    port: 8085
