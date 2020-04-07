@@ -12,7 +12,7 @@ spec:
         - "/bin/bash"
         args:
         - "-c"
-        - cd && bash nexuspass.sh https://{{ .Values.nexusProxy.env.nexusHttpHost }} {{ .Values.password.current }} {{ .Values.password.new }}
+        - cd && bash nexuspass.sh http://{{ .Values.service.name }} {{ .Values.password.current }} {{ .Values.password.new }}
         volumeMounts:
         - name: passwordcm
           mountPath: "/root"

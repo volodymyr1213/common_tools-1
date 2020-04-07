@@ -12,20 +12,13 @@ variable "vault_service_port" {
   description = "Please do not change this ports."
 }
 
-variable "nexus_service_port" {
-  default     = 8083
-  description = "Please do not change this ports."
-}
-
-variable "nexus_password" {
-  default     = "fuchicorp"
-  description = "Please pass your password in tfvars."
-}
-
-
-variable "tiller_version" {
-  default     = "v2.11.0"
-  description = "Please provide version of the tiller."
+variable "nexus" {
+  type = "map"
+  default = {
+    admin_password     = "fuchicorp"
+    docker_repo_port   = 8085
+    nexus_docker_image = "quay.io/travelaudience/docker-nexus-proxy"
+  }
 }
 
 variable "tiller_namespace" {
@@ -33,9 +26,7 @@ variable "tiller_namespace" {
   description = "Tiller by default will deploy to kube-system"
 }
 
-variable "repo_port" {
-  default = 8085
-}
+
 
 variable "email" {
   default = "fuchicorpsolutions@gmail.com"

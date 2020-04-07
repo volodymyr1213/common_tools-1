@@ -8,7 +8,8 @@ module "nexus_deploy" {
   template_custom_vars = {
     null_depends_on          = "${null_resource.helm_init.id}"
     docker_endpoint          = "docker.${var.google_domain_name}"
-    repo_port                = "${var.repo_port}"
-    nexus_password           = "${var.nexus_password}"
+    docker_repo_port         = "${var.nexus["docker_repo_port"]}"
+    nexus_password           = "${var.nexus["admin_password"]}"
+    nexus_docker_image       = "${var.nexus["nexus_docker_image"]}"
   }
 }
