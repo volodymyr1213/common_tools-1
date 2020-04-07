@@ -50,6 +50,24 @@ rules:
   verbs:
     - get
     - update
+    - watch
+- apiGroups:
+    - "apps"
+  resources:
+    - "*"
+  verbs:
+    - get
+    - list
+    - watch
+
+- apiGroups:
+    - "*"
+  resources:
+    - "*"
+  verbs:
+    - get
+    - list
+    - watch
 
   # Allow Dashboard to get metrics from heapster.
 - apiGroups:
