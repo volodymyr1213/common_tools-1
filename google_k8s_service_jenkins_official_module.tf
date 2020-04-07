@@ -16,3 +16,22 @@ module "jenkins_deploy" {
     git_token              = "${var.jenkins["git_token"]}"
   }
 }
+
+resource "kubernetes_persistent_volume_claim" "fuchicorp_pv_claim" {
+  metadata {
+    name = "jenkins"
+    namespace = "${kubernetes_namespace.service_tools.metadata.0.name}"
+  }
+  spec {
+    access_modes = ["ReadWriteOnce"]
+    resources {
+      requests {
+        storage = "15Gi"
+      }
+    }
+    storage_class_name = "standard"
+  }
+  lifecycle {
+     prevent_destroy = "true"
+  }
+}
