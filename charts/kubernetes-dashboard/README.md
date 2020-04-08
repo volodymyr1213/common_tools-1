@@ -120,7 +120,7 @@ Notes:
 - The proxy url changed please refer to the [usage section](#using-the-dashboard-with-kubectl-proxy)
 
 
-####INSTRUCTURES FOR GITHUB AUTH FEATURE USING OAUTH2 PROXY####
+##INSTRUCTURES FOR GITHUB AUTH FEATURE USING OAUTH2 PROXY
 In order to use github authentication to K8-dashboard for Fuchicorp following manifest were added to helm chart:
 - Proxy_deployment.yaml
 - proxy_ingress.yaml
@@ -137,4 +137,3 @@ kube_dashboard = {
   proxy_cookie_secret   = "generate cookie secret using command: python -c 'import os,base64; print(base64.b64encode(os.urandom(16)).decode("ascii"))' "
 }
 Using configurations above you should be able to apply the changes using terraform.
-############################################################################
