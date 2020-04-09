@@ -38,6 +38,7 @@ rules:
     - get
     - update
     - delete
+    - create
 
   # Allow Dashboard to get and update 'kubernetes-dashboard-settings' config map.
 - apiGroups:
@@ -49,6 +50,24 @@ rules:
   verbs:
     - get
     - update
+    - watch
+- apiGroups:
+    - "apps"
+  resources:
+    - "*"
+  verbs:
+    - get
+    - list
+    - watch
+
+- apiGroups:
+    - "*"
+  resources:
+    - "*"
+  verbs:
+    - get
+    - list
+    - watch
 
   # Allow Dashboard to get metrics from heapster.
 - apiGroups:
