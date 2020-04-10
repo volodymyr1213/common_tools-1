@@ -1,8 +1,25 @@
 variable "deployment_environment" {
-  default     = "tools"
+  default = "tools"
   description = "Namespace of the deployment <It will be created>"
 }
 
+variable "vault_token" {
+  description = "Please enter token for Vault."
+}
+
+variable "vault_service_port" {
+  default     = 8082
+  description = "Please do not change this ports."
+}
+
+variable "nexus" {
+  type = "map"
+  default = {
+    admin_password     = "fuchicorp"
+    docker_repo_port   = 8085
+    nexus_docker_image = "quay.io/travelaudience/docker-nexus-proxy"
+  }
+}
 
 variable "tiller_namespace" {
   default     = "kube-system"
@@ -45,21 +62,6 @@ variable "grafana" {
   }
 }
 
-
-variable "vault" {
-  type = "map"
-
-  default = {
-    vault_token            = "yourtoken"
-    vault_username         = "admin"
-    vault_service_port     = "8200"
-    vault-name             = "test-vault"
-    vault_auth_client_id   = "vault-id"
-    vault_auth_secret      = "vault-secret"
-    git_token              = "git-token"
-  }
-}
-
 variable "kube_dashboard" {
   type = "map"
   default {
@@ -72,7 +74,7 @@ variable "kube_dashboard" {
 
 
 variable "google_domain_name" {
-  default     = "fuchicorp.com"
+  default = "fuchicorp.com"
   description = "Please change to your domain name"
 }
 

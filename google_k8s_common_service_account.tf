@@ -3,9 +3,9 @@ resource "kubernetes_service_account" "common_service_account" {
     "kubernetes_namespace.service_tools",
     "kubernetes_service_account.tiller",
     "kubernetes_secret.tiller"
-  ]
+    ]
   metadata {
-    name      = "common-service-account"
+    name = "common-service-account"
     namespace = "${kubernetes_namespace.service_tools.metadata.0.name}"
   }
   secret {
@@ -19,9 +19,9 @@ resource "kubernetes_secret" "common_service_account_secret" {
     "kubernetes_namespace.service_tools",
     "kubernetes_service_account.tiller",
     "kubernetes_secret.tiller"
-  ]
+    ]
   metadata {
-    name      = "common-service-account-secret"
+    name = "common-service-account-secret"
     namespace = "${kubernetes_namespace.service_tools.metadata.0.name}"
   }
 }
@@ -32,18 +32,18 @@ resource "kubernetes_cluster_role_binding" "common_cluster_rule" {
     "kubernetes_secret.common_service_account_secret",
     "kubernetes_service_account.tiller",
     "kubernetes_secret.tiller"
-  ]
-  metadata {
-    name = "common-cluster-rule"
-  }
-  role_ref {
-    api_group = "rbac.authorization.k8s.io"
-    kind      = "ClusterRole"
-    name      = "cluster-admin"
-  }
-  subject {
-    kind      = "ServiceAccount"
-    name      = "${kubernetes_service_account.common_service_account.metadata.0.name}"
-    namespace = "${kubernetes_service_account.common_service_account.metadata.0.namespace}"
-  }
+    ]
+    metadata {
+        name = "common-cluster-rule"
+    }
+    role_ref {
+        api_group = "rbac.authorization.k8s.io"
+        kind      = "ClusterRole"
+        name      = "cluster-admin"
+    }
+    subject {
+        kind      = "ServiceAccount"
+        name      = "${kubernetes_service_account.common_service_account.metadata.0.name}"
+        namespace = "${kubernetes_service_account.common_service_account.metadata.0.namespace}"
+    }
 }
