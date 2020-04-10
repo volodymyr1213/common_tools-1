@@ -19,7 +19,7 @@ URL:      https://grafana.${deployment_endpoint}
                        
 ####################### Vault ############################
 Username: ${vault_username}
-Password: ${vault_password}
+Password: ${vault_token}
 URL:      https://vault.${deployment_endpoint}
 ##########################################################
 
@@ -31,9 +31,9 @@ URL:      https://docker.${deployment_endpoint}
 ####################### Prometheus ############################
 URL:      https://prometheus.${deployment_endpoint}
 ##########################################################
-===============================================================
 
 ################# Kubernetes Dashboard ########################
 URL:      https://dashboard.${deployment_endpoint}
 ##########################################################
 ===============================================================
+

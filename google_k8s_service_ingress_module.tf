@@ -7,13 +7,10 @@ module "ingress_deploy" {
   deployment_path        = "main-helm"
 
   template_custom_vars = {
-    
+
     null_depends_on   = "${helm_release.cert_manager.id}"
     vaultport         = "${var.vault_service_port}"
     email             = "${var.email}"
     domain_name       = "${var.google_domain_name}"
   }
 }
-
-
-
