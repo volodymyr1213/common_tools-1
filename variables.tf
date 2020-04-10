@@ -3,24 +3,13 @@ variable "deployment_environment" {
   description = "Namespace of the deployment <It will be created>"
 }
 
-variable "nexus_service_port" {
-  default     = 8083
-  description = "Please do not change this ports."
-}
-
-variable "tiller_version" {
-  default     = "v2.11.0"
-  description = "Please provide version of the tiller."
-}
 
 variable "tiller_namespace" {
   default     = "kube-system"
   description = "Tiller by default will deploy to kube-system"
 }
 
-variable "repo_port" {
-  default = 8085
-}
+
 
 variable "email" {
   default = "fuchicorpsolutions@gmail.com"
@@ -56,6 +45,7 @@ variable "grafana" {
   }
 }
 
+
 variable "vault" {
   type = "map"
 
@@ -69,6 +59,17 @@ variable "vault" {
     git_token              = "git-token"
   }
 }
+
+variable "kube_dashboard" {
+  type = "map"
+  default {
+    github_auth_client_id = "id"
+    github_auth_secret    = "secret"
+    github_organization   = "mkarimi20"
+    proxy_cookie_secret   = "exampleproxysecret"
+  }
+}
+
 
 variable "google_domain_name" {
   default     = "fuchicorp.com"
