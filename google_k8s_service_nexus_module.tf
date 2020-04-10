@@ -1,5 +1,5 @@
 module "nexus_deploy" {
-  source                 = "fuchicorp/chart/helm"
+  source  = "fuchicorp/chart/helm"
   deployment_name        = "nexus"
   deployment_environment = "${kubernetes_namespace.service_tools.metadata.0.name}"
   deployment_endpoint    = "nexus.${var.google_domain_name}"

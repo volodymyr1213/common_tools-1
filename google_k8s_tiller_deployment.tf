@@ -34,21 +34,21 @@ resource "kubernetes_secret" "tiller" {
 
 ## Cluster role binding for tiller
 resource "kubernetes_cluster_role_binding" "tiller_cluster_rule" {
-  depends_on = [
-    "kubernetes_service_account.tiller",
-    "kubernetes_secret.tiller"
-  ]
-  metadata {
-    name = "tiller-cluster-rule"
-  }
-  role_ref {
-    api_group = "rbac.authorization.k8s.io"
-    kind      = "ClusterRole"
-    name      = "cluster-admin"
-  }
-  subject {
-    kind      = "ServiceAccount"
-    name      = "${kubernetes_service_account.tiller.metadata.0.name}"
-    namespace = "${kubernetes_service_account.tiller.metadata.0.namespace}"
-  }
+    depends_on = [
+      "kubernetes_service_account.tiller",
+      "kubernetes_secret.tiller"
+    ]
+    metadata {
+        name = "tiller-cluster-rule"
+    }
+    role_ref {
+        api_group = "rbac.authorization.k8s.io"
+        kind      = "ClusterRole"
+        name      = "cluster-admin"
+    }
+    subject {
+        kind      = "ServiceAccount"
+        name      = "${kubernetes_service_account.tiller.metadata.0.name}"
+        namespace = "${kubernetes_service_account.tiller.metadata.0.namespace}"
+    }
 }
