@@ -15,8 +15,8 @@ spec:
 {{- if .Values.ingress.tls.enabled }}
   tls:
     - hosts:
-      - docker.fuchicorp.com
-      - nexus.fuchicorp.com
+      - {{ .Values.nexusProxy.env.nexusDockerHost }}
+      - {{ .Values.nexusProxy.env.nexusHttpHost }}
       secretName: {{ .Values.ingress.tls.secretName | quote }}
 {{- end -}}
 {{- end }}

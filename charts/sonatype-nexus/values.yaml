@@ -189,14 +189,14 @@ ingress:
     secretName: nexus-tls
   # Specify custom rules in addition to or instead of the nexus-proxy rules
   rules:
-  - host: nexus.fuchicorp.com
+  - host: ${deployment_endpoint}
     http:
       paths:
       - backend:
           serviceName: nexus-service-internal
           servicePort: 80
         path: /
-  - host: nexus.fuchicorp.com
+  - host: ${deployment_endpoint}
     http:
       paths:
       - backend:
@@ -204,7 +204,7 @@ ingress:
           servicePort: 8085
         path: /v2/
 
-  - host: docker.fuchicorp.com
+  - host: ${docker_endpoint}
     http:
       paths:
       - backend:
