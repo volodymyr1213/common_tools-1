@@ -382,6 +382,7 @@ Master:
 
       //   Adding DevOps team to admin access
       adminsMembers.addAll(getTeamMembers("devops"))
+      adminsMembers.addAll(getTeamMembers("jenkins-admin"))
 
       /**
        *                Roles
