@@ -148,35 +148,34 @@ Master:
     - rebuild:1.31
   # Used to approve a list of groovy functions in pipelines used the script-security plugin. Can be viewed under /scriptApproval
   ScriptApproval:
-    - "method com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy addRole"
-    - "method com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy addRole java.lang.String com.michelin.cio.hudson.plugins.rolestrategy.Role"
-    - "method com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy assignRole java.lang.String com.michelin.cio.hudson.plugins.rolestrategy.Role java.lang.String"
-    - "method hudson.model.Saveable save"
-    - "method java.lang.Class getConstructors"
-    - "method java.net.HttpURLConnection setRequestMethod java.lang.String"
-    - "method java.net.URL openConnection"
-    - "method java.net.URLConnection getInputStream"
-    - "method java.net.URLConnection setRequestProperty java.lang.String java.lang.String"
-    - "method jenkins.model.Jenkins getAuthorizationStrategy"
-    - "method jenkins.model.Jenkins getSecurityRealm"
-    - "method jenkins.model.Jenkins isQuietingDown"
-    - "method jenkins.model.Jenkins setAuthorizationStrategy hudson.security.AuthorizationStrategy"
-    - "method jenkins.model.Jenkins setSecurityRealm hudson.security.SecurityRealm"
-    - "method net.sf.json.JSONObject optString java.lang.String java.lang.String"
-    - "new com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy"
-    - "new net.sf.json.JSONObject"
-    - "new org.jenkinsci.plugins.GithubSecurityRealm java.lang.String java.lang.String java.lang.String java.lang.String java.lang.String"
-    - "staticField com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy PROJECT"
-    - "staticField org.jenkinsci.plugins.GithubSecurityRealm DEFAULT_API_URI"
-    - "staticField org.jenkinsci.plugins.GithubSecurityRealm DEFAULT_OAUTH_SCOPES"
-    - "staticField org.jenkinsci.plugins.GithubSecurityRealm DEFAULT_WEB_URI"
-    - "staticMethod hudson.model.Hudson getInstance"
-    - "staticMethod java.lang.System getenv"
-    - "staticMethod jenkins.model.Jenkins getInstance"
-    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods getText java.io.InputStream"
-    - "method java.lang.reflect.AccessibleObject setAccessible boolean"
-    - "staticMethod java.lang.System getenv java.lang.String"
-    - "method java.lang.Class getDeclaredMethod java.lang.String java.lang.Class[]"
+    - method com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy addRole
+    - method com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy addRole java.lang.String com.michelin.cio.hudson.plugins.rolestrategy.Role
+    - method com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy assignRole java.lang.String com.michelin.cio.hudson.plugins.rolestrategy.Role java.lang.String
+    - method hudson.model.Saveable save
+    - method java.lang.Class getConstructors
+    - method java.lang.Class getDeclaredMethod java.lang.String java.lang.Class[]
+    - method java.lang.reflect.AccessibleObject setAccessible boolean
+    - method java.net.URL openConnection
+    - method java.net.URLConnection getInputStream
+    - method java.net.URLConnection setRequestProperty java.lang.String java.lang.String
+    - method jenkins.model.Jenkins getAuthorizationStrategy
+    - method jenkins.model.Jenkins getSecurityRealm
+    - method jenkins.model.Jenkins isQuietingDown
+    - method jenkins.model.Jenkins setAuthorizationStrategy hudson.security.AuthorizationStrategy
+    - method jenkins.model.Jenkins setSecurityRealm hudson.security.SecurityRealm
+    - method net.sf.json.JSONObject optString java.lang.String java.lang.String
+    - new com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy
+    - new net.sf.json.JSONObject
+    - new org.jenkinsci.plugins.GithubSecurityRealm java.lang.String java.lang.String java.lang.String java.lang.String java.lang.String
+    - staticField com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy PROJECT
+    - staticField org.jenkinsci.plugins.GithubSecurityRealm DEFAULT_API_URI
+    - staticField org.jenkinsci.plugins.GithubSecurityRealm DEFAULT_OAUTH_SCOPES
+    - staticField org.jenkinsci.plugins.GithubSecurityRealm DEFAULT_WEB_URI
+    - staticMethod hudson.model.Hudson getInstance
+    - staticMethod java.lang.System getenv
+    - staticMethod java.lang.System getenv java.lang.String
+    - staticMethod jenkins.model.Jenkins getInstance
+    - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods getText java.io.InputStream
 
   # List of groovy init scripts to be executed during Jenkins master start
   InitScripts:
