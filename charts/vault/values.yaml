@@ -165,7 +165,7 @@ server:
 
   # Used to define custom readinessProbe settings
   readinessProbe:
-    enabled: true
+    enabled: false
     # If you need to use a http path instead of the default exec
     # path: /v1/sys/health?standbyok=true
   # Used to enable a livenessProbe for the pods
