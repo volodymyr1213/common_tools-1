@@ -13,7 +13,7 @@ global:
 
 injector:
   # True if you want to enable vault agent injection.
-  enabled: true
+  enabled: false
 
   # External vault server address for the injector to use. Setting this will
   # disable deployment of a vault server along with the injector.
@@ -130,21 +130,21 @@ server:
   # Ingress allows ingress services to be created to allow external access
   # from Kubernetes to access Vault pods.
   ingress:
-    enabled: false
+    enabled: true
     labels: {}
       # traffic: external
-    annotations: {}
-      # |
-      # kubernetes.io/ingress.class: nginx
-      # kubernetes.io/tls-acme: "true"
+    annotations: 
+      kubernetes.io/ingress.class: nginx
+      cert-manager.io/cluster-issuer: letsencrypt-prod
     hosts:
-      - host: chart-example.local
-        paths: []
+    - host: vault.bishkekdc.com
+      paths: 
+      - /
 
-    tls: []
-    #  - secretName: chart-example-tls
-    #    hosts:
-    #      - chart-example.local
+    tls: 
+    - secretName: chart-vault-tls
+      hosts:
+      - vault.bishkekdc.com
 
 
   # authDelegator enables a cluster role binding to be attached to the service
@@ -267,7 +267,7 @@ server:
   dataStorage:
     enabled: true
     # Size of the PVC created
-    size: 10Gi
+    size: 5Gi
     # Name of the storage class to use.  If null it will use the
     # configured default Storage Class.
     storageClass: null
