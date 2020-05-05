@@ -3,15 +3,6 @@ variable "deployment_environment" {
   description = "Namespace of the deployment <It will be created>"
 }
 
-variable "vault_token" {
-  description = "Please enter token for Vault."
-}
-
-variable "vault_service_port" {
-  default     = 8082
-  description = "Please do not change this ports."
-}
-
 variable "nexus" {
   type = "map"
   default = {
@@ -25,7 +16,6 @@ variable "tiller_namespace" {
   default     = "kube-system"
   description = "Tiller by default will deploy to kube-system"
 }
-
 
 
 variable "email" {
@@ -69,6 +59,14 @@ variable "kube_dashboard" {
     github_auth_secret    = "secret"
     github_organization   = "mkarimi20"
     proxy_cookie_secret   = "exampleproxysecret"
+  }
+}
+
+variable "vault" {
+  type = "map"
+  default {
+    github_auth_client_id = "id"
+    github_auth_secret    = "secret"
   }
 }
 
