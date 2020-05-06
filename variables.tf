@@ -3,15 +3,6 @@ variable "deployment_environment" {
   description = "Namespace of the deployment <It will be created>"
 }
 
-variable "vault_token" {
-  description = "Please enter token for Vault."
-}
-
-variable "vault_service_port" {
-  default     = 8082
-  description = "Please do not change this ports."
-}
-
 variable "nexus" {
   type = "map"
   default = {
@@ -25,7 +16,6 @@ variable "tiller_namespace" {
   default     = "kube-system"
   description = "Tiller by default will deploy to kube-system"
 }
-
 
 
 variable "email" {
@@ -71,6 +61,7 @@ variable "kube_dashboard" {
     proxy_cookie_secret   = "exampleproxysecret"
   }
 }
+
 
 
 variable "google_domain_name" {

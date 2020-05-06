@@ -138,14 +138,14 @@ server:
       kubernetes.io/ingress.class: nginx
       cert-manager.io/cluster-issuer: letsencrypt-prod
     hosts:
-    - host: vault.bishkekdc.com
+    - host: ${deployment_endpoint}
       paths: 
       - /
 
     tls: 
     - secretName: chart-vault-tls
       hosts:
-      - vault.bishkekdc.com
+      - ${deployment_endpoint}
 
 
   # authDelegator enables a cluster role binding to be attached to the service

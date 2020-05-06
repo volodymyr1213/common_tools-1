@@ -1,3 +1,2 @@
 domain_name: ${deployment_endpoint}
-vaultport: ${vaultport}
 email: ${email}
