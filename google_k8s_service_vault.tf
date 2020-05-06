@@ -9,7 +9,5 @@ module "vault_deploy" {
   template_custom_vars = {
 
     null_depends_on      = "${null_resource.cert_manager.id}"
-    vault_auth_secret    = "${var.vault["vault_auth_secret"]}"
-    vault_auth_client_id = "${var.vault["vault_auth_client_id"]}"
   }
 }

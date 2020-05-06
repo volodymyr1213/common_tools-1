@@ -62,13 +62,6 @@ variable "kube_dashboard" {
   }
 }
 
-variable "vault" {
-  type = "map"
-  default {
-    github_auth_client_id = "id"
-    github_auth_secret    = "secret"
-  }
-}
 
 
 variable "google_domain_name" {
