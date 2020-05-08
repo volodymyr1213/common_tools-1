@@ -1,5 +1,5 @@
 
-variable "credentials_json_file" {
+variable "credentials" {
   default = "common-service-account.json"
 }
 
