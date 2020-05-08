@@ -1,3 +1,8 @@
+
+variable "credentials_json_file" {
+  default = "common-service-account.json"
+}
+
 variable "deployment_environment" {
   default = "tools"
   description = "Namespace of the deployment <It will be created>"
