@@ -9,5 +9,8 @@ module "vault_deploy" {
   template_custom_vars = {
 
     null_depends_on      = "${null_resource.cert_manager.id}"
+    key_ring             = "${var.kms["key_ring"]}"
+    crypto_key           = "${var.kms["crypto_key"]}"
+    google_project_id    = "${var.google_project_id}"
   }
 }

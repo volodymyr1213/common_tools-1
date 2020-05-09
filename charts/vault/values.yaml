@@ -166,14 +166,14 @@ server:
 
   # Used to define custom readinessProbe settings
   readinessProbe:
-    enabled: false
+    enabled: true
     # If you need to use a http path instead of the default exec
     # path: /v1/sys/health?standbyok=true
   # Used to enable a livenessProbe for the pods
   livenessProbe:
-    enabled: false
+    enabled: true
     path: "/v1/sys/health?standbyok=true"
-    initialDelaySeconds: 60
+    initialDelaySeconds: 90
 
   # Used to set the sleep time during the preStop step
   preStopSleepSeconds: 5
@@ -182,8 +182,8 @@ server:
   # used to include variables required for auto-unseal.
   extraEnvironmentVars: {}
     # GOOGLE_REGION: global
-    # GOOGLE_PROJECT: myproject
-    # GOOGLE_APPLICATION_CREDENTIALS: /vault/userconfig/myproject/myproject-creds.json
+    # GOOGLE_PROJECT: fuchiclass
+    # GOOGLE_APPLICATION_CREDENTIALS: /common_tools/common-service-account.json
 
   # extraSecretEnvironmentVars is a list of extra enviroment variables to set with the stateful set.
   # These variables take value from existing Secret objects.
@@ -321,15 +321,15 @@ server:
         path = "/vault/data"
       }
 
-      # Example configuration for using auto-unseal, using Google Cloud KMS. The
-      # GKMS keys must already exist, and the cluster must have a service account
-      # that is authorized to access GCP KMS.
-      #seal "gcpckms" {
-      #   project     = "vault-helm-dev"
-      #   region      = "global"
-      #   key_ring    = "vault-helm-unseal-kr"
-      #   crypto_key  = "vault-helm-unseal-key"
-      #}
+    # Example configuration for using auto-unseal, using Google Cloud KMS. The
+    # GKMS keys must already exist, and the cluster must have a service account
+    # that is authorized to access GCP KMS.
+      seal "gcpckms" {
+        project     = ${google_project_id}
+        region      = "global"
+        key_ring    = ${key_ring}
+        crypto_key  = ${crypto_key}
+      }
 
   # Run Vault in "HA" mode. There are no storage requirements unless audit log
   # persistence is required.  In HA mode Vault will configure itself to use Consul
