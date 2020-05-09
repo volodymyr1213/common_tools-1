@@ -1,3 +1,3 @@
-@Library('CommonLib@master') _
+@Library('CommonLib@feature/cluster-common') _
 def common = new com.lib.JenkinsClusterCommonDeploy()
 common.runPipeline()
