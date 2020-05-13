@@ -138,7 +138,7 @@ Master:
     - workflow-job:2.33
     - workflow-aggregator:2.6
     - credentials-binding:1.19
-    - git:4.2.2
+    - git:4.2.0
     - docker-build-step:2.4
     - oki-docki:1.1
     - slack:2.34
