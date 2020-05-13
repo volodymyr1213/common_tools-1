@@ -147,16 +147,16 @@ Master:
     - authorize-project:1.3.0
     - rebuild:1.31
   # new pluggins below
-    - plugin-ansicolor 0.6.3
-    - plugin-monitoring 1.82.0
-    - plugin-xunit 2.3.9
+    - ansicolor:0.6.3
+    - monitoring:1.82.0
+    - xunit:2.3.9
     # - sonar-quality-gates
     # - sonar 
-    - plugin-pubsub-light 1.13
-    - plugin-pipeline-stage-view 3.6.2
-    - plugin-performance 3.17
+    - pubsub-light:1.13
+    - pipeline-stage-view:3.6.2
+    - performance:3.17
     # - kubernetes-credentials
-    - plugin-badge 1.8
+    - badge:1.8
   # Used to approve a list of groovy functions in pipelines used the script-security plugin. Can be viewed under /scriptApproval
   ScriptApproval:
     - "method com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy addRole"
