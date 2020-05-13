@@ -11,5 +11,6 @@ module "nexus_deploy" {
     docker_repo_port         = "${var.nexus["docker_repo_port"]}"
     nexus_password           = "${var.nexus["admin_password"]}"
     nexus_docker_image       = "${var.nexus["nexus_docker_image"]}"
+    nexus_ip_ranges          = "${var.nexus["nexus_ip_ranges"]}" 
   }
 }
