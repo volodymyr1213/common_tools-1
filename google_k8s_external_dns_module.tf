@@ -18,7 +18,7 @@ resource "kubernetes_secret" "external_dns_secret" {
     namespace = "${kubernetes_namespace.service_tools.metadata.0.name}"
   }
   data = {
-    "credentials.json" = "${file("${path.module}/common-service-account.json")}"
+    "credentials.json" = "${file("${var.credentials}")}"
   }
   type = "generic"
 }
