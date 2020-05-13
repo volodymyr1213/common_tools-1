@@ -201,7 +201,7 @@ data:
 {{- end }}
 {{- if .Values.Master.InitScripts }}
     mkdir -p /var/jenkins_home/init.groovy.d/;
-    cp -n /var/jenkins_config/*.groovy /var/jenkins_home/init.groovy.d/
+    cp -f /var/jenkins_config/*.groovy /var/jenkins_home/init.groovy.d/
 {{- end }}
 {{- if .Values.Master.CredentialsXmlSecret }}
     cp -n /var/jenkins_credentials/credentials.xml /var/jenkins_home;
