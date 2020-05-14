@@ -32,6 +32,6 @@ resource "kubernetes_persistent_volume_claim" "fuchicorp_pv_claim" {
     storage_class_name = "standard"
   }
   lifecycle {
-     prevent_destroy = "true"
+     prevent_destroy = "false"
   }
 }
