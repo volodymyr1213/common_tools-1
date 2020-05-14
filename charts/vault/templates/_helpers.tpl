@@ -143,20 +143,24 @@ based on the mode configured.
   {{ if eq (.Values.server.auditStorage.enabled | toString) "true" }}
             - name: audit
               mountPath: /vault/audit
+              readOnly: false
+
   {{ end }}
   {{ if or (eq .mode "standalone") (and (eq .mode "ha") (eq (.Values.server.ha.raft.enabled | toString) "true"))  }}
     {{ if eq (.Values.server.dataStorage.enabled | toString) "true" }}
             - name: data
               mountPath: /vault/data
+              readOnly: false
     {{ end }}
   {{ end }}
   {{ if and (ne .mode "dev") (or (ne .Values.server.standalone.config "")  (ne .Values.server.ha.config "")) }}
             - name: config
               mountPath: /vault/config
+              readOnly: false
   {{ end }}
   {{- range .Values.server.extraVolumes }}
             - name: userconfig-{{ .name }}
-              readOnly: true
+              readOnly: false
               mountPath: {{ .path | default "/vault/userconfig" }}/{{ .name }}
   {{- end }}
 {{- end -}}

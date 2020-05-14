@@ -79,11 +79,3 @@ variable "deployment_name" {
   default = "common_tools"
 }
 
-variable "kms" {
-  type = "map"
-  default {
-    key_ring          = "vault-helm-unseal-kr"
-    crypto_key        = "vault-helm-unseal-key"
-    keyring_location  = "global"
-  }
-}

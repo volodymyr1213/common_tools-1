@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: vault-init-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: vault-init-job
+        image: vault:1.4.0
+        command: ['/bin/sh', '-c', 'cd /vault/data && sh init.sh' ]
+        volumeMounts:
+        - name: vault-data
+          mountPath: "/vault/data"
+      restartPolicy: OnFailure
+      volumes:
+      - name: vault-data
+        configMap:
+          name: vault-init-cm
+  backoffLimit: 10
+  activeDeadlineSeconds: 360

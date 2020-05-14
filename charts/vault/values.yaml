@@ -166,12 +166,12 @@ server:
 
   # Used to define custom readinessProbe settings
   readinessProbe:
-    enabled: true
+    enabled: false
     # If you need to use a http path instead of the default exec
     # path: /v1/sys/health?standbyok=true
   # Used to enable a livenessProbe for the pods
   livenessProbe:
-    enabled: true
+    enabled: false
     path: "/v1/sys/health?standbyok=true"
     initialDelaySeconds: 90
 
@@ -311,7 +311,6 @@ server:
     # using a stateful set. This should be HCL.
     config: |
       ui = true
-
       listener "tcp" {
         tls_disable = 1
         address = "[::]:8200"
@@ -320,16 +319,15 @@ server:
       storage "file" {
         path = "/vault/data"
       }
-
-    # Example configuration for using auto-unseal, using Google Cloud KMS. The
-    # GKMS keys must already exist, and the cluster must have a service account
-    # that is authorized to access GCP KMS.
-      seal "gcpckms" {
-        project     = ${google_project_id}
-        region      = "global"
-        key_ring    = ${key_ring}
-        crypto_key  = ${crypto_key}
-      }
+      # Example configuration for using auto-unseal, using Google Cloud KMS. The
+      # GKMS keys must already exist, and the cluster must have a service account
+      # that is authorized to access GCP KMS.
+      #seal "gcpckms" {
+      #   project     = "vault-helm-dev"
+      #   region      = "global"
+      #   key_ring    = "vault-helm-unseal-kr"
+      #   crypto_key  = "vault-helm-unseal-key"
+      #}
 
   # Run Vault in "HA" mode. There are no storage requirements unless audit log
   # persistence is required.  In HA mode Vault will configure itself to use Consul
