@@ -8,12 +8,17 @@ spec:
       containers:
       - name: vault-init-job
         image: vault:1.4.0
-        command: ['/bin/sh', '-c', 'cd /vault/data && sh init.sh' ]
+        command: ['/bin/sh', '-c', 'cd /vault/data/init && sh init.sh' ]
         volumeMounts:
-        - name: vault-data
+        - name: vault-keys
           mountPath: "/vault/data"
+        - name: vault-data
+          mountPath: "/vault/data/init"
       restartPolicy: OnFailure
       volumes:
+      - name: vault-keys
+        persistentVolumeClaim:
+          claimName: data-vault-tools-0 
       - name: vault-data
         configMap:
           name: vault-init-cm

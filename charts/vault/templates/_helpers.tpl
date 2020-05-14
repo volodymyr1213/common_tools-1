@@ -76,7 +76,6 @@ Set's the replica count based on the different modes configured by user
     {{- default 1 -}}
   {{ end }}
 {{- end -}}
-
 {{/*
 Set's up configmap mounts if this isn't a dev deployment and the user
 defined a custom configuration.  Additionally iterates over any
@@ -98,7 +97,6 @@ extra volumes the user may have specified (such as a secret with TLS).
           {{- end }}
   {{- end }}
 {{- end -}}
-
 {{/*
 Set's a command to override the entrypoint defined in the image
 so we can make the user experience nicer.  This works in with
@@ -124,7 +122,6 @@ for users looking to use this chart with Consul Helm.
             /usr/local/bin/docker-entrypoint.sh vault server -config=/tmp/storageconfig.hcl {{ .Values.server.extraArgs }}
   {{ end }}
 {{- end -}}
-
 {{/*
 Set's additional environment variables based on the mode.
 */}}
@@ -143,28 +140,23 @@ based on the mode configured.
   {{ if eq (.Values.server.auditStorage.enabled | toString) "true" }}
             - name: audit
               mountPath: /vault/audit
-              readOnly: false
-
   {{ end }}
   {{ if or (eq .mode "standalone") (and (eq .mode "ha") (eq (.Values.server.ha.raft.enabled | toString) "true"))  }}
     {{ if eq (.Values.server.dataStorage.enabled | toString) "true" }}
             - name: data
               mountPath: /vault/data
-              readOnly: false
     {{ end }}
   {{ end }}
   {{ if and (ne .mode "dev") (or (ne .Values.server.standalone.config "")  (ne .Values.server.ha.config "")) }}
             - name: config
               mountPath: /vault/config
-              readOnly: false
   {{ end }}
   {{- range .Values.server.extraVolumes }}
             - name: userconfig-{{ .name }}
-              readOnly: false
+              readOnly: true
               mountPath: {{ .path | default "/vault/userconfig" }}/{{ .name }}
   {{- end }}
 {{- end -}}
-
 {{/*
 Set's up the volumeClaimTemplates when data or audit storage is required.  HA
 might not use data storage since Consul is likely it's backend, however, audit
@@ -201,7 +193,6 @@ storage might be desired by the user.
       {{ end }}
   {{ end }}
 {{- end -}}
-
 {{/*
 Set's the affinity for pod placement when running in standalone and HA modes.
 */}}
@@ -231,7 +222,6 @@ Set's the toleration for pod placement when running in standalone and HA modes.
         {{ tpl .Values.server.tolerations . | nindent 8 | trim }}
   {{- end }}
 {{- end -}}
-
 {{/*
 Sets the injector toleration for pod placement
 */}}
@@ -241,7 +231,6 @@ Sets the injector toleration for pod placement
         {{ tpl .Values.injector.tolerations . | nindent 8 | trim }}
   {{- end }}
 {{- end -}}
-
 {{/*
 Set's the node selector for pod placement when running in standalone and HA modes.
 */}}
@@ -311,7 +300,6 @@ Set's the container resources if the user has set any.
 {{ toYaml .Values.server.resources | indent 12}}
   {{ end }}
 {{- end -}}
-
 {{/*
 Sets the container resources if the user has set any.
 */}}
@@ -321,7 +309,6 @@ Sets the container resources if the user has set any.
 {{ toYaml .Values.injector.resources | indent 12}}
   {{ end }}
 {{- end -}}
-
 {{/*
 Inject extra environment vars in the format key:value, if populated
 */}}
@@ -333,7 +320,6 @@ Inject extra environment vars in the format key:value, if populated
 {{- end }}
 {{- end -}}
 {{- end -}}
-
 {{/*
 Inject extra environment populated by secrets, if populated
 */}}
@@ -348,7 +334,6 @@ Inject extra environment populated by secrets, if populated
 {{- end -}}
 {{- end -}}
 {{- end -}}
-
 {{/* Scheme for health check and local endpoint */}}
 {{- define "vault.scheme" -}}
 {{- if .Values.global.tlsDisable -}}
