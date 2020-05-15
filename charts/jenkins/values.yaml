@@ -363,10 +363,10 @@ Master:
 
         while (true) {
           // While loop to go each pages and get all members from team 
-          memberUrl = "https://api.github.com/teams/${getTeamId}/members?page=${pageCount}"
+          memberUrl = "https://api.github.com/teams/" + getTeamId + "/members?page=" + pageCount
           def get = new URL(memberUrl).openConnection();
             get.setRequestMethod("GET")
-            get.setRequestProperty("Authorization", "token ${gitToken}")
+            get.setRequestProperty("Authorization", "token "+ gitToken)
             get.setRequestProperty("Content-Type", "application/json")
           def object = jsonSlurper.parseText(get.getInputStream().getText())
 
