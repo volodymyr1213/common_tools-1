@@ -560,9 +560,89 @@ Master:
   # master.key and hudson.util.Secret)
   # SecretsFilesSecret: jenkins-secrets
   # Jenkins XML job configs to provision
-#   Jobs: |-
+  Jobs: |-
 
-###  Youre xml goes here.
+    common-tools-deploy: |
+      <flow-definition plugin="workflow-job@2.33">
+      <script type="text/javascript" charset="utf-8" id="zm-extension"/>
+      <actions>
+      <org.jenkinsci.plugins.workflow.multibranch.JobPropertyTrackerAction plugin="workflow-multibranch@2.21">
+      <jobPropertyDescriptors>
+      <string>hudson.model.ParametersDefinitionProperty</string>
+      </jobPropertyDescriptors>
+      </org.jenkinsci.plugins.workflow.multibranch.JobPropertyTrackerAction>
+      </actions>
+      <description/>
+      <keepDependencies>false</keepDependencies>
+      <properties>
+      <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.15"/>
+      <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.31">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+      </com.sonyericsson.rebuild.RebuildSettings>
+      <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+      <hudson.model.BooleanParameterDefinition>
+      <name>terraform_apply</name>
+      <description>Apply All Changes</description>
+      <defaultValue>false</defaultValue>
+      </hudson.model.BooleanParameterDefinition>
+      <hudson.model.BooleanParameterDefinition>
+      <name>terraform_destroy</name>
+      <description>Destroy deployment</description>
+      <defaultValue>false</defaultValue>
+      </hudson.model.BooleanParameterDefinition>
+      <net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition plugin="git-parameter@0.9.12">
+      <name>branchName</name>
+      <description>Please select the branch name to deploy</description>
+      <uuid>9c58f5db-5860-4d2f-98f1-e2e9c1b13609</uuid>
+      <type>PT_BRANCH</type>
+      <branch/>
+      <tagFilter>*</tagFilter>
+      <branchFilter>origin/(.*)</branchFilter>
+      <sortMode>NONE</sortMode>
+      <defaultValue>origin/master</defaultValue>
+      <selectedValue>NONE</selectedValue>
+      <quickFilterEnabled>true</quickFilterEnabled>
+      <listSize>5</listSize>
+      </net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition>
+      <hudson.model.TextParameterDefinition>
+      <name>deployment_tfvars</name>
+      <description>terraform configuration</description>
+      <defaultValue>extra_values = "tools"</defaultValue>
+      <trim>false</trim>
+      </hudson.model.TextParameterDefinition>
+      <hudson.model.BooleanParameterDefinition>
+      <name>debugMode</name>
+      <description>If you would like to turn on debuging click this!!</description>
+      <defaultValue>false</defaultValue>
+      </hudson.model.BooleanParameterDefinition>
+      </parameterDefinitions>
+      </hudson.model.ParametersDefinitionProperty>
+      </properties>
+      <definition class="org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition" plugin="workflow-cps@2.80">
+      <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
+      <configVersion>2</configVersion>
+      <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+      <url>https://github.com/fuchicorp/common_tools.git</url>
+      </hudson.plugins.git.UserRemoteConfig>
+      </userRemoteConfigs>
+      <branches>
+      <hudson.plugins.git.BranchSpec>
+      <name>*/master</name>
+      </hudson.plugins.git.BranchSpec>
+      </branches>
+      <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+      <submoduleCfg class="list"/>
+      <extensions/>
+      </scm>
+      <scriptPath>JenkinsDeployer.groovy</scriptPath>
+      <lightweight>true</lightweight>
+      </definition>
+      <triggers/>
+      <disabled>false</disabled>
+      </flow-definition>
 
 Agent:
   Enabled: true
