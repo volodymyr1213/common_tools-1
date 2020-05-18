@@ -8,3 +8,4 @@ common-service-account.json
 set-env
 *fuchicorp-service-account.json*
 .vscode/settings.json
+.docker/config.json
