@@ -14,7 +14,7 @@ variable "nexus" {
     admin_password     = "fuchicorp"
     docker_repo_port   = 8085
     nexus_docker_image = "quay.io/travelaudience/docker-nexus-proxy"
-    nexus_ip_ranges    = "10.16.0.27/8, 50.194.68.229/32"
+    nexus_ip_ranges    = "10.16.0.27/8, 50.194.68.229/32, 34.72.131.197/32, 24.1.188.126/32"
   }
 }
 
@@ -77,4 +77,15 @@ variable "google_domain_name" {
 
 variable "deployment_name" {
   default = "common_tools"
+}
+
+
+variable "secret_config" {
+  type = "map"
+
+  default = {
+    docker_endpoint  = "docker.fuchicorp.com"
+    user_data = "admin:password"
+  }
+  description = "- (Required) Variable is looking for <docker_endpoint> and  <docker_user_data> with following format (username:password)"
 }
