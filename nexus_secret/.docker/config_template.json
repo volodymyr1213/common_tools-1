@@ -1,7 +1,0 @@
-{
-    "auths": {
-            "${docker_endpoint}": {
-                    "auth": "${user_data}"
-            }
-    }
-}
