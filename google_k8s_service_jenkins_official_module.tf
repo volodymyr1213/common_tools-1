@@ -19,19 +19,23 @@ module "jenkins_deploy" {
 
 resource "kubernetes_persistent_volume_claim" "fuchicorp_pv_claim" {
   metadata {
-    name = "jenkins"
+    name      = "jenkins"
     namespace = "${kubernetes_namespace.service_tools.metadata.0.name}"
   }
+
   spec {
     access_modes = ["ReadWriteOnce"]
+
     resources {
       requests {
         storage = "15Gi"
       }
     }
+
     storage_class_name = "standard"
   }
+
   lifecycle {
-     prevent_destroy = "false"
+    prevent_destroy = "false"
   }
 }

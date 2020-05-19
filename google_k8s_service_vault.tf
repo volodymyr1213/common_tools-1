@@ -7,7 +7,6 @@ module "vault_deploy" {
   deployment_path        = "vault"
 
   template_custom_vars = {
-
-    null_depends_on      = "${null_resource.cert_manager.id}"
+    null_depends_on = "${null_resource.cert_manager.id}"
   }
 }
