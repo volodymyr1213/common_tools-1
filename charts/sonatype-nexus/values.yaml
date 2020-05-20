@@ -85,7 +85,7 @@ route:
 ingressProxy:
   enabled: true 
   dockerPort: 8085
-  
+
 
 nexusProxy:
   enabled: false
