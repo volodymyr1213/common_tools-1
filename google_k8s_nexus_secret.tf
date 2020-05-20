@@ -7,19 +7,13 @@ data "template_file" "docker_config_template" {
   }
 }
 
-
-resource "local_file" "docker_config" {
-    content     = "${data.template_file.docker_config_template.rendered}"
-    filename = "${path.module}/.docker/config.json"
-}
-
 resource "kubernetes_secret" "nexus_creds" {
   metadata {
     name = "nexus-creds"
   }
 
   data = {
-    ".dockerconfigjson" = "${file("${path.module}/.docker/config.json")}"
+    ".dockerconfigjson" = "${data.template_file.docker_config_template.rendered}"
   }
 
   type = "kubernetes.io/dockerconfigjson"
