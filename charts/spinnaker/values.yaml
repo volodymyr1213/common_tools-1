@@ -199,7 +199,7 @@ kubeConfig:
 # Change this if youd like to expose Spinnaker outside the cluster
 ingress:
   enabled: true
-  host: build.kuzyshynliliia.com
+  host: ${deployment_endpoint}
   annotations:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: letsencrypt-hostk8s-prod
@@ -207,7 +207,7 @@ ingress:
   tls:
    - secretName: spinaker-secret
      hosts:
-      - build.kuzyshynliliia.com
+      - ${deployment_endpoint}
 
 ingressGate:
   enabled: false
