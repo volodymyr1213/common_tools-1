@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "dev_namespace" {
+ resource "kubernetes_namespace" "dev_namespace" {
   metadata {
     name = "dev-students"
   }
@@ -24,25 +24,25 @@ resource "kubernetes_namespace" "service_tools" {
 }
 
 resource "kubernetes_namespace" "qa" {
-  metadata {
-    name = "qa"
-  }
+   metadata {
+      name = "qa"
+    }
 }
 
 resource "kubernetes_namespace" "prod" {
-  metadata {
-    name = "prod"
-  }
+   metadata {
+     name = "prod"
+   }
 }
 
 resource "kubernetes_namespace" "test" {
-  metadata {
-    name = "test"
-  }
+   metadata {
+     name = "test"
+   }
 }
 
 resource "kubernetes_namespace" "dev" {
-  metadata {
-    name = "dev"
-  }
+   metadata {
+     name = "dev"
+   }
 }

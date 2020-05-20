@@ -1,15 +1,15 @@
+
 variable "credentials" {
   default = "common-service-account.json"
 }
 
 variable "deployment_environment" {
-  default     = "tools"
+  default = "tools"
   description = "Namespace of the deployment <It will be created>"
 }
 
 variable "nexus" {
   type = "map"
-
   default = {
     admin_password     = "fuchicorp"
     docker_repo_port   = 8085
@@ -22,6 +22,7 @@ variable "tiller_namespace" {
   default     = "kube-system"
   description = "Tiller by default will deploy to kube-system"
 }
+
 
 variable "email" {
   default = "fuchicorpsolutions@gmail.com"
@@ -59,7 +60,6 @@ variable "grafana" {
 
 variable "kube_dashboard" {
   type = "map"
-
   default {
     github_auth_client_id = "id"
     github_auth_secret    = "secret"
@@ -68,8 +68,10 @@ variable "kube_dashboard" {
   }
 }
 
+
+
 variable "google_domain_name" {
-  default     = "fuchicorp.com"
+  default = "fuchicorp.com"
   description = "Please change to your domain name"
 }
 

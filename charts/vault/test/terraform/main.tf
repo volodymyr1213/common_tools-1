@@ -10,7 +10,7 @@ resource "random_id" "suffix" {
 }
 
 data "google_container_engine_versions" "main" {
-  location       = "${var.zone}"
+  location = "${var.zone}"
   version_prefix = "1.15."
 }
 
@@ -24,8 +24,8 @@ resource "google_kms_key_ring" "keyring" {
 }
 
 resource "google_kms_crypto_key" "vault-helm-unseal-key" {
-  name     = "vault-helm-unseal-key"
-  key_ring = "${google_kms_key_ring.keyring.self_link}"
+  name            = "vault-helm-unseal-key"
+  key_ring        = "${google_kms_key_ring.keyring.self_link}"
 
   lifecycle {
     prevent_destroy = true

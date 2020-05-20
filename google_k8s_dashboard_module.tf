@@ -6,10 +6,10 @@ module "dashboard_deployer" {
   deployment_path        = "kubernetes-dashboard"
 
   template_custom_vars = {
-    null_depends_on       = "${null_resource.cert_manager.id}"
-    github_organization   = "${var.kube_dashboard["github_organization"]}"
-    github_auth_client_id = "${var.kube_dashboard["github_auth_client_id"]}"
-    github_auth_secret    = "${var.kube_dashboard["github_auth_secret"]}"
-    proxy_cookie_secret   = "${var.kube_dashboard["proxy_cookie_secret"]}"
+    null_depends_on            = "${null_resource.cert_manager.id}"
+    github_organization        = "${var.kube_dashboard["github_organization"]}"
+    github_auth_client_id      = "${var.kube_dashboard["github_auth_client_id"]}"
+    github_auth_secret         = "${var.kube_dashboard["github_auth_secret"]}"
+    proxy_cookie_secret        = "${var.kube_dashboard["proxy_cookie_secret"]}"
   }
 }

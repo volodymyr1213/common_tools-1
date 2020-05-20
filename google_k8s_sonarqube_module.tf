@@ -6,6 +6,7 @@ module "sonarqube_deploy" {
   deployment_path        = "sonarqube"
 
   template_custom_vars = {
-    null_depends_on = "${null_resource.cert_manager.id}"
+
+    null_depends_on      = "${null_resource.cert_manager.id}"
   }
 }
