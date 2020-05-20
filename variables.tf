@@ -1,4 +1,3 @@
-
 variable "credentials" {
   default = "common-service-account.json"
 }
