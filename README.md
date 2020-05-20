@@ -1,52 +1,74 @@
-# fuchicorp Kubernetes Common Tools
-This page contains how to deploy  common_tools to Kubernetes  Cluster.
+# Helm
 
-### Required Packages
-1. terraform
-2. kubectl (configured )
-3. helm v2.11.0
-3. Cert-manager v0.11.0
-4. Kube Cluster 1.12.7-gke.10
+[![CircleCI](https://circleci.com/gh/helm/helm.svg?style=shield)](https://circleci.com/gh/helm/helm)
+[![Go Report Card](https://goreportcard.com/badge/github.com/helm/helm)](https://goreportcard.com/report/github.com/helm/helm)
+[![GoDoc](https://godoc.org/k8s.io/helm?status.svg)](https://godoc.org/k8s.io/helm)
 
-## What will be deployed to cluster?
-1. Jenkins
-Jenkins is will be deployed to the cluster. You will need to get password from the pod [Example doc](https://stackoverflow.com/questions/40570173/installing-jenkins-the-first-time-and-do-not-know-the-default-user-name)
+Helm is a tool for managing Kubernetes charts. Charts are packages of
+pre-configured Kubernetes resources.
 
-2. Nexus
-After deploying the nexus you will need to change the password default creds is  `admin:admin123`
+Use Helm to:
 
-4. Grafana
-Grafana also will be deployed you are able to parse admin username and password with tfvars. Vars `grafana_username`, `grafana_password`
+- Find and use [popular software packaged as Helm charts](https://github.com/helm/charts) to run in Kubernetes
+- Share your own applications as Helm charts
+- Create reproducible builds of your Kubernetes applications
+- Intelligently manage your Kubernetes manifest files
+- Manage releases of Helm packages
 
-6. Vault
-For Vault you will need to create parse variable for token call it `vault_token`
+## Helm in a Handbasket
+
+Helm is a tool that streamlines installing and managing Kubernetes applications.
+Think of it like apt/yum/homebrew for Kubernetes.
+
+- Helm has two parts: a client (`helm`) and a server (`tiller`)
+- Tiller runs inside of your Kubernetes cluster, and manages releases (installations)
+  of your charts.
+- Helm runs on your laptop, CI/CD, or wherever you want it to run.
+- Charts are Helm packages that contain at least two things:
+  - A description of the package (`Chart.yaml`)
+  - One or more templates, which contain Kubernetes manifest files
+- Charts can be stored on disk, or fetched from remote chart repositories
+  (like Debian or RedHat packages)
+
+## Install
 
 
-## Deploy to Cluster
-First you will need to clone the repo
-```
-git clone https://github.com/fuchicorp/common_tools.git
-cd common_tools
-```
+Binary downloads of the Helm client can be found on [the Releases page](https://github.com/helm/helm/releases/latest).
 
-Please use default  module just run following command.
-```
-source set-env.sh configuration/fuchicorp-common-tools.tfvars
-```
+Unpack the `helm` binary and add it to your PATH and you are good to go!
 
-If you are using scripted way you will need to generate tfvars file. For example
+If you want to use a package manager:
 
-```
-» cat <<EOF > terraform apply -var-file=$DATAFILE                                                                     
-grafana_password = 'mypassword'
-grafana_username = 'admin_user'
-namespace      = 'tools'
-vault_token    = 'a872nawd81*q2n'
-EOF
-```
+- [Homebrew](https://brew.sh/) users can use `brew install kubernetes-helm`.
+- [Chocolatey](https://chocolatey.org/) users can use `choco install kubernetes-helm`.
+- [Scoop](https://scoop.sh/) users can use `scoop install helm`.
+- [GoFish](https://gofi.sh/) users can use `gofish install helm`.
 
-After you done with generation of the var file. You can start deploying.
-```
-terraform plan -var-file=terraform apply -var-file=$DATAFILE    
-terraform apply -var-file=terraform apply -var-file=$DATAFILE
-```
+To rapidly get Helm up and running, start with the [Quick Start Guide](https://docs.helm.sh/using_helm/#quickstart-guide).
+
+See the [installation guide](https://docs.helm.sh/using_helm/#installing-helm) for more options,
+including installing pre-releases.
+
+## Docs
+
+Get started with the [Quick Start guide](https://docs.helm.sh/using_helm/#quickstart-guide) or plunge into the [complete documentation](https://docs.helm.sh)
+
+## Roadmap
+
+The [Helm roadmap uses Github milestones](https://github.com/helm/helm/milestones) to track the progress of the project.
+
+## Community, discussion, contribution, and support
+
+You can reach the Helm community and developers via the following channels:
+
+- [Kubernetes Slack](https://kubernetes.slack.com):
+  - [#helm-users](https://kubernetes.slack.com/messages/helm-users)
+  - [#helm-dev](https://kubernetes.slack.com/messages/helm-dev)
+  - [#charts](https://kubernetes.slack.com/messages/charts)
+- Mailing List:
+  - [Helm Mailing List](https://lists.cncf.io/g/cncf-helm)
+- Developer Call: Thursdays at 9:30-10:00 Pacific. [https://zoom.us/j/696660622](https://zoom.us/j/696660622)
+
+### Code of conduct
+
+Participation in the Helm community is governed by the [Code of Conduct](code-of-conduct.md).
