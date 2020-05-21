@@ -85,7 +85,7 @@ route:
 ingressProxy:
   enabled: true 
   dockerPort: 8085
-  
+
 
 nexusProxy:
   enabled: false
@@ -175,6 +175,7 @@ ingress:
   enabled: true
   path: /
   annotations: 
+    nginx.ingress.kubernetes.io/whitelist-source-range: ${nexus_ip_ranges}
     nginx.ingress.kubernetes.io/proxy-body-size: 2000m
     nginx.org/client-max-body-size: 2000m
     cert-manager.io/cluster-issuer: letsencrypt-prod
