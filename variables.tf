@@ -89,3 +89,18 @@ variable "secret_config" {
   }
   description = "- (Required) Variable is looking for <docker_endpoint> and  <docker_user_data> with following format (username:password)"
 }
+
+
+variable "namespaces" {
+  type = "list"
+  default = [
+    "dev-students",
+    "qa-students",
+    "prod-students",
+    "dev",
+    "qa",
+    "prod",
+    "test"
+  ]
+  description = "- (Required) list of all namespaces for fuchicorp cluster"
+}
