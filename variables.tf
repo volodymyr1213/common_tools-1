@@ -84,8 +84,7 @@ variable "secret_config" {
   type = "map"
 
   default = {
-    docker_endpoint  = "docker.fuchicorp.com"
-    user_data = "admin:password"
+    user_data = "admin:fuchicorp"
   }
   description = "- (Required) Variable is looking for <docker_endpoint> and  <docker_user_data> with following format (username:password)"
 }
