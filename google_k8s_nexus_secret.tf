@@ -3,7 +3,7 @@ data "template_file" "docker_config_template" {
 
   vars {
     docker_endpoint = "docker.${var.google_domain_name}"
-    user_data = "${base64encode(var.secret_config["user_data"])}"
+    user_data = "${base64encode("admin:${var.nexus["admin_password"]}")}"
   }
 }
 
