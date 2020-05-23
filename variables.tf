@@ -103,3 +103,8 @@ variable "namespaces" {
   ]
   description = "- (Required) list of all namespaces for fuchicorp cluster"
 }
+
+variable "show_passwords" {
+  default = "false"
+  description = "- (Optional) if you put <true> output will show password."
+}
