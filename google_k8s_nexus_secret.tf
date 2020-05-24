@@ -1,9 +1,9 @@
 data "template_file" "docker_config_template" {
-  template = "${file("${path.module}/.docker/config_template.json")}"
+  template = "${file("${path.module}/terraform_templates/config_template.json")}"
 
   vars {
-    docker_endpoint = "${var.secret_config["docker_endpoint"]}"
-    user_data = "${base64encode(var.secret_config["user_data"])}"
+    docker_endpoint = "docker.${var.google_domain_name}"
+    user_data = "${base64encode("admin:${var.nexus["admin_password"]}")}"
   }
 }
 
