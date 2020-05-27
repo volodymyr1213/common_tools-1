@@ -1,7 +1,7 @@
 ================================================================
 Hello,
 Congrats, You were able to configure and deploy all common tools.
-Please use bellow information to access to your applicaions. 
+Please use below information to access to your applicaions. 
              
 ######################## Jenkins ########################
 URL: https://jenkins.${deployment_endpoint}
