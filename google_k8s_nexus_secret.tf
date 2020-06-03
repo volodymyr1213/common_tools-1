@@ -33,3 +33,10 @@ resource "kubernetes_secret" "nexus_creds_namespaces" {
 
   type = "kubernetes.io/dockerconfigjson"
 }
+resource "null_resource" "chack_norris" {
+  count = "${length(var.namespaces)}"
+  provisioner "local-exec" {
+    command = "kubectl patch serviceaccount default -p  '{\"imagePullSecrets\": [{\"name\": \"nexus-creds\"}]}' -n ${var.namespaces[count.index]}"
+  }
+}
+
