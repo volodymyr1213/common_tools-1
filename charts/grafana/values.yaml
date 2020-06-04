@@ -378,6 +378,12 @@ dashboards:
       # gnetId: 6739
       # revision: 1
       # datasource: Prometheus
+    Academy-Deployment:
+      file: dashboards/academy.json
+      # gnetId: 5303
+      # revision: 1
+      # datasource: Prometheus
+      
 
 ## Reference to external ConfigMap per provider. Use provider name as key and ConfiMap name as value.
 ## A provider dashboards must be defined either by external ConfigMaps or in values.yaml, not in both.
