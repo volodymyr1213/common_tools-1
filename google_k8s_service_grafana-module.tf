@@ -17,6 +17,7 @@ module "grafana_deploy" {
     smtp_user                = "${var.grafana["smtp_username"]}"
     smtp_password            = "${var.grafana["smtp_password"]}"
     smtp_host                = "${var.grafana["smtp_host"]}"
+    grafana_ip_ranges        = "${var.grafana["grafana_ip_ranges"]}" 
     
   }
 }

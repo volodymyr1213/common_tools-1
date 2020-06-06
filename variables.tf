@@ -55,6 +55,7 @@ variable "grafana" {
     smtp_username    = "smtp-user"
     smtp_password    = "password"
     smtp_host        = "smtp.gmail.com:587"
+    grafana_ip_ranges = "10.16.0.27/8, 50.194.68.229/32"
   }
 }
 
